@@ -8,7 +8,7 @@ const db = getFirestore();
 export const doSignInWithGoogle = async()=>{
     
     const navigate = useNavigate();
-     const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = {
         displayName: result.user.displayName,

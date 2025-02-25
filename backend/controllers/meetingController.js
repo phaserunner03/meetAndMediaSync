@@ -23,4 +23,13 @@ const scheduleMeeting = async (req, res) => {
   }
 };
 
-module.exports = { scheduleMeeting };
+const getAllMeetings = async (req, res) => {
+  try {
+    const result = await meetingService.getAllMeetings();
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { scheduleMeeting, getAllMeetings };

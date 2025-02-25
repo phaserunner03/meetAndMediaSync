@@ -62,4 +62,37 @@ const scheduleMeeting = async ({ token, title, description, participants, startT
     }
 };
 
-module.exports = { scheduleMeeting };
+const getAllMeetings = async () => {
+    try {
+        const meetings = await Meeting.find()
+            .populate('scheduledBy', 'firstName lastName email') // Fetch scheduler info
+            .sort({ createdAt: -1 }); // Latest first
+
+        const detailedMeetings = await Promise.all(
+            meetings.map(async (meeting) => {
+                const details = await MeetingDetails.findOne({ meetingID: meeting._id })
+                    .populate('participants', 'firstName lastName email') // Fetch participant details
+                    .lean();
+
+                return {
+                    _id: meeting._id,
+                    title: meeting.title,
+                    description: meeting.description,
+                    meetLink: meeting.meetLink,
+                    scheduledBy: meeting.scheduledBy,
+                    createdAt: meeting.createdAt,
+                    updatedAt: meeting.updatedAt,
+                    meetingDetails: details || {}, // Include meeting details if available
+                };
+            })
+        );
+
+        return { success: true, meetings: detailedMeetings };
+    } catch (error) {
+        console.error('Error fetching meetings:', error);
+        throw new Error('Failed to fetch meetings');
+    }
+};
+
+
+module.exports = { scheduleMeeting, getAllMeetings };

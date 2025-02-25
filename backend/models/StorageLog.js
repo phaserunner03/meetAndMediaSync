@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const StorageLogSchema = new mongoose.Schema({
-    meetingID: { type: mongoose.Schema.Types.UUID, ref: 'Meeting', required: true },
+    meetingID: { type: mongoose.Schema.Types.ObjectId, ref: 'Meeting', required: true },
     fileName: { type: String, required: true },
     storedIn: { type: String, enum: ['Google Drive', 'GCP'], required: true },
     fileUrl: { type: String, required: true },

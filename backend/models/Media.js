@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MediaSchema = new mongoose.Schema({
-    meetingID: { type: mongoose.Schema.Types.UUID, ref: 'Meeting', required: true },
+    meetingID: { type: mongoose.Schema.Types.ObjectId, ref: 'Meeting', required: true },
     type: { type: String, enum: ['screenshot', 'recording'], required: true },
     fileUrl: { type: String, required: true },
     storedIn: { type: String, enum: ['Google Drive', 'GCP'], required: true },

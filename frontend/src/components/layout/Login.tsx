@@ -1,9 +1,15 @@
-import React from 'react'
+import axios from 'axios';
 
-const Login = () => {
+const Login =  () => {
+  const handleClick =async ()=>{
+    console.log("Login button clicked")
+    const resp = await axios.get('http://localhost:8000/api/auth/login');
+    console.log(resp.data)
+  }
   return (
     <div>
-      Login
+      <button onClick={handleClick}>Login</button>
+      
     </div>
   )
 }

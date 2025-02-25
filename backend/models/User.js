@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   profilePic: { type: String },
-  role: { type: String, enum: ['organiser', 'user'], required: true },
+  role: { type: String, enum: ['organiser', 'user'], required: true, default: 'user' },
   isAdmin: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },

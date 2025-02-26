@@ -34,7 +34,7 @@ async function signInWithGoogle(idToken) {
         }
         const token = jwt.sign({ uid, email }, SECRET_KEY, { expiresIn: "7d" });
 
-        return { success: true, token, user };
+        return { success: true, token, idToken, user };
     }
     catch (err) {
         console.error("Error verifying token:", err);

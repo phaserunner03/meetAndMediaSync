@@ -15,8 +15,9 @@ const Login: React.FC = () => {
     try {
       setIsSigningIn(true);
       const result = await doSignInWithGoogle();
-      const idToken = await result.user.getIdToken(); // Get Firebase ID Token
-
+      const idToken = await result.user.getIdToken();
+      console.log(idToken); // Get Firebase ID Token
+      localStorage.setItem("idToken", idToken);
       // Send ID Token to backend
       const response = await axios.post(
         "http://localhost:8000/api/auth/google",

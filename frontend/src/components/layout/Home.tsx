@@ -1,7 +1,15 @@
+import React from 'react'
+import Navbar from './Navbar'
+import Hero from './herosection/HeroSection'
+// import Footer from './Footer'
+
 const Home = () => {
+  
   return (
     <div>
-      home
+      <Navbar/>
+      <Hero/>
+      {/* <Footer/> */}
     </div>
   )
 }

@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(user));
 
       // Navigate to dashboard
-      navigate("/dashboard");
+      navigate("/dashboard/home");
     } catch (error: any) {
       setErrorMessage(error.response?.data?.error || "Authentication failed");
     } finally {

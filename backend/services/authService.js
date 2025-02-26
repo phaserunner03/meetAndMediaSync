@@ -24,6 +24,7 @@ async function login() {
 
 async function signInWithGoogle(idToken) {
     try {
+        
         const decodedToken = await admin.auth().verifyIdToken(idToken);
         const { uid, email, name, picture } = decodedToken;
         let user = await User.findOne({ uid });

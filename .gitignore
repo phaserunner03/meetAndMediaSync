@@ -1,3 +1,5 @@
 **/.env
 node_modules
 config.json
+googleConfig.js
+config/googleCredentials.json

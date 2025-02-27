@@ -1,39 +1,28 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-const authService = require('../services/authService');
+const authService = require("../services/authService");
 
-async function signup(req, res) {
+async function redirectToGoogle(req, res) {
     try {
-        const result = await authService.signup();
-        res.json({
-            message: "User Registration"
-        });
+        const url = authService.getGoogleAuthURL();
+        res.redirect(url);
     } catch (err) {
-        console.log(err);
+        res.status(500).json({ message: "Failed to redirect to Google", error: err.message });
     }
 }
-async function login(req, res) {
+
+async function handleGoogleCallback(req, res) {
     try {
-        const result = await authService.login();
-        res.json({
-            message: "User Login"
-        });
+        const { code } = req.query;
+        if (!code) {
+            return res.status(400).json({ success: false, message: "Authorization code is missing" });
+        }
+
+        const result = await authService.processGoogleAuth(code);
+        res.json(result);  // Send token and user data back to frontend
     } catch (err) {
-        console.log(err);
+        res.status(401).json({ success: false, message: err.message });
     }
 }
-async function signInWithGoogle(req, res) {
-    const {idToken} = req.body;
-    
-    if (!idToken) {
-      return res.status(400).json({ success: false, message: "ID token is required" });
-    }
-  
-    try {
-      const result = await authService.signInWithGoogle(idToken);
-      res.json(result);
-    } catch (error) {
-      res.status(401).json({ success: false, message: error.message });
-    }
-}
-module.exports = { signup, login, signInWithGoogle };
+
+module.exports = { redirectToGoogle, handleGoogleCallback };

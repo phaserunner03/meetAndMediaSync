@@ -20,7 +20,7 @@ app.listen(PORT, () => {
 });
 
 //Feature 1: User Registration and registration
-// app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 //Feature 2: Schedule an meeting and all details
 // app.use("/api/meetings", meetingRoutes);
 

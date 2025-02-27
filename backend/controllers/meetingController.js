@@ -2,9 +2,9 @@ const meetingService = require('../services/meetingService');
 
 const scheduleMeeting = async (req, res) => {
   try {
-    const { organizerId, title, description, participants, startTime, endTime } = req.body;
-
-    if (!organizerId || !title || !startTime || !endTime) {
+    const { title, description, participants, startTime, endTime } = req.body;
+    const organizerId=req.user?.id;
+    if (!title || !startTime || !endTime) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 

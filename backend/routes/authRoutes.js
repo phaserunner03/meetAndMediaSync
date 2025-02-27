@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const auth=require('../middleware/auth');
 const authController = require("../controllers/authController");
 
-router.post("/signup", auth.authenticateUser, authController.signup);
-router.post("/login", auth.authenticateUser, authController.login);
-router.post("/google", auth.authenticateUser, authController.signInWithGoogle);
+router.get("/google", authController.redirectToGoogle);
+router.get("/google/callback", authController.handleGoogleCallback);
 
 module.exports = router;
-

@@ -1,45 +1,67 @@
-const admin = require('./firebaseAdmin');
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+const { google } = require("googleapis");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+
 const SECRET_KEY = process.env.SECRET_KEY;
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 
-async function signup() {
-    try {
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
-        console.log("Sign Up")
-    }
-    catch (err) {
-        console.error("Error in signup", err)
-    }
+// Generates the Google OAuth2 URL
+function getGoogleAuthURL() {
+    return oauth2Client.generateAuthUrl({
+        access_type: "offline",
+        prompt: "consent",
+        scope: [
+            "profile",
+            "email",
+            "https://www.googleapis.com/auth/calendar", // Allows creating/editing ev Allows reading events
+        ],
+    });
 }
 
-async function login() {
+// Exchanges authorization code for access token
+async function processGoogleAuth(code) {
     try {
-        console.log("Login")
-    }
-    catch (err) {
-        console.error("Error in login", err)
-    }
-}
+        const { tokens } = await oauth2Client.getToken(code);
+        oauth2Client.setCredentials(tokens);
 
-async function signInWithGoogle(idToken) {
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const { uid, email, name, picture } = decodedToken;
-        let user = await User.findOne({ uid });
+        // Fetch user info
+        const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+        const { data } = await oauth2.userinfo.get();
 
+        // Save or update user in database
+        console.log(data);
+        let user = await User.findOne({ googleId: data.id });
         if (!user) {
-            user = new User({ uid, displayName: name, email, photoURL: picture });
-            await user.save();
+            user = new User({
+                googleId: data.id,
+                displayName: data.name,
+                email: data.email,
+                photoURL: data.picture,
+                accessToken: tokens.access_token,
+                refreshToken: tokens.refresh_token,
+            });
+        } else {
+            user.accessToken = tokens.access_token;
+            user.refreshToken = tokens.refresh_token;
         }
-        const token = jwt.sign({ uid, email }, SECRET_KEY, { expiresIn: "7d" });
+        await user.save();
 
-        return { success: true, token, idToken, user };
-    }
-    catch (err) {
-        console.error("Error verifying token:", err);
-        throw new Error("Unauthorized");
+        // Generate JWT token
+        const jwtToken = jwt.sign(
+            { uid: user.googleId, email: user.email },
+            SECRET_KEY,
+            { expiresIn: "7d" }
+        );
+
+        return { success: true, token: jwtToken };
+    } catch (err) {
+        console.error("Error processing Google OAuth:", err);
+        throw new Error("Authentication failed");
     }
 }
 
-module.exports = { signup, login, signInWithGoogle };
+module.exports = { getGoogleAuthURL, processGoogleAuth };

@@ -1,60 +1,67 @@
-import { google } from "googleapis";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js"; // MongoDB User model
-import dotenv from "dotenv";
+const { google } = require("googleapis");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
-dotenv.config();
+const SECRET_KEY = process.env.SECRET_KEY;
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
-);
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
-// Generate Google Auth URL
-export const getGoogleAuthURL = () => {
-  const scopes = ["https://www.googleapis.com/auth/calendar"];
-  return oauth2Client.generateAuthUrl({
-    access_type: "offline",
-    scope: ["email", "profile", ...scopes],
-    prompt: "consent",
-  });
-};
-
-// Handle Google Callback
-export const googleAuthCallback = async (code) => {
-  const { tokens } = await oauth2Client.getToken(code);
-  
-  oauth2Client.setCredentials(tokens);
-  // Get user info
-  const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
-  const {data} = await oauth2.userinfo.get();
-  // Check if user exists in DB
-  let user = await User.findOne({ email: data.email });
-  if (!user) {
-    user = new User({
-      name: data.name,
-      email: data.email,
-      picture: data.picture,
-      googleId: data.id,
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
+// Generates the Google OAuth2 URL
+function getGoogleAuthURL() {
+    return oauth2Client.generateAuthUrl({
+        access_type: "offline",
+        prompt: "consent",
+        scope: [
+            "profile",
+            "email",
+            "https://www.googleapis.com/auth/calendar", // Allows creating/editing ev Allows reading events
+        ],
     });
-  } else {
-    user.accessToken = tokens.access_token;
-    user.refreshToken = tokens.refresh_token;
-  }
-  await user.save();
+}
 
-  // Generate JWT Token
-  const jwtToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-  console.log(jwtToken);
-  return { user, jwtToken };
-};
+// Exchanges authorization code for access token
+async function processGoogleAuth(code) {
+    try {
+        const { tokens } = await oauth2Client.getToken(code);
+        oauth2Client.setCredentials(tokens);
 
-// Refresh Access Token
-export const refreshAccessToken = async (refreshToken) => {
-  oauth2Client.setCredentials({ refresh_token: refreshToken });
-  const { credentials } = await oauth2Client.refreshAccessToken();
-  return credentials.access_token;
-};
+        // Fetch user info
+        const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+        const { data } = await oauth2.userinfo.get();
+
+        // Save or update user in database
+        console.log(data);
+        let user = await User.findOne({ googleId: data.id });
+        if (!user) {
+            user = new User({
+                googleId: data.id,
+                displayName: data.name,
+                email: data.email,
+                photoURL: data.picture,
+                accessToken: tokens.access_token,
+                refreshToken: tokens.refresh_token,
+            });
+        } else {
+            user.accessToken = tokens.access_token;
+            user.refreshToken = tokens.refresh_token;
+        }
+        await user.save();
+
+        // Generate JWT token
+        const jwtToken = jwt.sign(
+            { uid: user.googleId, email: user.email },
+            SECRET_KEY,
+            { expiresIn: "7d" }
+        );
+
+        return { success: true, token: jwtToken };
+    } catch (err) {
+        console.error("Error processing Google OAuth:", err);
+        throw new Error("Authentication failed");
+    }
+}
+
+module.exports = { getGoogleAuthURL, processGoogleAuth };

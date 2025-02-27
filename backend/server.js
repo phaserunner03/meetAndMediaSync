@@ -1,14 +1,10 @@
-
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import authRoutes from "./routes/authRoutes.js";
-import meetRoutes from "./routes/meetRoutes.js";
-import cors from "cors";
-import databaseConnect from "./config/db.js"; 
+const express = require("express");
+const databaseConnect = require("./config/database");
+const cors = require("cors");
+const dotenv = require("dotenv").config();
+const authRoutes = require("./routes/authRoutes");
 // const cookieParser = require("cookie-parser");
-dotenv.config();
-
+// const meetingRoutes = require("./routes/meetingRoutes");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -25,7 +21,9 @@ app.listen(PORT, () => {
 
 //Feature 1: User Registration and registration
 app.use("/api/auth", authRoutes);
-app.use("/api/schedule",meetRoutes);
+//Feature 2: Schedule an meeting and all details
+// app.use("/api/meetings", meetingRoutes);
+
 
 
 app.get("/", (req, res) => {
@@ -34,8 +32,3 @@ app.get("/", (req, res) => {
     message: "Your server is up and running....",
     });
   });
-
-
-
-
-

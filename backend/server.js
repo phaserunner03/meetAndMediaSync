@@ -1,9 +1,13 @@
-const express = require("express");
-const databaseConnect = require("./config/database");
-const cors = require("cors");
-const dotenv = require("dotenv").config();
-const authRoutes = require("./routes/authRoutes");
+
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes.js";
+import meetRoutes from "./routes/meetRoutes.js";
+import cors from "cors";
+import databaseConnect from "./config/db.js"; 
 // const cookieParser = require("cookie-parser");
+dotenv.config();
 
 
 const PORT = process.env.PORT || 5000;
@@ -21,6 +25,7 @@ app.listen(PORT, () => {
 
 //Feature 1: User Registration and registration
 app.use("/api/auth", authRoutes);
+app.use("/api/schedule",meetRoutes);
 
 
 app.get("/", (req, res) => {
@@ -29,3 +34,8 @@ app.get("/", (req, res) => {
     message: "Your server is up and running....",
     });
   });
+
+
+
+
+

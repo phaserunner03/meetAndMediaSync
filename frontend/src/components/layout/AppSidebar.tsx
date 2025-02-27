@@ -7,8 +7,8 @@ import {
   Calendar,
   LogOut,
   Menu,
-  BicepsFlexed,
-  X,
+  Settings,
+  X
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
 import { doSignOut } from "../../firebase/auth";
@@ -21,9 +21,9 @@ const Sidebar = () => {
 
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
-    { title: "Journal", url: "/dashboard/journal", icon: Inbox },
-    { title: "Meditation", url: "/dashboard/meditation", icon: Calendar },
-    { title: "Yoga", url: "/dashboard/yoga/", icon:BicepsFlexed  },
+    { title: "Meeting Type", url: "/dashboard/journal", icon: Inbox },
+    { title: "Scheduled Meeting", url: "/dashboard/meditation", icon: Calendar },
+    { title: "Settings", url: "/dashboard/yoga/", icon: Settings },
   ];
 
   return (

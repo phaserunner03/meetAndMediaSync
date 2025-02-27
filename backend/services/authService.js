@@ -1,46 +1,60 @@
-const admin = require('./firebaseAdmin');
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = process.env.SECRET_KEY;
+import { google } from "googleapis";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js"; // MongoDB User model
+import dotenv from "dotenv";
 
-async function signup() {
-    try {
+dotenv.config();
 
-        console.log("Sign Up")
-    }
-    catch (err) {
-        console.error("Error in signup", err)
-    }
-}
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
 
-async function login() {
-    try {
-        console.log("Login")
-    }
-    catch (err) {
-        console.error("Error in login", err)
-    }
-}
+// Generate Google Auth URL
+export const getGoogleAuthURL = () => {
+  const scopes = ["https://www.googleapis.com/auth/calendar"];
+  return oauth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: ["email", "profile", ...scopes],
+    prompt: "consent",
+  });
+};
 
-async function signInWithGoogle(idToken) {
-    try {
-        
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const { uid, email, name, picture } = decodedToken;
-        let user = await User.findOne({ uid });
+// Handle Google Callback
+export const googleAuthCallback = async (code) => {
+  const { tokens } = await oauth2Client.getToken(code);
+  
+  oauth2Client.setCredentials(tokens);
+  // Get user info
+  const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+  const {data} = await oauth2.userinfo.get();
+  // Check if user exists in DB
+  let user = await User.findOne({ email: data.email });
+  if (!user) {
+    user = new User({
+      name: data.name,
+      email: data.email,
+      picture: data.picture,
+      googleId: data.id,
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token,
+    });
+  } else {
+    user.accessToken = tokens.access_token;
+    user.refreshToken = tokens.refresh_token;
+  }
+  await user.save();
 
-        if (!user) {
-            user = new User({ uid, displayName: name, email, photoURL: picture });
-            await user.save();
-        }
-        const token = jwt.sign({ uid, email }, SECRET_KEY, { expiresIn: "7d" });
+  // Generate JWT Token
+  const jwtToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  console.log(jwtToken);
+  return { user, jwtToken };
+};
 
-        return { success: true, token, user };
-    }
-    catch (err) {
-        console.error("Error verifying token:", err);
-        throw new Error("Unauthorized");
-    }
-}
-
-module.exports = { signup, login, signInWithGoogle };
+// Refresh Access Token
+export const refreshAccessToken = async (refreshToken) => {
+  oauth2Client.setCredentials({ refresh_token: refreshToken });
+  const { credentials } = await oauth2Client.refreshAccessToken();
+  return credentials.access_token;
+};

@@ -1,39 +1,26 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const authService = require('../services/authService');
+import { getGoogleAuthURL, googleAuthCallback, refreshAccessToken } from "../services/authService.js";
 
-async function signup(req, res) {
-    try {
-        const result = await authService.signup();
-        res.json({
-            message: "User Registration"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-}
-async function login(req, res) {
-    try {
-        const result = await authService.login();
-        res.json({
-            message: "User Login"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-}
-async function signInWithGoogle(req, res) {
-    const {idToken} = req.body;
-    
-    if (!idToken) {
-      return res.status(400).json({ success: false, message: "ID token is required" });
-    }
-  
-    try {
-      const result = await authService.signInWithGoogle(idToken);
-      res.json(result);
-    } catch (error) {
-      res.status(401).json({ success: false, message: error.message });
-    }
-}
-module.exports = { signup, login, signInWithGoogle };
+export const googleAuth = (req, res) => {
+  res.redirect(getGoogleAuthURL());
+};
+
+export const googleCallback = async (req, res) => {
+  try {
+    const { code } = req.query;
+    const { user, jwtToken } = await googleAuthCallback(code);
+
+    res.json({ user, jwtToken });
+  } catch (error) {
+    res.status(500).json({ error: "Authentication failed" });
+  }
+};
+
+export const refreshToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    const newAccessToken = await refreshAccessToken(refreshToken);
+    res.json({ accessToken: newAccessToken });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to refresh token" });
+  }
+};

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { doSignInWithGoogle } from "../../firebase/auth";
+// import { doSignInWithGoogle } from "../../firebase/auth";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { FcGoogle } from "react-icons/fc";
@@ -13,23 +13,16 @@ const Login: React.FC = () => {
 
   const handleClick = async () => {
     try {
-      setIsSigningIn(true);
-      const result = await doSignInWithGoogle();
-      const idToken = await result.user.getIdToken();
-      console.log(idToken); // Get Firebase ID Token
-      localStorage.setItem("idToken", idToken);
-      // Send ID Token to backend
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/google",
-        { idToken }, // Send ID Token
+      const response = await axios.get(
+        "http://localhost:8000/api/auth/google", // Send ID Token
         {
           headers: { "Content-Type": "application/json" },
         }
       );
 
       // Store JWT token from backend in localStorage
-      const { token, user } = response.data;
-      console.log(token, user);
+      const { token } = response.data;
+      console.log(token);
       localStorage.setItem("authToken", token);
       localStorage.setItem("user", JSON.stringify(user));
 

@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 // const cookieParser = require("cookie-parser");
-// const meetingRoutes = require("./routes/meetingRoutes");
+const meetingRoutes = require("./routes/meetingRoutes");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -22,7 +22,8 @@ app.listen(PORT, () => {
 //Feature 1: User Registration and registration
 app.use("/api/auth", authRoutes);
 //Feature 2: Schedule an meeting and all details
-// app.use("/api/meetings", meetingRoutes);
+app.use("/api/meetings", meetingRoutes);
+
 
 
 

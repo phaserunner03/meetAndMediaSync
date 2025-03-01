@@ -5,6 +5,9 @@ const authMiddleware=require('../middleware/authMiddleware');
 
 const meetingController = require("../controllers/meetingController");
 
+router.post("/schedule",authMiddleware, meetingController.scheduleMeeting);
+router.get("/all",authMiddleware,meetingController.getAllMeetings);
+router.get("/our",authMiddleware,meetingController.getOurMeetings);
 router.post("/schedule-group",authMiddleware.authMiddleware, authMiddleware.restrictToAdmin,meetingController.scheduleMeeting);
 router.post("/schedule",authMiddleware.authMiddleware,meetingController.scheduleMeeting);
 

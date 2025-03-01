@@ -19,7 +19,15 @@ catch(err){
 
 const getAllMeetings = async (req, res) => {
   try {
-    const result = await meetingService.getAllMeetings();
+    const result = await meetingService.getAllMeetings(req.user);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const getOurMeetings = async (req, res) => {
+  try {
+    const result = await meetingService.getOurMeetings(req.user);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -75,4 +83,5 @@ catch(err){
 }
 }
 
-module.exports = { scheduleMeeting, getAllMeetings,test};
+
+module.exports = { scheduleMeeting, getAllMeetings,getOurMeetings,test};

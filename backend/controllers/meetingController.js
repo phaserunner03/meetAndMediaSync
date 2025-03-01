@@ -1,20 +1,11 @@
 const meetingService = require('../services/meetingService');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { google } = require('googleapis');
 
 
 const scheduleMeeting = async (req, res) => {
-//   try {
-//     const { accessToken, eventData } = req.body; // Get token from frontend
-//     if (!accessToken) {
-//         return res.status(401).json({ message: 'Unauthorized: No access token provided' });
-//     }
 
-//     const event = await createEvent(accessToken, eventData);
-//     res.status(200).json(event);
-// } catch (error) {
-//     res.status(500).json({ message: error.message });
-// }
 try{
   const {user} = req;
   const {title,location,description,participants,startTime,endTime} = req.body;
@@ -34,17 +25,54 @@ const getAllMeetings = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+async function authorize(payload) {
+    
+  let client = google.auth.fromJSON(payload);
+  if (client) return client;
+  
+}
+
 const test = async (req,res)=>{
   try{
-    const token = req.header('authToken');
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await User.findOne({googleId:decoded.uid});
-    console.log(user)
-    res.status(200).json({message:"Token verified"});
-  }
-  catch(err){
 
-  }
+    
+    const refreshToken = "1//0gyqD_rNDZbWGCgYIARAAGBASNwF-L9IrmCxmPuKYJsyy5ovaGyJQCk66iU3bV7S0nv1mp5Nyfl8F0HeRxbsRHsOQnj4Prt6MOh8";
+    const payload = {
+      type: 'authorized_user',
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      refresh_token: refreshToken,
+    }
+  
+  
+      const auth = await authorize(payload);
+      const calendar = google.calendar({ version: 'v3', auth });
+  
+    
+    
+    const response = await calendar.freebusy.query({
+      requestBody: {
+          timeMin: "2025-03-01T12:01:00Z",
+          timeMax: "2025-03-01T14:30:00Z",
+          timeZone: "UTC",
+          items: [{ id: "primary" }] // Checking primary calendar
+      },
+  });
+  
+
+  const busySlots = response.data.calendars.primary.busy;
+  console.log(busySlots);
+  
+  // If there are any busy slots, return false (not available)
+  return res.status(200).json({ success: true, available: !busySlots.length });
+    
+
+
+}
+catch(err){
+    return { success: false, message: 'Error in checking user availability' };
+}
 }
 
 module.exports = { scheduleMeeting, getAllMeetings,test};

@@ -2,11 +2,19 @@ const Meeting = require('../models/Meeting');
 const MeetingDetails = require('../models/MeetingDetails');
 const { createEvent } = require('../utils/googleCalendar');
 const { v4: uuid } = require('uuid');
+const validateMeetingDetails = require('../utils/meetingValidation');
 
 const scheduleMeeting = async ( user, title,location ,description, participants, startTime, endTime ) => {
     try {
-        // Create Google Calendar Event with Google Meet link
-        
+        const validation = await validateMeetingDetails(user, participants, startTime, endTime);
+        if (!validation.success) {
+            return { success: false, message: validation.message }; 
+        }
+        const isAvailable = await checkUserAvailability(user.refreshToken, startTime, endTime);
+        if (!isAvailable) {
+            return { success: false, message: 'User is not available at the specified time' };
+        }
+
         const event = {
             'summary': title,
             'location': location,

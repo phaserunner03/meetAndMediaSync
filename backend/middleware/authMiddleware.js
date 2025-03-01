@@ -5,8 +5,15 @@ const authMiddleware = async (req, res, next) => {
   try {
 
     const token = req.header('authToken');
+    if(!token){
+      return res.status(401).json({ message: 'Unauthorized'} );
+    }
+
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const user = await User.findOne({ googleId: decoded.uid });
+    if (!user) {
+      return res.status(401).json({ message: 'User not found'});
+    }
     req.user = user;
     req.token = token;
     next();
@@ -15,4 +22,18 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+const restrictToAdmin = (req,res,next)=>{
+  try{
+  if(req.user.role!=='admin'){
+    return res.status(403).json({message:'Access denied: Admins only'});
+  }
+  next();
+}
+catch(err){
+  res.status(500).json({message:err.message});
+
+}
+}
+
+
+module.exports = {authMiddleware, restrictToAdmin};

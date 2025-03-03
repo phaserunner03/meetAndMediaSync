@@ -82,7 +82,7 @@ async function checkUserAvaibility  (refreshToken, startTime, endTime)  {
         requestBody: {
             timeMin: startTime,
             timeMax: endTime,
-            timeZone: "UTC",
+            timeZone: "Asia/Kolkata",
             items: [{ id: "primary" }] 
         },
     }

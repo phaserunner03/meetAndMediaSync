@@ -107,11 +107,11 @@ const scheduleMeeting = async ( user, title, location, description, participants
             'description': description,
             'start': {
                 'dateTime': startTime,
-                'timeZone': 'UTC',
+                'timeZone': 'Asia/Kolkata',
             },
             'end': {
                 'dateTime': endTime,
-                'timeZone': 'UTC',
+                'timeZone': 'Asia/Kolkata',
             },
             colorId: 1,
             conferenceData: {

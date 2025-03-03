@@ -28,15 +28,12 @@ catch(err){
 
 const getAllMeetings = async (req, res) => {
   try {
-    const result = await meetingService.getAllMeetings(req.user);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-const getOurMeetings = async (req, res) => {
-  try {
-    const result = await meetingService.getOurMeetings(req.user);
+    const { year, month } = req.query;
+
+        if (!year || !month) {
+            return res.status(400).json({ success: false, message: "Year and month are required" });
+        }
+    const result = await meetingService.getAllMeetings(req.user,parseInt(year), parseInt(month));
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -55,5 +52,4 @@ const test = async (req,res)=>{
   }
 }
 
-
-module.exports = { scheduleMeeting, getAllMeetings,getOurMeetings,test};
+module.exports = { scheduleMeeting, getAllMeetings,test};

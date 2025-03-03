@@ -29,7 +29,7 @@ async function createEvent(refreshToken, eventData) {
 /**
  * List all Google Calendar events for the next year.
  */
-async function listEvents(refreshToken) {
+async function listEvents(refreshToken, year, month) {
     try {
         const payload = {
             type: 'authorized_user',
@@ -41,31 +41,31 @@ async function listEvents(refreshToken) {
         const auth = await authorize(payload);
         const calendar = google.calendar({ version: 'v3', auth });
 
-        const now = new Date();
-        const oneYearLater = new Date();
-        oneYearLater.setFullYear(now.getFullYear() + 1);
+        // Define the start and end of the given month in IST (Asia/Kolkata)
+        const timeZone = 'Asia/Kolkata';
+
+        const timeMin = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
+        timeMin.setMinutes(timeMin.getMinutes() + 330); // Convert UTC to IST
+
+        const timeMax = new Date(Date.UTC(year, month, 1, 0, 0, 0));
+        timeMax.setMinutes(timeMax.getMinutes() + 330); // Convert UTC to IST
 
         const res = await calendar.events.list({
             calendarId: 'primary',
-            timeMin: now.toISOString(),
-            timeMax: oneYearLater.toISOString(),
-            maxResults: 2500, // Maximum allowed by Google Calendar API
+            timeMin: timeMin.toISOString(),
+            timeMax: timeMax.toISOString(),
+            maxResults: 100, // Adjust if needed
             singleEvents: true,
             orderBy: 'startTime',
+            timeZone,
         });
 
-        const events = res.data.items;
-        if (!events || events.length === 0) {
-            console.log('No upcoming events found.');
-            return [];
-        }
-
-        console.log(`Total ${events.length} events found for the next year.`);
-        return events;
+        return res.data.items || [];
     } catch (error) {
         console.error('Error fetching events:', error);
         throw new Error('Failed to retrieve Google Calendar events');
     }
 }
+
 
 module.exports = { createEvent, listEvents };

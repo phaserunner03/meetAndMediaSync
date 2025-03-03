@@ -41,6 +41,7 @@ async function processGoogleAuth(code) {
                 displayName: data.name,
                 email: data.email,
                 photoURL: data.picture,
+                role: "user",
                 accessToken: tokens.access_token,
                 refreshToken: tokens.refresh_token,
             });

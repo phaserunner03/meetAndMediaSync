@@ -66,6 +66,31 @@ async function listEvents(refreshToken, year, month) {
         throw new Error('Failed to retrieve Google Calendar events');
     }
 }
+async function checkUserAvaibility  (refreshToken, startTime, endTime)  {
+
+    const payload = {
+        type: 'authorized_user',
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        refresh_token: refreshToken,
+      }
+    
+      const auth = await authorize(payload);
+      const calendar = google.calendar({ version: 'v3', auth });
+    
+      const response = await calendar.freebusy.query({
+        requestBody: {
+            timeMin: startTime,
+            timeMax: endTime,
+            timeZone: "UTC",
+            items: [{ id: "primary" }] 
+        },
+    }
+    );
+    const busy = response.data.calendars.primary.busy;
+    return busy.length === 0;
+}
+    
 
 
-module.exports = { createEvent, listEvents };
+module.exports = { createEvent, checkUserAvaibility,listEvents };

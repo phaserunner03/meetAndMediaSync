@@ -14,32 +14,15 @@ const Login: React.FC = () => {
   const handleClick = async () => {
     try {
       setIsSigningIn(true);
-      const result = await doSignInWithGoogle();
-      const idToken = await result.user.getIdToken(); // Get Firebase ID Token
-
-      // Send ID Token to backend
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/google",
-        { idToken }, // Send ID Token
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      // Store JWT token from backend in localStorage
-      const { token, user } = response.data;
-      console.log(token, user);
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      // Navigate to dashboard
-      navigate("/dashboard/home");
+      // Redirect user to the backend authentication route
+      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
     } catch (error: any) {
       setErrorMessage(error.response?.data?.error || "Authentication failed");
     } finally {
       setIsSigningIn(false);
     }
   };
+  
 
   return (
     <div className="flex h-screen">

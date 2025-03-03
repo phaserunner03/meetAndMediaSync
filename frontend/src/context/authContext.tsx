@@ -1,16 +1,26 @@
 import React, { useContext, useEffect, useState, createContext, ReactNode } from "react";
-import { auth } from "../firebase/firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
+import axiosInstance from "../utils/axiosConfig"; // Import axios instance
 
-const AuthContext = createContext<{
+interface AuthContextType {
     currentUser: User | null;
     userLoggedIn: boolean;
     loading: boolean;
-} | undefined>(undefined);
+    logout: () => void;
+}
+
+interface User {
+    googleId: string;
+    displayName: string;
+    email: string;
+    photoURL: string;
+    role: string;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
     const context = useContext(AuthContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;
@@ -22,28 +32,35 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setCurrentUser(user);
+        const fetchUser = async () => {
+            try {
+                const response = await axiosInstance.get("/api/auth/user"); 
+                console.log(response.data.user);// Uses axiosConfig
+                setCurrentUser(response.data.user);
                 setUserLoggedIn(true);
-            } else {
+            } catch (error) {
                 setCurrentUser(null);
                 setUserLoggedIn(false);
             }
             setLoading(false);
-        });
-        return () => unsubscribe();
+        };
+
+        fetchUser();
     }, []);
 
-    const value = {
-        currentUser,
-        userLoggedIn,
-        loading,
+    const logout = async () => {
+        try {
+            await axiosInstance.post("/api/auth/logout"); // Uses axiosConfig
+            setCurrentUser(null);
+            setUserLoggedIn(false);
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
     };
 
-    return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
-    );
+    const value = React.useMemo(() => ({ currentUser, userLoggedIn, loading, logout }), [currentUser, userLoggedIn, loading, logout]);
+
+    return <AuthContext.Provider value={value}>{
+                !loading && children}
+            </AuthContext.Provider>;
 };

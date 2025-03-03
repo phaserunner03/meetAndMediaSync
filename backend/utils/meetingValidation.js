@@ -17,7 +17,7 @@ const validateMeetingDetails = async (user, participants, startTime, endTime) =>
         return { success: false, message: 'At least one participant is required' };
     }
 
-    if(participants.length>=2 && user.role!=='admin'){
+    if(participants.length>=2 && user.role!=='ADMIN'){
         return { success: false, message: 'You can only schedule one-to-one meetings' };
 
     }

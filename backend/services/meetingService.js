@@ -85,7 +85,7 @@
 
 const Meeting = require('../models/Meeting');
 const MeetingDetails = require('../models/MeetingDetails');
-const { createEvent, listEvents } = require('../utils/googleCalendar');
+const { createEvent, listEvents,checkUserAvaibility } = require('../utils/googleCalendar');
 const { v4: uuid } = require('uuid');
 const validateMeetingDetails = require('../utils/meetingValidation');
 
@@ -96,7 +96,7 @@ const scheduleMeeting = async ( user, title, location, description, participants
         if (!validation.success) {
             return { success: false, message: validation.message }; 
         }
-        const isAvailable = await checkUserAvailability(user.refreshToken, startTime, endTime);
+        const isAvailable = await checkUserAvaibility(user.refreshToken, startTime, endTime);
         if (!isAvailable) {
             return { success: false, message: 'User is not available at the specified time' };
         }

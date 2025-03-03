@@ -17,7 +17,7 @@ function getGoogleAuthURL() {
         scope: [
             "profile",
             "email",
-            "https://www.googleapis.com/auth/calendar", // Allows creating/editing ev Allows reading events
+            "https://www.googleapis.com/auth/calendar", // Allows creating/editing events, Allows reading events
         ],
     });
 }
@@ -65,4 +65,24 @@ async function processGoogleAuth(code) {
     }
 }
 
-module.exports = { getGoogleAuthURL, processGoogleAuth };
+async function getAuthenticatedUser(userId) {
+    try {
+        const user = await User.findOne({ googleId: userId }).select("-refreshToken");
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        return {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            role: user.role
+        };
+    } catch (err) {
+        console.error("Error fetching authenticated user:", err);
+        throw new Error("Failed to fetch user data");
+    }
+}
+
+module.exports = { getGoogleAuthURL, processGoogleAuth, getAuthenticatedUser };

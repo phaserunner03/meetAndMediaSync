@@ -108,7 +108,7 @@ async function updateEvent(refreshToken, eventId, updatedEventData) {
         });
 
         if (existingEvent.data.extendedProperties?.private?.source !== "CloudCapture") {
-            throw new Error("You can only update events created by CloudCapture");
+            return {success:false, message:"You can only update events created by CloudCapture"};
         }
 
         // Update the event with new details

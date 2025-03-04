@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from "../../../context/authContext";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { doSignInWithGoogle } from '../../../firebase/auth';
+// import { doSignInWithGoogle } from '../../../firebase/auth';
 
 const HeroText = () => {
     const { userLoggedIn } = useAuth();
@@ -20,7 +20,7 @@ const HeroText = () => {
                     </p>
                     {!userLoggedIn && (
                         <div className="mt-6 flex gap-4">
-                                <button className="dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 px-6 py-3 rounded-full text-lg font-semibold" onClick={doSignInWithGoogle}>
+                                <button className="dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 px-6 py-3 rounded-full text-lg font-semibold">
                                     Login 
                                 </button>
                         </div>

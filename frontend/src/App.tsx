@@ -2,9 +2,12 @@ import Login from "./components/layout/Login";
 import Home from "./components/layout/Home";
 import NotFound from "./components/layout/NotFound";
 import Dashboard from "./components/layout/Dashboard";
-import DashboardHome from "./components/layout/DashboardHome";
+import DashboardHome from "./components/layout/Dashboard/DashboardHome";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PrivateRoute from "./components/layout/PrivateRoute";
+import Avaibility from "./components/layout/Dashboard/Avaibility";
+import Create from "./components/layout/Dashboard/Create";
+import Meetings from "./components/layout/Dashboard/Meetings";
 
 export default function App() {
 
@@ -16,6 +19,10 @@ export default function App() {
       element: <PrivateRoute Component={Dashboard} />,
       children: [
         { path: "home", element: <DashboardHome /> },
+        { path: "meetings", element: <Meetings /> },
+        { path: "create", element: <Create /> },
+        { path: "avaibility", element: <Avaibility /> },
+
         
       ],
     },

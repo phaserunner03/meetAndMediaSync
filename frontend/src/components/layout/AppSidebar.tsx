@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Home,
-  LayoutDashboard,
+  
   Inbox,
   Calendar,
   LogOut,
   Menu,
-  BicepsFlexed,
-  X,
+  CalendarPlus2,
+  X
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
-import { doSignOut } from "../../firebase/auth";
+// import { doSignOut } from "../../firebase/auth";
 
 const Sidebar = () => {
   const { currentUser } = useAuth();
@@ -21,9 +21,10 @@ const Sidebar = () => {
 
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
-    { title: "Journal", url: "/dashboard/journal", icon: Inbox },
-    { title: "Meditation", url: "/dashboard/meditation", icon: Calendar },
-    { title: "Yoga", url: "/dashboard/yoga/", icon:BicepsFlexed  },
+    { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
+    { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
+    { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
+    
   ];
 
   return (
@@ -92,7 +93,7 @@ const Sidebar = () => {
             {currentUser && (
               <li>
                 <button
-                  onClick={doSignOut}
+                  // onClick={doSignOut}
                   className="w-full flex items-center p-2 rounded-lg transition-all hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800"
                 >
                   <LogOut className="w-5 h-5 text-red-500 dark:text-red-400" />

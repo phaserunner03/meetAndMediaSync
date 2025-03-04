@@ -4,7 +4,10 @@ const User = require('../models/User');
 const authMiddleware = async (req, res, next) => {
   try {
 
-    const token = req.header('authToken');
+    let token = req.header('authToken');
+    if (!token) {
+      token = req.cookies?.token; // Read from HTTP-only cookie
+    }
     if(!token){
       return res.status(401).json({ message: 'Unauthorized'} );
     }

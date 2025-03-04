@@ -5,6 +5,7 @@ async function authorize(payload) {
     if (client) return client;
 }
 
+// Create a new event
 async function createEvent(refreshToken, eventData) {
     const payload = {
         type: 'authorized_user',
@@ -26,9 +27,7 @@ async function createEvent(refreshToken, eventData) {
     return response.data;
 }
 
-/**
- * List all Google Calendar events for the next year.
- */
+// List events for a given month
 async function listEvents(refreshToken, year, month) {
     try {
         const payload = {
@@ -41,9 +40,7 @@ async function listEvents(refreshToken, year, month) {
         const auth = await authorize(payload);
         const calendar = google.calendar({ version: 'v3', auth });
 
-        // Define the start and end of the given month in IST (Asia/Kolkata)
         const timeZone = 'Asia/Kolkata';
-
         const timeMin = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
         timeMin.setMinutes(timeMin.getMinutes() + 330); // Convert UTC to IST
 
@@ -54,7 +51,7 @@ async function listEvents(refreshToken, year, month) {
             calendarId: 'primary',
             timeMin: timeMin.toISOString(),
             timeMax: timeMax.toISOString(),
-            maxResults: 100, // Adjust if needed
+            maxResults: 100,
             singleEvents: true,
             orderBy: 'startTime',
             timeZone,
@@ -66,31 +63,101 @@ async function listEvents(refreshToken, year, month) {
         throw new Error('Failed to retrieve Google Calendar events');
     }
 }
-async function checkUserAvaibility  (refreshToken, startTime, endTime)  {
 
+// Check user availability
+async function checkUserAvailability(refreshToken, startTime, endTime) {
     const payload = {
         type: 'authorized_user',
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
         refresh_token: refreshToken,
-      }
-    
-      const auth = await authorize(payload);
-      const calendar = google.calendar({ version: 'v3', auth });
-    
-      const response = await calendar.freebusy.query({
+    };
+
+    const auth = await authorize(payload);
+    const calendar = google.calendar({ version: 'v3', auth });
+
+    const response = await calendar.freebusy.query({
         requestBody: {
             timeMin: startTime,
             timeMax: endTime,
-            timeZone: "Asia/Kolkata",
-            items: [{ id: "primary" }] 
+            timeZone: 'Asia/Kolkata',
+            items: [{ id: 'primary' }],
         },
-    }
-    );
+    });
+
     const busy = response.data.calendars.primary.busy;
     return busy.length === 0;
 }
-    
 
+async function updateEvent(refreshToken, eventId, updatedEventData) {
+    try {
+        const payload = {
+            type: 'authorized_user',
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            refresh_token: refreshToken,
+        };
 
-module.exports = { createEvent, checkUserAvaibility,listEvents };
+        const auth = await authorize(payload);
+        const calendar = google.calendar({ version: 'v3', auth });
+
+        // Fetch the event to verify it belongs to CloudCapture
+        const existingEvent = await calendar.events.get({
+            calendarId: "primary",
+            eventId: eventId,
+        });
+
+        if (existingEvent.data.extendedProperties?.private?.source !== "CloudCapture") {
+            throw new Error("You can only update events created by CloudCapture");
+        }
+
+        // Update the event with new details
+        const response = await calendar.events.update({
+            calendarId: "primary",
+            eventId: eventId,
+            resource: { ...existingEvent.data, ...updatedEventData },
+            conferenceDataVersion: 1,
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error("Error updating event:", error);
+        throw new Error("Failed to update the event");
+    }
+}
+
+async function deleteEvent(refreshToken, eventId) {
+    try {
+        const payload = {
+            type: 'authorized_user',
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            refresh_token: refreshToken,
+        };
+
+        const auth = await authorize(payload);
+        const calendar = google.calendar({ version: 'v3', auth });
+
+        // Fetch the event to verify it belongs to CloudCapture
+        const existingEvent = await calendar.events.get({
+            calendarId: "primary",
+            eventId: eventId,
+        });
+
+        if (existingEvent.data.extendedProperties?.private?.source !== "CloudCapture") {
+            return {success:false, message:"You can only delete events created by CloudCapture"};
+        }
+
+        await calendar.events.delete({
+            calendarId: "primary",
+            eventId: eventId,
+        });
+
+        return { success: true, message: "Event deleted successfully" };
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        throw new Error("Failed to delete the event");
+    }
+}
+
+module.exports = { createEvent, checkUserAvailability, listEvents, updateEvent, deleteEvent };

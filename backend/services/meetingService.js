@@ -85,7 +85,7 @@
 
 const Meeting = require('../models/Meeting');
 const MeetingDetails = require('../models/MeetingDetails');
-const { createEvent, listEvents,checkUserAvaibility } = require('../utils/googleCalendar');
+const { createEvent, listEvents, checkUserAvailability, updateEvent, deleteEvent } = require('../utils/googleCalendar');
 const { v4: uuid } = require('uuid');
 const validateMeetingDetails = require('../utils/meetingValidation');
 
@@ -96,7 +96,7 @@ const scheduleMeeting = async ( user, title, location, description, participants
         if (!validation.success) {
             return { success: false, message: validation.message }; 
         }
-        const isAvailable = await checkUserAvaibility(user.refreshToken, startTime, endTime);
+        const isAvailable = await checkUserAvailability(user.refreshToken, startTime, endTime);
         if (!isAvailable) {
             return { success: false, message: 'User is not available at the specified time' };
         }
@@ -177,6 +177,7 @@ const getAllMeetings = async (user,year, month) => {
 
         const allMeetings = googleMeetings.map((event)=>
         ({
+            id: event.id,
             title: event.summary || "No Title",
             description: event.description || "No Description",
             meetLink: event.hangoutLink || "No Link",
@@ -201,5 +202,26 @@ const getAllMeetings = async (user,year, month) => {
     }
 };
 
+// Update a meeting
+const modifyMeeting = async (user, eventId, updatedData) => {
+    try {
+        const updatedEvent = await updateEvent(user.refreshToken, eventId, updatedData);
+        return { success: true, message: 'Meeting updated successfully', updatedEvent };
+    } catch (error) {
+        console.error('Error updating meeting:', error);
+        throw new Error('Failed to update meeting');
+    }
+};
 
-module.exports = { scheduleMeeting, getAllMeetings };
+// Delete a meeting
+const removeMeeting = async (user, eventId) => {
+    try {
+        const result = await deleteEvent(user.refreshToken, eventId);
+        return result;
+    } catch (error) {
+        console.error('Error deleting meeting:', error);
+        throw new Error('Failed to delete meeting');
+    }
+};
+
+module.exports = { scheduleMeeting, getAllMeetings, modifyMeeting, removeMeeting };

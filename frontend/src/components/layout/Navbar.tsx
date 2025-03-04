@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
-import { doSignInWithGoogle, doSignOut } from "../../firebase/auth";
+// import { doSignInWithGoogle, doSignOut } from "../../firebase/auth";
+
 import { handleScrollToSection } from "./handleScrollToSection";
 
 const Navbar = () => {
   
-  const { userLoggedIn } = useAuth();
+  const { userLoggedIn,logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -17,6 +18,15 @@ const handleLogin = async () => {
       navigate("/login");
   } catch (error) {
       console.error("Login Error:", error);
+  }
+};
+
+const handleLogOut = async () => {
+  try {
+    await logout();
+    navigate("/login"); // Redirect user to login page after logout
+  } catch (error) {
+    console.error("Logout Error:", error);
   }
 };
 
@@ -52,7 +62,7 @@ const handleLogin = async () => {
           </Link>}
           {userLoggedIn ? (
             <button
-              onClick={doSignOut}
+              onClick={handleLogOut}
               className="text-white bg-red-600 hover:bg-red-700 font-semibold rounded-full px-6 py-3 transition-all"
             >
               Logout

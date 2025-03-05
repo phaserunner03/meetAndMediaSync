@@ -1,43 +1,61 @@
 import React from "react";
-import SignupForm from "./signupForm";
+import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 import logo from "../../assets/image.png"
+import OAuthButton from "../ui/oauthButton";
 
-const SignUp: React.FC = () => {
+
+const Login: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
-      <nav className="flex justify-between items-center p-4 shadow-md">
-        <div className="text-xl font-bold flex items-center">
-          <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
-          <span className="text-blue-600">CloudCapture</span>
+      <nav className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center space-x-2">
+          <img src={logo} alt="CloudCapture" className="h-8" />
+          <span className="text-xl font-bold text-blue-600">CloudCapture</span>
         </div>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          Log In
-        </button>
+        <Link to="/signup">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            Getting started
+          </button>
+        </Link>
       </nav>
 
-      {/* Content */}
-      <div className="flex flex-col md:flex-row flex-1">
-        {/* Left Section */}
-        <div className="flex-1 bg-gray-100 p-10 flex flex-col justify-center">
-          <h1 className="text-3xl font-bold text-gray-800">Create your free account</h1>
-          <p className="text-gray-600 mt-2">
-            Meet, capture, and store – all in one place with CloudCapture.
-          </p>
+      {/* Login Form */}
+      <div className="flex flex-1 justify-center items-center p-6">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+          <h2 className="text-2xl font-bold text-center">Log in to your account</h2>
 
-          <div className="mt-6 space-y-3 text-gray-700">
-            <p>✅ Easy meeting scheduling – Organizers can set up and manage meetings.</p>
-            <p>✅ Media capture – Screenshots and recordings saved instantly.</p>
-            <p>✅ Cloud storage integration – Files stored in Google Drive & GCP.</p>
-            <p>✅ Structured media storage – Media are organized automatically.</p>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="mt-4 w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <button className="mt-4 w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+            Log In
+          </button>
+
+          <div className="my-4 flex items-center">
+            <hr className="flex-grow border-gray-300" />
+            <span className="px-2 text-gray-500">OR</span>
+            <hr className="flex-grow border-gray-300" />
           </div>
-        </div>
 
-        {/* Right Section (Signup Form) */}
-        <SignupForm />
+          {/* <button className="w-full flex items-center justify-center gap-2 bg-white border p-3 rounded-lg hover:shadow">
+            <FcGoogle size={20} /> Continue with Google
+          </button> */}
+            <OAuthButton />
+
+          <p className="text-center mt-4">
+            Don’t have an account?{" "}
+            <Link to="/signup" className="text-blue-600 hover:underline">
+              Sign Up Here
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

@@ -8,12 +8,13 @@ import PrivateRoute from "./components/layout/PrivateRoute";
 import Avaibility from "./components/layout/Dashboard/Avaibility";
 import Create from "./components/layout/Dashboard/Create";
 import Meetings from "./components/layout/Dashboard/Meetings";
+import Signup from "./components/layout/Signup";
 
 export default function App() {
-
   const router = createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/login", element: <Login /> },
+    { path: "/signup", element: <Signup /> },
     {
       path: "/dashboard",
       element: <PrivateRoute Component={Dashboard} />,
@@ -22,17 +23,13 @@ export default function App() {
         { path: "meetings", element: <Meetings /> },
         { path: "create", element: <Create /> },
         { path: "avaibility", element: <Avaibility /> },
-
-        
       ],
     },
     { path: "*", element: <NotFound /> },
   ]);
   return (
-
     <div className="w-full h-screen flex flex-col">
       <RouterProvider router={router} />
     </div>
-    
-  )
+  );
 }

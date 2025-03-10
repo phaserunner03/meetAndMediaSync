@@ -30,6 +30,7 @@ const updateMeeting = async (req, res) => {
         const { user } = req;
         const { eventId } = req.params;
         const updatedData = req.body;
+        console.log(updatedData)
         if (!eventId || !updatedData) {
             return res.status(400).json({ success: false, message: "Event ID and updated data are required" });
         }

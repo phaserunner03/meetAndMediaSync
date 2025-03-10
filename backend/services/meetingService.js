@@ -205,7 +205,12 @@ const getAllMeetings = async (user,year, month) => {
 // Update a meeting
 const modifyMeeting = async (user, eventId, updatedData) => {
     try {
-        const updatedEvent = await updateEvent(user.refreshToken, eventId, updatedData);
+        const formattedData = {
+            ...updatedData,
+            summary:updatedData.title
+        }
+        delete formattedData.title
+        const updatedEvent = await updateEvent(user.refreshToken, eventId, formattedData);
         return { success: true, message: 'Meeting updated successfully', updatedEvent };
     } catch (error) {
         console.error('Error updating meeting:', error);

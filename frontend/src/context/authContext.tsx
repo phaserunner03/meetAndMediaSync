@@ -35,7 +35,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const fetchUser = async () => {
             try {
                 const response = await axiosInstance.get("/api/auth/user"); 
-                console.log(response.data.user);// Uses axiosConfig
                 setCurrentUser(response.data.user);
                 setUserLoggedIn(true);
             } catch (error) {

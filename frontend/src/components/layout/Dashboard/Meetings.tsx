@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from 'axios'
+// import axios from 'axios';
+import axiosInstance from "../../../utils/axiosConfig"; // Import axios instance
+import Cookies from "js-cookie";
 import MeetingFilter from "./MeetingFilter";
 import MeetingCardView from "./MeetingCardView";
-// import Cookies from "js-cookie";
 // import MeetingCalendarView from "./MeetingCalendarView";
 
 const Meetings = () => {
@@ -17,11 +18,13 @@ const Meetings = () => {
 
   const fetchMeetings = async () => {
     try {
-      const res = await  axios.get("http://localhost:8000/api/meetings/all", {
-        params: { month, year }, headers: { authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMDEzMjUyMzYyOTk2NzE3NDMxNTYiLCJlbWFpbCI6ImJoYXZ5YS5zaGFoQHNlYXJjZS5jb20iLCJpYXQiOjE3NDEwMDA1NzEsImV4cCI6MTc0MTYwNTM3MX0.2j1nVx7P9ABU60ndPI0pkIHiWAIsyxTlyi3hWJsgpGg" },
+      // const authToken = Cookies.get("token");
+      // console.log(authToken);
+      const res = await axiosInstance.get("http://localhost:8000/api/meetings/all", {
+        params: { month, year }
       });
     
-    setMeetings(res.data.allMeetings);
+      setMeetings(res.data.allMeetings);
       
     } catch (error) {
       console.error("Error fetching meetings:", error);

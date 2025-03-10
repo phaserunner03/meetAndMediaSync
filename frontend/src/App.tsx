@@ -9,6 +9,7 @@ import Avaibility from "./components/layout/Dashboard/Avaibility";
 import Create from "./components/layout/Dashboard/Create";
 import Meetings from "./components/layout/Dashboard/Meetings";
 import Signup from "./components/layout/Signup";
+import { Toaster } from "./components/ui/sonner";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -30,6 +31,8 @@ export default function App() {
   return (
     <div className="w-full h-screen flex flex-col">
       <RouterProvider router={router} />
+      <Toaster/>
     </div>
+
   );
 }

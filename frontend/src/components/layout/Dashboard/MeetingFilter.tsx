@@ -1,83 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMeetings } from "../../../context/meetingContext";
+import { Input } from "../../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
-import { ToggleGroup, ToggleGroupItem } from "../../ui/toggle-group";
+import { toast } from "sonner"; // ✅ Import ShadCN Sonner
+import { Loader2 } from "lucide-react"; // ✅ Loading icon
 
-interface MeetingFilterProps {
-  view: string;
-  setView: (view: string) => void;
-  setMonth: (month: number) => void;
-  setYear: (year: number) => void;
-}
+const months = [...Array(12)].map((_, i) => ({
+  value: i + 1,
+  label: new Date(2025, i).toLocaleString("default", { month: "short" }),
+}));
 
-const months = [
-  { value: 1, label: "Jan" },
-  { value: 2, label: "Feb" },
-  { value: 3, label: "Mar" },
-  { value: 4, label: "Apr" },
-  { value: 5, label: "May" },
-  { value: 6, label: "Jun" },
-  { value: 7, label: "Jul" },
-  { value: 8, label: "Aug" },
-  { value: 9, label: "Sep" },
-  { value: 10, label: "Oct" },
-  { value: 11, label: "Nov" },
-  { value: 12, label: "Dec" },
-];
+const years = [2023, 2024, 2025];
 
-const MeetingFilter: React.FC<MeetingFilterProps> = ({ view, setView, setMonth, setYear }) => {
+const MeetingFilter: React.FC = () => {
+  const { setSearchQuery, setSelectedDay, setMonth, setYear, month, year } = useMeetings();
+  const [day, setDay] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // ✅ Page-level loader state
+
+  const handleMonthChange = (value: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setMonth(Number(value));
+      toast.success(`📅 Month changed to ${months.find(m => m.value === Number(value))?.label}`);
+      setIsLoading(false);
+    }, 700);
+  };
+
+  const handleYearChange = (value: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setYear(Number(value));
+      toast.success(`📆 Year changed to ${value}`);
+      setIsLoading(false);
+    }, 700);
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = e.target.value;
+    setDay(selectedDate);
+    setSelectedDay(selectedDate || null);
+    toast.success(`📌 Filter applied for ${selectedDate}`);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
-    <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
-      {/* Month & Year Selectors */}
-      <div className="flex gap-4">
-        <Select onValueChange={(value) => setMonth(Number(value))}>
-          <SelectTrigger className="w-[140px] border border-gray-300 rounded-md">
-            <SelectValue placeholder="Select Month" />
-          </SelectTrigger>
-          <SelectContent>
-            {months.map((month) => (
-              <SelectItem key={month.value} value={month.value.toString()}>
-                {month.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="relative">
+      {/* Full-page loader */}
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 z-50">
+          <Loader2 className="w-10 h-10 text-gray-700 animate-spin" />
+        </div>
+      )}
 
-        <Select onValueChange={(value) => setYear(Number(value))}>
-          <SelectTrigger className="w-[140px] border border-gray-300 rounded-md">
-            <SelectValue placeholder="Select Year" />
-          </SelectTrigger>
-          <SelectContent>
-            {[2023, 2024, 2025, 2026].map((y) => (
-              <SelectItem key={y} value={y.toString()}>{y}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      {/* Filter UI */}
+      <div className="flex flex-wrap gap-4 justify-between items-center bg-white p-4 rounded-lg shadow-md">
+        <div className="flex gap-4">
+          <Select onValueChange={handleMonthChange} value={String(month)}>
+            <SelectTrigger className="w-[140px] border border-gray-300 rounded-md">
+              <SelectValue placeholder="Select Month" />
+            </SelectTrigger>
+            <SelectContent>
+              {months.map((m) => (
+                <SelectItem key={m.value} value={String(m.value)}>
+                  {m.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={handleYearChange} value={String(year)}>
+            <SelectTrigger className="w-[140px] border border-gray-300 rounded-md">
+              <SelectValue placeholder="Select Year" />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((y) => (
+                <SelectItem key={y} value={String(y)}>
+                  {y}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <Input placeholder="🔎 Search Meetings..." onChange={handleSearchChange} />
+        <Input type="date" value={day} onChange={handleDateChange} />
       </div>
-
-      {/* View Toggle */}
-      <ToggleGroup
-        type="single"
-        className="rounded-lg border bg-gray-100 p-1 flex"
-        defaultValue={view}
-        onValueChange={(val: string) => val && setView(val)}
-      >
-        <ToggleGroupItem
-          value="card"
-          className={`px-6 py-2 text-sm font-medium rounded-md transition ${
-            view === "card" ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-200"
-          }`}
-        >
-          Card View
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="calendar"
-          className={`px-6 py-2 text-sm font-medium rounded-md transition ${
-            view === "calendar" ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-200"
-          }`}
-        >
-          Calendar View
-        </ToggleGroupItem>
-      </ToggleGroup>
     </div>
   );
 };

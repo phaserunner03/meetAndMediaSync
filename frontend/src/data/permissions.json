@@ -1,0 +1,14 @@
+[
+  "addRole",
+  "addUser",
+  "editRole",
+  "deleteRole",
+  "editUserRole",
+  "deleteUser",
+  "viewUser",
+  "viewMeeting",
+  "groupMeeting",
+  "createMeeting",
+  "editMeeting",
+  "deleteMeeting"
+]

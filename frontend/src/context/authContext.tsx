@@ -13,7 +13,10 @@ interface User {
     displayName: string;
     email: string;
     photoURL: string;
-    role: string;
+    role: {
+        name: string;
+        permissions: string[];
+    };
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

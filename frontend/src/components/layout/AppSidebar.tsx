@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Home,
-  
+  Plus,
   Inbox,
   Calendar,
   LogOut,
@@ -11,20 +11,21 @@ import {
   X
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
-// import { doSignOut } from "../../firebase/auth";
 
 const Sidebar = () => {
   const { currentUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
-
+  const canAddUser = currentUser?.role.permissions.includes("addUser");
+  const canAddRole = currentUser?.role.permissions.includes("addRole");
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
     { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
     { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
-    
+    ...(canAddUser ? [{ title: "Add Users", url: "/dashboard/add-users", icon: Plus }] : []),
+    ...(canAddRole ? [{ title: "Add New Role", url: "/dashboard/add-role", icon: Plus }] : []),
   ];
 
   return (

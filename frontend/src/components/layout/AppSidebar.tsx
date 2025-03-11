@@ -27,7 +27,8 @@ const Sidebar = () => {
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
     { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
     { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
-    
+    ...(canAddUser ? [{ title: "Add Users", url: "/dashboard/add-users", icon: Plus }] : []),
+    ...(canAddRole ? [{ title: "Add New Role", url: "/dashboard/add-role", icon: Plus }] : []),
   ];
   const handleLogOut = async () => {
     try {

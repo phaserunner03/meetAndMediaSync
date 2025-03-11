@@ -3,6 +3,8 @@ import User from "../models/User";
 import Role from "../models/Role";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import { newUserAccessRequestTemplate } from "../utils/emailTemplate";
+
 import mongoose, { Document } from 'mongoose';
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";

@@ -80,12 +80,13 @@ const AddUsers = () => {
     event.preventDefault();
     try {
       
-      const response = await axiosInstance.put('/api/auth/editUserRole', {
+      const res = await axiosInstance.put('/api/auth/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
 
       fetchUsers(); 
+      
     } catch (error) {
       console.error("Error updating user role:", error);
     }

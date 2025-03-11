@@ -4,7 +4,7 @@ import { authMiddleware, restrictTo } from "../middleware/authMiddleware";
 import { AuthenticatedRequest } from "../controllers/authController";
 
 const router = express.Router();
-
+router.post("/notify", (req, res) => authController.notifyAdmin(req, res));
 router.get("/google", authController.redirectToGoogle);
 router.get("/google/callback", authController.handleGoogleCallback);
 router.get("/user", authMiddleware, restrictTo('viewUser'), (req, res) => authController.getUser(req as AuthenticatedRequest, res));

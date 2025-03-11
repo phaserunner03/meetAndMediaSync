@@ -95,8 +95,8 @@ async function handleGoogleCallback(req: Request, res: Response) {
 
 async function notifyAdmin(req: Request, res: Response) {
     try {
-        const { email } = req.body;
-        await authService.notifyAdminToAddUser({ email });
+        const { email,name } = req.body;
+        await authService.notifyAdminToAddUser({ email ,name});
         res.json({ success: true, message: "Admin notified successfully" });
     } catch (err) {
         res.status(500).json({ success: false, message: (err as Error).message });

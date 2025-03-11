@@ -10,14 +10,16 @@ import {
   CalendarPlus2,
   X
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-// import { doSignOut } from "../../firebase/auth";
+
 
 const Sidebar = () => {
-  const { currentUser } = useAuth();
+  const { currentUser,logout  } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
 
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
@@ -26,6 +28,14 @@ const Sidebar = () => {
     { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
     
   ];
+  const handleLogOut = async () => {
+    try {
+      await logout();
+      navigate("/login"); // Redirect user to login page after logout
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  };
 
   return (
     <>
@@ -89,11 +99,11 @@ const Sidebar = () => {
               </li>
             ))}
 
-            {/* Sign Out Button (Styled in Red) */}
+           
             {currentUser && (
               <li>
                 <button
-                  // onClick={doSignOut}
+                  onClick={handleLogOut}
                   className="w-full flex items-center p-2 rounded-lg transition-all hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800"
                 >
                   <LogOut className="w-5 h-5 text-red-500 dark:text-red-400" />

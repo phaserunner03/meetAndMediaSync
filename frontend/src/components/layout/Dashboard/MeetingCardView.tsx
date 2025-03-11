@@ -59,7 +59,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const onSubmit = async (data: any) => {
     if (!editMeetingData) return;
 
-    console.log("Submitting form:", data);
+    
     await editMeeting(editMeetingData.id, {
       title: data.title,
       description: data.description,

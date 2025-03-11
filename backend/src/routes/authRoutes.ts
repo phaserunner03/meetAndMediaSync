@@ -2,7 +2,6 @@ import express from "express";
 import * as authController from "../controllers/authController";
 import { authMiddleware, restrictTo } from "../middleware/authMiddleware";
 import { AuthenticatedRequest } from "../controllers/authController";
-import { Response } from "express-serve-static-core";
 
 const router = express.Router();
 

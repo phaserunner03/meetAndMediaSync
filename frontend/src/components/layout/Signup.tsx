@@ -1,6 +1,7 @@
 import React from "react";
 import SignupForm from "./signupForm";
 import logo from "../../assets/image.png"
+import { Link } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   return (
@@ -11,9 +12,12 @@ const SignUp: React.FC = () => {
           <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
           <span className="text-blue-600">CloudCapture</span>
         </div>
+        <Link to="/login" className="text-blue-600 hover:underline">
         <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Log In
         </button>
+        </Link>
+        
       </nav>
 
       {/* Content */}

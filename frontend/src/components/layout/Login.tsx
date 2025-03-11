@@ -14,7 +14,7 @@ const Login: React.FC = () => {
           <img src={logo} alt="CloudCapture" className="h-8" />
           <span className="text-xl font-bold text-blue-600">CloudCapture</span>
         </div>
-        <Link to="/signup">
+        <Link to="/">
           <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
             Getting started
           </button>

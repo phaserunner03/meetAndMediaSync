@@ -1,9 +1,28 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
+import { refreshToken, isTokenExpired } from "../../utils/auth";
 
 const OAuthButton: React.FC = () => {
-  const handleGoogleSignUp = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+  const handleGoogleSignUp = async () => {
+    const token = document.cookie.split('; ').find(row => row.startsWith('refreshToken='));
+    const tokenValue = token ? token.split('=')[1] : null;
+    console.log(tokenValue);
+    
+    
+    if (tokenValue && !isTokenExpired(tokenValue)) {
+      window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+    } else {
+      try {
+        const newToken = await refreshToken();
+        if (newToken) {
+          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+        } else {
+          window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+        }
+      } catch (error) {
+        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+      }
+    }
   };
 
   return (

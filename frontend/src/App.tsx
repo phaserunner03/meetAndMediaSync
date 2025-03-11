@@ -10,6 +10,8 @@ import Create from "./components/layout/Dashboard/Create";
 import Meetings from "./components/layout/Dashboard/Meetings";
 import Signup from "./components/layout/Signup";
 import { Toaster } from "./components/ui/sonner";
+import AddUsers from "./components/layout/Dashboard/AddUsers";
+import AddNewRole from "./components/layout/Dashboard/AddNewRole";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -24,6 +26,8 @@ export default function App() {
         { path: "meetings", element: <Meetings /> },
         { path: "create", element: <Create /> },
         { path: "avaibility", element: <Avaibility /> },
+        { path: "add-users", element: <AddUsers /> }, 
+        { path: "add-Role",element: <AddNewRole /> },
       ],
     },
     { path: "*", element: <NotFound /> },

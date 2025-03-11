@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Home,
-  
+  Plus,
   Inbox,
   Calendar,
   LogOut,
@@ -20,7 +20,8 @@ const Sidebar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
-
+  const canAddUser = currentUser?.role.permissions.includes("addUser");
+  const canAddRole = currentUser?.role.permissions.includes("addRole");
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },

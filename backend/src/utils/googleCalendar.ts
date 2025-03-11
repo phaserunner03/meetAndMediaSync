@@ -1,23 +1,31 @@
-const { google } = require('googleapis');
+import { google, calendar_v3 } from 'googleapis';
 
-async function authorize(payload) {
-    let client = google.auth.fromJSON(payload);
-    if (client) return client;
+interface Payload {
+    type: string;
+    client_id: string;
+    client_secret: string;
+    refresh_token: string;
 }
 
-// Create a new event
-async function createEvent(refreshToken, eventData) {
-    const payload = {
+async function authorize(payload: Payload) {
+    const { client_id, client_secret, refresh_token } = payload;
+    const client = new google.auth.OAuth2(client_id, client_secret);
+    client.setCredentials({ refresh_token });
+    return client;
+}
+
+export async function createEvent(refreshToken: string, eventData: calendar_v3.Schema$Event) {
+    const payload: Payload = {
         type: 'authorized_user',
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
         refresh_token: refreshToken,
     };
 
     const auth = await authorize(payload);
     const calendar = google.calendar({ version: 'v3', auth });
 
-    const response = await calendar.events.insert({
+    const response = await calendar.events.insert(<calendar_v3.Params$Resource$Events$Insert>{
         calendarId: 'primary',
         resource: eventData,
         conferenceDataVersion: 1,
@@ -27,13 +35,12 @@ async function createEvent(refreshToken, eventData) {
     return response.data;
 }
 
-// List events for a given month
-async function listEvents(refreshToken, year, month) {
+export async function listEvents(refreshToken: string, year: number, month: number) {
     try {
-        const payload = {
+        const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            client_id: process.env.GOOGLE_CLIENT_ID!,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
             refresh_token: refreshToken,
         };
 
@@ -42,10 +49,10 @@ async function listEvents(refreshToken, year, month) {
 
         const timeZone = 'Asia/Kolkata';
         const timeMin = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
-        timeMin.setMinutes(timeMin.getMinutes() + 330); // Convert UTC to IST
+        timeMin.setMinutes(timeMin.getMinutes() + 330);
 
         const timeMax = new Date(Date.UTC(year, month, 1, 0, 0, 0));
-        timeMax.setMinutes(timeMax.getMinutes() + 330); // Convert UTC to IST
+        timeMax.setMinutes(timeMax.getMinutes() + 330);
 
         const res = await calendar.events.list({
             calendarId: 'primary',
@@ -64,12 +71,11 @@ async function listEvents(refreshToken, year, month) {
     }
 }
 
-// Check user availability
-async function checkUserAvailability(refreshToken, startTime, endTime) {
-    const payload = {
+export async function checkUserAvailability(refreshToken: string, startTime: string, endTime: string) {
+    const payload: Payload = {
         type: 'authorized_user',
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
         refresh_token: refreshToken,
     };
 
@@ -85,37 +91,35 @@ async function checkUserAvailability(refreshToken, startTime, endTime) {
         },
     });
 
-    const busy = response.data.calendars.primary.busy;
+    const busy = response.data.calendars?.primary?.busy || [];
     return busy.length === 0;
 }
 
-async function updateEvent(refreshToken, eventId, updatedEventData) {
+export async function updateEvent(refreshToken: string, eventId: string, updatedEventData: calendar_v3.Schema$Event) {
     try {
-        const payload = {
+        const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            client_id: process.env.GOOGLE_CLIENT_ID!,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
             refresh_token: refreshToken,
         };
 
         const auth = await authorize(payload);
         const calendar = google.calendar({ version: 'v3', auth });
 
-        // Fetch the event to verify it belongs to CloudCapture
         const existingEvent = await calendar.events.get({
             calendarId: "primary",
             eventId: eventId,
         });
 
         if (existingEvent.data.extendedProperties?.private?.source !== "CloudCapture") {
-            return {success:false, message:"You can only update events created by CloudCapture"};
+            return { success: false, message: "You can only update events created by CloudCapture" };
         }
 
-        // Update the event with new details
-        const response = await calendar.events.update({
+        const response = await calendar.events.update(<calendar_v3.Params$Resource$Events$Update>{
             calendarId: "primary",
             eventId: eventId,
-            resource: { ...existingEvent.data, ...updatedEventData },
+            requestBody: { ...existingEvent.data, ...updatedEventData },
             conferenceDataVersion: 1,
         });
 
@@ -126,26 +130,25 @@ async function updateEvent(refreshToken, eventId, updatedEventData) {
     }
 }
 
-async function deleteEvent(refreshToken, eventId) {
+export async function deleteEvent(refreshToken: string, eventId: string) {
     try {
-        const payload = {
+        const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            client_id: process.env.GOOGLE_CLIENT_ID!,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
             refresh_token: refreshToken,
         };
 
         const auth = await authorize(payload);
         const calendar = google.calendar({ version: 'v3', auth });
 
-        // Fetch the event to verify it belongs to CloudCapture
         const existingEvent = await calendar.events.get({
             calendarId: "primary",
             eventId: eventId,
         });
 
         if (existingEvent.data.extendedProperties?.private?.source !== "CloudCapture") {
-            return {success:false, message:"You can only delete events created by CloudCapture"};
+            return { success: false, message: "You can only delete events created by CloudCapture" };
         }
 
         await calendar.events.delete({
@@ -159,5 +162,3 @@ async function deleteEvent(refreshToken, eventId) {
         throw new Error("Failed to delete the event");
     }
 }
-
-module.exports = { createEvent, checkUserAvailability, listEvents, updateEvent, deleteEvent };

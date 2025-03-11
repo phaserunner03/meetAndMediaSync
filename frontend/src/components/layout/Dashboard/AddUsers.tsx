@@ -5,6 +5,8 @@ import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/ico
 import axiosInstance from "../../../utils/axiosConfig";
 import {Button} from "../../ui/button";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const AddUsers = () => {
   const { currentUser } = useAuth();
@@ -30,6 +32,7 @@ const AddUsers = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch roles and users from the backend
@@ -38,59 +41,82 @@ const AddUsers = () => {
   }, []);
 
   const fetchRoles = async () => {
-    // Fetch roles from the backend
-    const response = await axiosInstance.get("/api/auth/allRoles");
-    setRoles(response.data.roles);
+    setLoading(true);
+    try {
+      // Fetch roles from the backend
+      const response = await axiosInstance.get("/api/auth/allRoles");
+      setRoles(response.data.roles);
+      console.log(response.data.roles);
+    } catch (error) {
+      toast.error("Error fetching roles");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchUsers = async () => {
-    // Fetch users from the backend
-    const response = await axiosInstance.get("/api/auth/allUsers");
-    setUsers(response.data.users);
+    setLoading(true);
+    try {
+      // Fetch users from the backend
+      const response = await axiosInstance.get("/api/auth/allUsers");
+      setUsers(response.data.users);
+    } catch (error) {
+      toast.error("Error fetching users");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAddUser = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axiosInstance.post("/api/auth/addUser", {
         email,
         role: selectedRole,
       });
-      console.log(`User added: ${response.data}`);
+      toast.success("User added successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
-      console.error("Error adding user:", error);
+      toast.error("Error adding user");
+    } finally {
+      setLoading(false);
+      setOpenAddDialog(false);
     }
-    setOpenAddDialog(false);
   };
 
   const handleEditUserRole = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axiosInstance.put('/api/auth/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
-      console.log(`User role updated: ${response.data}`);
+      toast.success("User role updated successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
-      console.error("Error updating user role:", error);
+      toast.error("Error updating user role");
+    } finally {
+      setLoading(false);
+      setOpenEditDialog(false);
     }
-    setOpenEditDialog(false);
   };
 
   const handleDeleteUser = async () => {
     if (!userToDelete) return;
+    setLoading(true);
     try {
       const response = await axiosInstance.delete(`/api/auth/deleteUser/${userToDelete}`);
-      console.log(userToDelete);
-      console.log(`User deleted: ${response.data}`);
+      toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
-      console.error("Error deleting user:", error);
+      toast.error("Error deleting user");
+    } finally {
+      setLoading(false);
+      setOpenDeleteDialog(false);
+      setUserToDelete(null);
     }
-    setOpenDeleteDialog(false);
-    setUserToDelete(null);
   };
 
   const handleCloseDialog = (setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -133,35 +159,41 @@ const AddUsers = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="grid grid-cols-1 gap-4"
-      >
-        {filteredUsers.map((user) => (
-          <motion.div
-            key={user._id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="border p-4 flex justify-between items-center rounded-lg shadow-md"
-          >
-            <div>
-              <p className="font-semibold">{user.email}</p>
-              <p className="text-sm text-gray-600">{user.role.name}</p>
-            </div>
-            <div>
-              <IconButton color="secondary" onClick={() => { setSelectedUser(user._id); setSelectedRole(user.role._id); setOpenEditDialog(true); }}>
-                <EditIcon />
-              </IconButton>
-              <IconButton color="error" onClick={() => { setUserToDelete(user._id); setOpenDeleteDialog(true); }}>
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <Loader2 className="animate-spin" />
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="grid grid-cols-1 gap-4"
+        >
+          {filteredUsers.map((user) => (
+            <motion.div
+              key={user._id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="border p-4 flex justify-between items-center rounded-lg shadow-md"
+            >
+              <div>
+                <p className="font-semibold">{user.email}</p>
+                <p className="text-sm text-gray-600">{user.role.name}</p>
+              </div>
+              <div>
+                <IconButton color="secondary" onClick={() => { setSelectedUser(user._id); setSelectedRole(user.role._id); setOpenEditDialog(true); }}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton color="error" onClick={() => { setUserToDelete(user._id); setOpenDeleteDialog(true); }}>
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
 
       {/* Add User Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>

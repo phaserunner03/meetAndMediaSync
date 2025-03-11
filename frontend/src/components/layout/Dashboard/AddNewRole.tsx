@@ -6,6 +6,8 @@ import axiosInstance from "../../../utils/axiosConfig";
 import {Button} from "../../ui/button";
 import permissionsData from "../../../data/permissions.json";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const AddNewRole = () => {
   const { currentUser } = useAuth();
@@ -24,58 +26,75 @@ const AddNewRole = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchRoles();
   }, []);
 
   const fetchRoles = async () => {
-    const response = await axiosInstance.get("/api/auth/allRoles");
-    setRoles(response.data.roles);
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("/api/auth/allRoles");
+      setRoles(response.data.roles);
+    } catch (error) {
+      toast.error("Error fetching roles");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAddRole = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axiosInstance.post("/api/auth/addRole", {
         name: newRoleName,
         permissions: newRolePermissions,
       });
-      console.log(`Role added: ${response.data}`);
+      toast.success("Role added successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      console.error("Error adding role:", error);
+      toast.error("Error adding role");
+    } finally {
+      setLoading(false);
+      setOpenAddDialog(false);
     }
-    setOpenAddDialog(false);
   };
 
   const handleEditRole = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!selectedRole) return;
+    setLoading(true);
     try {
       const response = await axiosInstance.put(`/api/auth/editRole/${selectedRole._id}`, {
         name: selectedRole.name,
         permissions: newRolePermissions,
       });
-      console.log(`Role updated: ${response.data}`);
+      toast.success("Role updated successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      console.error("Error updating role:", error);
+      toast.error("Error updating role");
+    } finally {
+      setLoading(false);
+      setOpenEditDialog(false);
     }
-    setOpenEditDialog(false);
   };
 
   const handleDeleteRole = async () => {
     if (!roleToDelete) return;
+    setLoading(true);
     try {
       const response = await axiosInstance.delete(`/api/auth/deleteRole/${roleToDelete}`);
-      console.log(`Role deleted: ${response.data}`);
+      toast.success("Role deleted successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      console.error("Error deleting role:", error);
+      toast.error("Error deleting role");
+    } finally {
+      setLoading(false);
+      setOpenDeleteDialog(false);
+      setRoleToDelete(null);
     }
-    setOpenDeleteDialog(false);
-    setRoleToDelete(null);
   };
 
   const handlePermissionChange = (permission: string) => {
@@ -126,35 +145,41 @@ const AddNewRole = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="grid grid-cols-1 gap-4"
-      >
-        {filteredRoles.map((role) => (
-          <motion.div
-            key={role._id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="border p-4 flex justify-between items-center rounded-lg shadow-md"
-          >
-            <div>
-              <p className="font-semibold">{role.name}</p>
-              <p className="text-sm text-gray-600">{role.permissions.join(", ")}</p>
-            </div>
-            <div>
-              <IconButton color="secondary" onClick={() => { setSelectedRole(role); setNewRolePermissions(role.permissions); setOpenEditDialog(true); }}>
-                <EditIcon />
-              </IconButton>
-              <IconButton color="error" onClick={() => { setRoleToDelete(role._id); setOpenDeleteDialog(true); }}>
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <Loader2 className="animate-spin" />
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="grid grid-cols-1 gap-4"
+        >
+          {filteredRoles.map((role) => (
+            <motion.div
+              key={role._id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="border p-4 flex justify-between items-center rounded-lg shadow-md"
+            >
+              <div>
+                <p className="font-semibold">{role.name}</p>
+                <p className="text-sm text-gray-600">{role.permissions.join(", ")}</p>
+              </div>
+              <div>
+                <IconButton color="secondary" onClick={() => { setSelectedRole(role); setNewRolePermissions(role.permissions); setOpenEditDialog(true); }}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton color="error" onClick={() => { setRoleToDelete(role._id); setOpenDeleteDialog(true); }}>
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
 
       {/* Add Role Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>

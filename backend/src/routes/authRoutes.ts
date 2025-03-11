@@ -16,8 +16,8 @@ router.post("/addRole", authMiddleware, restrictTo("addRole"), (req, res) => aut
 router.put("/editUserRole", authMiddleware, restrictTo("editUserRole"), (req, res) => authController.editUserRole(req as AuthenticatedRequest, res));
 router.delete("/deleteUser/:userId", authMiddleware, restrictTo("deleteUser"), (req, res) => authController.deleteUser(req as AuthenticatedRequest, res));
 router.get("/allUsers", authMiddleware, restrictTo('viewAllUsers'), (req, res) => authController.getAllUsers(req as AuthenticatedRequest, res));
-router.get("/allRoles", authMiddleware, restrictTo('addRole'), (req, res) => authController.getAllRoles(req as AuthenticatedRequest, res));
-router.put("/editRole/:id", authMiddleware, restrictTo('addRole'), (req, res) => authController.editRole(req as AuthenticatedRequest, res));
-router.delete("/deleteRole/:id", authMiddleware, restrictTo('addRole'), (req, res) => authController.deleteRole(req as AuthenticatedRequest, res));
+router.get("/allRoles", authMiddleware, restrictTo('viewRoles'), (req, res) => authController.getAllRoles(req as AuthenticatedRequest, res));
+router.put("/editRole/:id", authMiddleware, restrictTo('editRole'), (req, res) => authController.editRole(req as AuthenticatedRequest, res));
+router.delete("/deleteRole/:id", authMiddleware, restrictTo('deleteRole'), (req, res) => authController.deleteRole(req as AuthenticatedRequest, res));
 
 export default router;

@@ -16,7 +16,6 @@ const AddNewRole = () => {
   }
 
   const [roles, setRoles] = useState<Role[]>([]);
-  
   const [newRoleName, setNewRoleName] = useState("");
   const [newRolePermissions, setNewRolePermissions] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/app.js\"",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
   },

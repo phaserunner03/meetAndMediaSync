@@ -187,9 +187,9 @@ async function refreshAccessToken(refreshToken: string) {
     }
 }
 
-async function addUser(email: string, role: string) {
+async function addUser(email: string, roleId: string) {
     try {
-        const roleDoc = await Role.findOne({ name: role });
+        const roleDoc = await Role.findById(roleId); 
         if (!roleDoc) {
             throw new Error("Invalid role");
         }
@@ -269,6 +269,14 @@ async function deleteRole(id: string) {
         if (!role) {
             throw new Error("Role not found");
         }
+
+        const nauRole = await Role.findOne({ name: "NAU" });
+        if (!nauRole) {
+            throw new Error("NAU role not found");
+        }
+
+        await User.updateMany({ role: id }, { role: nauRole._id });
+
         return role;
     } catch (err) {
         console.error("Error deleting Role:", err);

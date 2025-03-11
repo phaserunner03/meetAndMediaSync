@@ -6,6 +6,7 @@
   "editUserRole",
   "deleteUser",
   "viewUser",
+  "viewAllUsers",
   "viewMeeting",
   "groupMeeting",
   "createMeeting",

@@ -10,7 +10,6 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ Component, ...rest }) => {
   const { userLoggedIn, currentUser } = useAuth();
   
-  
   if (currentUser && currentUser?.role.name ==='NAU') {
     return <Navigate to="/unauthorized" replace />;
   }

@@ -1,27 +1,28 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import { refreshToken, isTokenExpired } from "../../utils/auth";
+import axiosInstance from "../../utils/axiosConfig";
 
 const OAuthButton: React.FC = () => {
   const handleGoogleSignUp = async () => {
-    const token = document.cookie.split('; ').find(row => row.startsWith('refreshToken='));
-    const tokenValue = token ? token.split('=')[1] : null;
-    console.log(tokenValue);
-    
-    
-    if (tokenValue && !isTokenExpired(tokenValue)) {
-      window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
-    } else {
-      try {
-        const newToken = await refreshToken();
-        if (newToken) {
+    try {
+      const response = await axiosInstance.get('/api/auth/check-refresh');
+
+      if (response.status === 200) {
+        const data = response.data;
+        if (data.valid) {
+          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+        } else if (data.token) {
+          // If a new token is returned, save it in cookies and redirect
+          document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
           window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
         }
-      } catch (error) {
+      } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
       }
+    } catch (error) {
+      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
     }
   };
 

@@ -4,6 +4,7 @@ import Role from "../models/Role";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import mongoose, { Document } from 'mongoose';
+import { newUserAccessRequestTemplate, welcomeUserTemplate } from "../utils/emailTemplate";
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -14,6 +15,7 @@ const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = parseInt(process.env.SMTP_PORT!);
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -112,21 +114,7 @@ async function notifyAdminToAddUser(userInfo: any) {
         const mailOptions = {
             from: `"No Reply" <${SMTP_USER}>`,
             to: ADMIN_EMAIL,
-            subject: "New User Access Request",
-            text: `A new user with email ${userInfo.email} has requested access.`,
-            html: `
-                <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-                    <h2 style="color: #333;">New User Access Request</h2>
-                    <p>A new user has requested access to the system. Here are the details:</p>
-                    <ul>
-                        <li><strong>Name:</strong> ${userInfo.name}</li>
-                        <li><strong>Email:</strong> ${userInfo.email}</li>
-                    </ul>
-                    <p>Please review and take the necessary action.</p>
-                    <p>Thank you,</p>
-                    <p><em>Your Team</em></p>
-                </div>
-            `,
+            ...newUserAccessRequestTemplate(userInfo),
         };
 
         await transporter.sendMail(mailOptions);
@@ -187,15 +175,47 @@ async function refreshAccessToken(refreshToken: string) {
     }
 }
 
-async function addUser(email: string, roleId: string) {
+async function sendWelcomeEmail(user: { email: string }) {
     try {
-        const roleDoc = await Role.findById(roleId); 
+        const transporter = nodemailer.createTransport({
+            host: SMTP_HOST,
+            port: SMTP_PORT,
+            secure: false,
+            auth: {
+                user: SMTP_USER,
+                pass: SMTP_PASS,
+            },
+        });
+
+        const loginUrl = `${FRONTEND_URL}/login`; 
+        const emailTemplate = welcomeUserTemplate({ email: user.email }, loginUrl);
+
+        const mailOptions = {
+            from: `"CloudCapture" <${process.env.SMTP_USER}>`,
+            to: user.email,
+            subject: emailTemplate.subject,
+            text: emailTemplate.text,
+            html: emailTemplate.html,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`Welcome email sent to ${user.email}`);
+    } catch (err) {
+        console.error("Error sending welcome email:", err);
+    }
+}
+
+async function addUser(email: string, role: string) {
+    try {
+        const roleDoc = await Role.findById(role);
         if (!roleDoc) {
             throw new Error("Invalid role");
         }
-
         const user = new User({ email, role: roleDoc._id });
         await user.save();
+
+        await sendWelcomeEmail(user);
+
         return user;
     } catch (err) {
         console.error("Error adding user:", err);
@@ -269,14 +289,6 @@ async function deleteRole(id: string) {
         if (!role) {
             throw new Error("Role not found");
         }
-
-        const nauRole = await Role.findOne({ name: "NAU" });
-        if (!nauRole) {
-            throw new Error("NAU role not found");
-        }
-
-        await User.updateMany({ role: id }, { role: nauRole._id });
-
         return role;
     } catch (err) {
         console.error("Error deleting Role:", err);

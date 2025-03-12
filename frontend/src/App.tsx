@@ -12,12 +12,14 @@ import Signup from "./components/layout/Signup";
 import { Toaster } from "./components/ui/sonner";
 import AddUsers from "./components/layout/Dashboard/AddUsers";
 import AddNewRole from "./components/layout/Dashboard/AddNewRole";
+import Unauthorized from "./components/layout/Unauthorized"
 
 export default function App() {
   const router = createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <Signup /> },
+    {path:"/unauthorized", element:<Unauthorized/>},
     {
       path: "/dashboard",
       element: <PrivateRoute Component={Dashboard} />,

@@ -8,13 +8,17 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ Component, ...rest }) => {
-  const { userLoggedIn } = useAuth();
+  const { userLoggedIn, currentUser } = useAuth();
   
-  return userLoggedIn ? (
-    <Component {...rest} />
-  ) : (
-    <Navigate to="/" replace />
-  );
+  
+  if (currentUser && currentUser?.role.name ==='NAU') {
+    return <Navigate to="/unauthorized" replace />;
+  }
+  if (!userLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return <Component {...rest} />;
 };
 
 export default PrivateRoute;

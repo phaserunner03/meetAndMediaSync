@@ -12,7 +12,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) return <p>Loading...</p>;
-  if (!currentUser) return <Navigate to="/login" />; // Redirect if user is not authenticated
+  if (!currentUser) return <Navigate to="/login" />; 
 
   return (
     <SidebarProvider>

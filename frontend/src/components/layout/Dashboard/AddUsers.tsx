@@ -4,6 +4,7 @@ import { TextField, Select, MenuItem, InputLabel, FormControl, IconButton, Dialo
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axiosInstance from "../../../utils/axiosConfig";
 import {Button} from "../../ui/button";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const AddUsers = () => {
@@ -13,7 +14,7 @@ const AddUsers = () => {
     name: string;
     permissions: string[];
   }
-  
+  const navigate = useNavigate();
   const [roles, setRoles] = useState<Role[]>([]);
   interface User {
     _id: string;
@@ -30,23 +31,34 @@ const AddUsers = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch roles and users from the backend
     fetchRoles();
     fetchUsers();
   }, []);
 
   const fetchRoles = async () => {
-    // Fetch roles from the backend
+
     const response = await axiosInstance.get("/api/auth/allRoles");
     setRoles(response.data.roles);
   };
 
   const fetchUsers = async () => {
-    // Fetch users from the backend
-    const response = await axiosInstance.get("/api/auth/allUsers");
-    setUsers(response.data.users);
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.get("/api/auth/allUsers");
+      setUsers(response.data.users);
+    } catch (error: any) {
+      if (error.response && error.response.status === 403) {
+        
+        navigate("/unauthorized");
+      } else {
+        console.error("Error fetching users:", error);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAddUser = async (event: React.FormEvent) => {
@@ -67,12 +79,14 @@ const AddUsers = () => {
   const handleEditUserRole = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await axiosInstance.put('/api/auth/editUserRole', {
+      
+      const res = await axiosInstance.put('/api/auth/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
-      console.log(`User role updated: ${response.data}`);
-      fetchUsers(); // Refresh the user list
+
+      fetchUsers(); 
+      
     } catch (error) {
       console.error("Error updating user role:", error);
     }

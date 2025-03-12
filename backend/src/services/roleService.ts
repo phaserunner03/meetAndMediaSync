@@ -1,4 +1,5 @@
 import Role from "../models/Role";
+import User from "../models/User";
 
 async function addRole(name: string, permissions: string[]) {
     try {
@@ -33,6 +34,12 @@ async function deleteRole(id: string) {
         if (!role) {
             throw new Error("Role not found");
         }
+        const nauRole = await Role.findOne({ name: "NAU" });
+        if (!nauRole) {
+            throw new Error("NAU role not found");
+        }
+
+        await User.updateMany({ role: id }, { role: nauRole._id });
         return role;
     } catch (err) {
         console.error("Error deleting Role:", err);

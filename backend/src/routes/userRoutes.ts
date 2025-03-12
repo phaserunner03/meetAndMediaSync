@@ -10,5 +10,6 @@ router.get("/user", authMiddleware, restrictTo('viewUser'), (req, res) => userCo
 router.post("/addUser", authMiddleware, restrictTo("addUser"),(req, res) =>  userController.addUser(req as AuthenticatedRequest, res));
 router.delete("/deleteUser/:userId", authMiddleware, restrictTo("deleteUser"), (req, res) => userController.deleteUser(req as AuthenticatedRequest, res));
 router.get("/allUsers", authMiddleware, restrictTo('viewAllUsers'), (req, res) => userController.getAllUsers(req as AuthenticatedRequest, res));
+router.put("/editUserRole", authMiddleware, restrictTo('editUserRole'), (req, res) => userController.editUserRole(req as AuthenticatedRequest, res));
 
 export default router;

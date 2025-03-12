@@ -46,6 +46,17 @@ async function getAllUsers(req: AuthenticatedRequest, res: Response) {
         res.status(500).json({ success: false, message: (err as Error).message, data: {} });
     }
 }
+
+async function editUserRole(req: AuthenticatedRequest, res: Response) {
+    try {
+        const { userId, newRole } = req.body;
+        const user = await userService.editUserRole(userId, newRole);
+        res.status(200).json({ success: true, message: "User role updated successfully", data: { user } });
+    } catch (err) {
+        res.status(400).json({ success: false, message: (err as Error).message, data: {} });
+    }
+}
+
 async function notifyAdmin(req: Request, res: Response) {
     try {
         const { email,name } = req.body;
@@ -55,4 +66,4 @@ async function notifyAdmin(req: Request, res: Response) {
         res.status(500).json({ success: false, message: (err as Error).message });
     }
 }
-export { getUser, addUser, deleteUser, getAllUsers,notifyAdmin };
+export { getUser, addUser, deleteUser, getAllUsers,notifyAdmin, editUserRole };

@@ -126,4 +126,25 @@ async function deleteUser(userId: string) {
     }
 }
 
-export { notifyAdminToAddUser, sendWelcomeEmail, addUser, getAuthenticatedUser, deleteUser };
+async function editUserRole(userId: string, newRole: mongoose.Schema.Types.ObjectId) {
+    try {
+        const roleDoc = await Role.findById(newRole);
+        if (!roleDoc) {
+            throw new Error("Invalid role");
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        user.role = newRole;
+        await user.save();
+        return user;
+    } catch (err) {
+        console.error("Error editing user role:", err);
+        throw new Error("Failed to edit user role");
+    }
+}
+
+export { notifyAdminToAddUser, sendWelcomeEmail, addUser, getAuthenticatedUser, deleteUser, editUserRole };

@@ -48,7 +48,7 @@ const AddNewRole = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/roles/addRole", {
+      await axiosInstance.post("/api/roles/addRole", {
         name: newRoleName,
         permissions: newRolePermissions,
       });
@@ -67,7 +67,7 @@ const AddNewRole = () => {
     if (!selectedRole) return;
     setLoading(true);
     try {
-      const response = await axiosInstance.put(`/api/roles/editRole/${selectedRole._id}`, {
+      await axiosInstance.put(`/api/roles/editRole/${selectedRole._id}`, {
         name: selectedRole.name,
         permissions: newRolePermissions,
       });
@@ -85,7 +85,7 @@ const AddNewRole = () => {
     if (!roleToDelete) return;
     setLoading(true);
     try {
-      const response = await axiosInstance.delete(`/api/roles/deleteRole/${roleToDelete}`);
+      await axiosInstance.delete(`/api/roles/deleteRole/${roleToDelete}`);
       toast.success("Role deleted successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {

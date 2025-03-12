@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as meetingService from '../services/meetingService';
-import { google, calendar_v3 } from 'googleapis';
+import { google } from 'googleapis';
 
 // Extend the Request interface to include the user property
 interface AuthenticatedRequest extends Request {

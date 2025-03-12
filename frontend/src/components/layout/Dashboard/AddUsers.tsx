@@ -70,7 +70,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/users/addUser", {
+      await axiosInstance.post("/api/users/addUser", {
         email,
         role: selectedRole,
       });
@@ -88,7 +88,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosInstance.put('/api/users/editUserRole', {
+      await axiosInstance.put('/api/users/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
@@ -106,7 +106,7 @@ const AddUsers = () => {
     if (!userToDelete) return;
     setLoading(true);
     try {
-      const response = await axiosInstance.delete(`/api/users/deleteUser/${userToDelete}`);
+      await axiosInstance.delete(`/api/users/deleteUser/${userToDelete}`);
       toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {

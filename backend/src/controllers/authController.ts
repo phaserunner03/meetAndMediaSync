@@ -17,48 +17,59 @@ async function redirectToGoogle(req: Request, res: Response) {
         const token = req.cookies.token;
 
         if (token) {
-            try {
-                const decoded = jwt.verify(token, process.env.SECRET_KEY!);
-                
-                const user = await User.findOne({ googleId: (decoded as any).uid });
-
-                if (!user) throw new Error("User not found");
-
-                return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
-            } catch (err) {
-                console.log("JWT expired or invalid. Trying refresh token...");
-                const { refreshToken } = req.cookies;
-                if (refreshToken) {
-                    try {
-                        const user = await User.findOne({ refreshToken });
-                        if (!user) throw new Error("User not found");
-
-                        const newToken = jwt.sign(
-                            { uid: user.googleId, email: user.email },
-                            process.env.SECRET_KEY!,
-                            { expiresIn: "7d" }
-                        );
-
-                        res.cookie("token", newToken, {
-                            httpOnly: true,
-                            secure: process.env.NODE_ENV === "production",
-                            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-                            maxAge: 7 * 24 * 60 * 60 * 1000,
-                        });
-                        return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
-                    } catch (refreshErr) {
-                        console.log("Error refreshing access token:", refreshErr);
-                    }
-                }
-            }
+            await handleToken(token, req, res);
+        } else {
+            await handleNoToken(req, res);
         }
-
-        console.log("No valid session. Redirecting to Google OAuth...");
-        const url = authService.getGoogleAuthURL();
-        res.redirect(url);
     } catch (err) {
         res.status(500).json({ success: false, message: "Failed to authenticate", data: { error: (err as Error).message } });
     }
+}
+
+async function handleToken(token: string, req: Request, res: Response) {
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY!);
+        const user = await User.findOne({ googleId: (decoded as any).uid });
+
+        if (!user) throw new Error("User not found");
+
+        return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+    } catch (err) {
+        console.log("JWT expired or invalid. Trying refresh token...");
+        await handleRefreshToken(req, res);
+    }
+}
+
+async function handleRefreshToken(req: Request, res: Response) {
+    const { refreshToken } = req.cookies;
+    if (refreshToken) {
+        try {
+            const user = await User.findOne({ refreshToken });
+            if (!user) throw new Error("User not found");
+
+            const newToken = jwt.sign(
+                { uid: user.googleId, email: user.email },
+                process.env.SECRET_KEY!,
+                { expiresIn: "7d" }
+            );
+
+            res.cookie("token", newToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+            return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+        } catch (refreshErr) {
+            console.log("Error refreshing access token:", refreshErr);
+        }
+    }
+}
+
+async function handleNoToken(req: Request, res: Response) {
+    console.log("No valid session. Redirecting to Google OAuth...");
+    const url = authService.getGoogleAuthURL();
+    res.redirect(url);
 }
 
 async function handleGoogleCallback(req: Request, res: Response) {
@@ -113,7 +124,7 @@ async function refreshJwtToken(req: Request, res: Response) {
         }
 
         try {
-            const decoded = jwt.verify(refreshToken, process.env.SECRET_KEY!);
+            jwt.verify(refreshToken, process.env.SECRET_KEY!);
             return res.status(200).json({ success: true, message: "Token is still valid", data: { valid: true } });
         } catch (err) {
             console.log("Refresh token expired or invalid. Generating new token...");

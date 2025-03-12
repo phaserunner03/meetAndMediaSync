@@ -12,7 +12,7 @@ import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
 import { toast } from "sonner";
 import { cn } from "../../../lib/utils";
-
+import { motion } from "framer-motion";
 interface Meeting {
   id: string;
   title: string;
@@ -115,7 +115,13 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
           <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+        
+      
           {meetings.length === 0 ? (
             <div className="col-span-full text-center text-gray-500">No meetings found.</div>
           ) : (
@@ -200,7 +206,8 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
               </DialogContent>
             </Dialog>
           )}
-        </div>
+          </motion.div>
+        
       )}
     </div>
   );

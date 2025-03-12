@@ -44,9 +44,8 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch roles from the backend
-      const response = await axiosInstance.get("/api/auth/allRoles");
-      setRoles(response.data.roles);
-      console.log(response.data.roles);
+      const response = await axiosInstance.get("/api/roles/allRoles");
+      setRoles(response.data.data.roles);
     } catch (error) {
       toast.error("Error fetching roles");
     } finally {
@@ -58,8 +57,8 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch users from the backend
-      const response = await axiosInstance.get("/api/auth/allUsers");
-      setUsers(response.data.users);
+      const response = await axiosInstance.get("/api/users/allUsers");
+      setUsers(response.data.data.users);
     } catch (error) {
       toast.error("Error fetching users");
     } finally {
@@ -71,7 +70,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/auth/addUser", {
+      const response = await axiosInstance.post("/api/users/addUser", {
         email,
         role: selectedRole,
       });
@@ -89,7 +88,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosInstance.put('/api/auth/editUserRole', {
+      const response = await axiosInstance.put('/api/users/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
@@ -107,7 +106,7 @@ const AddUsers = () => {
     if (!userToDelete) return;
     setLoading(true);
     try {
-      const response = await axiosInstance.delete(`/api/auth/deleteUser/${userToDelete}`);
+      const response = await axiosInstance.delete(`/api/users/deleteUser/${userToDelete}`);
       toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {

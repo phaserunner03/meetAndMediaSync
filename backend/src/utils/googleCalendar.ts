@@ -122,7 +122,7 @@ export async function updateEvent(refreshToken: string, eventId: string, updated
             requestBody: { ...existingEvent.data, ...updatedEventData },
             conferenceDataVersion: 1,
         });
-
+        
         return response.data;
     } catch (error) {
         console.error("Error updating event:", error);

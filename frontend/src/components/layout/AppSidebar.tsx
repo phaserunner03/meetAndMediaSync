@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/image.png"
 import {
   Home,
   Plus,
@@ -55,7 +56,7 @@ const Sidebar = () => {
 
           {/* Logo */}
           <NavLink to="/" className="flex items-center ms-2 md:me-24">
-            <span className="text-4xl text-blue-700 font-bold">⌘</span>
+          <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
             <span className="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white ml-2">
               CloudCapture
             </span>

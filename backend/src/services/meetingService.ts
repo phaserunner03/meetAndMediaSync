@@ -111,6 +111,7 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
             meetingType: event.attendees && event.attendees.length > 1 ? 'group' : 'one to one',
             participants: event.attendees ? event.attendees.map(a => a.email) : [],
             extendedProperties: event.extendedProperties || {},
+            location: event.location,
         }));
 
         return {
@@ -127,12 +128,29 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
 
 const modifyMeeting = async (user: User, eventId: string, updatedData: any): Promise<MeetingResponse> => {
     try {
-        const formattedData={
-            ...updatedData,
+
+        const formattedData = {
             summary: updatedData.title,
-        }
+            location: updatedData.location,
+            description: updatedData.description,
+            start: {
+                dateTime: updatedData.startTime,
+                timeZone: "Asia/Kolkata",
+            },
+            end: {
+                dateTime: updatedData.endTime,
+                timeZone: "Asia/Kolkata",
+            },
+            attendees: updatedData.participants.map((participant: string) => ({ email: participant })),
+        };
+        
         const updatedEvent = await updateEvent(user.refreshToken, eventId, formattedData);
+        if ('success' in updatedEvent && !updatedEvent.success) {
+            return { success: false, message: updatedEvent.message || 'Failed to update meeting' };
+        }
+
         return { success: true, message: 'Meeting updated successfully', updatedEvent };
+
     } catch (error) {
         console.error('Error updating meeting:', error);
         throw new Error('Failed to update meeting');

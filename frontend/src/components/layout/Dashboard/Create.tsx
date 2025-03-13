@@ -1,4 +1,3 @@
-import React from 'react'
 import MeetingForm from './MeetingForm'
 const Create = () => {
   return (

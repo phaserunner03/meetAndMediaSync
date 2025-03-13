@@ -65,9 +65,9 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
     const start = new Date(meeting.startTime.dateTime);
     const end = new Date(meeting.endTime.dateTime);
 
-    if (now >= start && now <= end) return "bg-green-500"; // Ongoing
-    if (now > end) return "bg-blue-500"; // Past
-    return "bg-purple-500"; // Future
+    if (now >= start && now <= end) return "bg-green-500"; 
+    if (now > end) return "bg-blue-500"; 
+    return "bg-purple-500";
   };
 
   const copyToClipboard = (meeting:any) => {

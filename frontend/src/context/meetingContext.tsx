@@ -41,8 +41,8 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const [isLoading, setIsLoading] = useState(false);
     
     // Month & Year states
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1); // Default: Current month
-    const [year, setYear] = useState<number>(new Date().getFullYear()); // Default: Current year
+    const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
+    const [year, setYear] = useState<number>(new Date().getFullYear()); 
 
     const fetchMeetings = async (fetchMonth = month, fetchYear = year) => {
         setIsLoading(true);

@@ -1,44 +1,83 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "capture_screenshot") {
-      console.log("Capturing screenshot...");
-
-      chrome.tabs.captureVisibleTab(null, { format: "png" }, (image) => {
-          if (chrome.runtime.lastError) {
-              console.error("Screenshot error:", chrome.runtime.lastError.message);
+    if (request.action === "capture_screenshot") {
+        console.log("Capturing screenshot...");
+        
+        chrome.tabs.captureVisibleTab(null, { format: "png" }, (image) => {
+            if (chrome.runtime.lastError) {
+                console.error("Screenshot error:", chrome.runtime.lastError.message);
               sendResponse({ success: false, message: "Screenshot failed" });
               return;
-          }
-          console.log("Screenshot taken");
-          sendResponse({ success: true, image: image });
-      });
-
-      return true; // Keep sendResponse open
-  }
-
-  if (request.action === "upload_screenshot") {
-      console.log("Uploading screenshot...");
-
-      chrome.identity.getAuthToken({ interactive: true }, function (token) {
-          if (chrome.runtime.lastError) {
-              console.error("OAuth Error:", chrome.runtime.lastError.message);
-              sendResponse({ success: false, message: "Authentication failed" });
-              return;
+            }
+            console.log("Screenshot taken");
+            sendResponse({ success: true, image: image });
+        });
+        
+        return true; // Keep sendResponse open
+    }
+    
+    if (request.action === "upload_screenshot") {
+        console.log("Uploading screenshot...");
+        
+        chrome.identity.getAuthToken({ interactive: true }, function (token) {
+            if (chrome.runtime.lastError) {
+                console.error("OAuth Error:", chrome.runtime.lastError.message);
+                sendResponse({ success: false, message: "Authentication failed" });
+                return;
           }
           console.log("OAuth Token obtained");
-
+          
           getOrCreateDriveFolder(token, "CloudCapture").then((parentFolderId) => {
               return getOrCreateDriveFolder(token, request.meetingId, parentFolderId);
-          }).then((meetingFolderId) => {
-              uploadToDrive(token, request.image, meetingFolderId, sendResponse);
-          }).catch((error) => {
-              console.error("Folder error:", error);
-              sendResponse({ success: false, message: "Failed to create/find folder" });
-          });
-      });
-
-      return true;
-  }
+            }).then((meetingFolderId) => {
+                uploadToDrive(token, request.image, meetingFolderId, sendResponse);
+            }).catch((error) => {
+                console.error("Folder error:", error);
+                sendResponse({ success: false, message: "Failed to create/find folder" });
+            });
+        });
+        
+        return true;
+    }
 });
+
+function fetchActiveMeetId() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0 || !tabs[0].url) {
+            console.warn("⚠ No active Meet tab found.");
+            return;
+        }
+
+        const url = tabs[0].url;
+        console.log("🌍 Active Tab URL:", url);
+
+        const meetIdMatch = url.match(/meet\.google\.com\/([a-zA-Z0-9-]+)/);
+        if (meetIdMatch) {
+            const meetId = meetIdMatch[1].split("?")[0]; // Remove query params
+            console.log("✅ Active Meet ID:", meetId);
+            activeMeetId = meetId;
+
+            // Store the Meet ID for later use
+            chrome.runtime.sendMessage({ action: "store_meet_id", meetId: activeMeetId });
+        } else {
+            console.warn("❌ No Meet ID found in URL.");
+        }
+    });
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "fetch_meet_id") {
+        console.log("📢 Returning stored Meet ID:", activeMeetId);
+        sendResponse({ meetId: activeMeetId });
+    }
+});
+
+chrome.tabs.onActivated.addListener(fetchActiveMeetId);
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "complete" && tab.active) {
+        fetchActiveMeetId();
+    }
+});
+
 
 // ✅ Function to Find or Create Folder in Google Drive
 function getOrCreateDriveFolder(token, folderName, parentFolderId = null) {

@@ -23,26 +23,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Upload Screenshot with Meeting ID
   uploadButton.addEventListener("click", function () {
-      if (!screenshotData) {
-          console.error("No screenshot to upload!");
-          return;
-      }
+    if (!screenshotData) {
+        console.error("No screenshot to upload!");
+        return;
+    }
 
-      // Ask for Meeting ID
-      const meetingId = prompt("Enter the Meeting ID for this screenshot:");
-      if (!meetingId) {
-          alert("Meeting ID is required!");
-          return;
-      }
+    // ✅ Auto-fetch Meet ID instead of prompting user
+    chrome.runtime.sendMessage({ action: "fetch_meet_id" }, (response) => {
+        console.log(response)
+        const meetingId = response.meetId || prompt("Enter Meeting ID (if not detected):");
+        if (!meetingId) {
+            alert("Meeting ID is required!");
+            return;
+        }
 
-      console.log("Uploading screenshot...");
-      chrome.runtime.sendMessage({ action: "upload_screenshot", image: screenshotData, meetingId }, (response) => {
-          if (response.success) {
-              alert("Screenshot uploaded successfully!");
-          } else {
-              console.error("Upload failed:", response.message);
-              alert("Upload failed!");
-          }
-      });
-  });
+        console.log("Uploading screenshot...");
+        chrome.runtime.sendMessage({ action: "upload_screenshot", image: screenshotData, meetingId }, (uploadResponse) => {
+            if (uploadResponse.success) {
+                alert("Screenshot uploaded successfully!");
+            } else {
+                console.error("Upload failed:", uploadResponse.message);
+                alert("Upload failed!");
+            }
+        });
+    });
+});
+
 });

@@ -7,10 +7,12 @@
         "activeTab",
         "scripting",
         "storage",
-        "identity"  
+        "identity",
+        "tabs" 
     ],
     "host_permissions": [
-        "https://www.googleapis.com/*"
+        "https://www.googleapis.com/*",
+        "https://meet.google.com/*"
     ],
     "background": {
         "service_worker": "background.js"
@@ -24,10 +26,20 @@
         }
     },
     "oauth2": {
-        "client_id": "972397341408-l08mv479m0ldgrgphpmcnsvrl2h5f4md.apps.googleusercontent.com",
+        "client_id": "972397341408-uuhd9b5mlaa6mve05p4pkoqs0q3kcv3r.apps.googleusercontent.com",
         "scopes": [
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/userinfo.email"
         ]
+    },
+    "content_scripts": [
+    {
+        "matches": ["https://meet.google.com/*"],
+        "js": ["content.js"],
+        "run_at": "document_start"
     }
+]
+
+
+
 }

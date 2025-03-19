@@ -5,7 +5,7 @@ import MeetingDetails from '../models/MeetingDetails';
 
 interface User extends Document {
     _id: string;
-    role: { _id: mongoose.Schema.Types.ObjectId, name: string };
+    role: { _id: mongoose.Schema.Types.ObjectId, name: string, permissions:string[] };
 }
 
 interface ValidationResult {
@@ -30,7 +30,7 @@ const validateMeetingDetails = async (user: User, participants: string[], startT
 
     await user.populate('role');
     const populatedUser = user;
-    if (participants.length >= 2 && populatedUser.role.name !== 'Admin' && populatedUser.role.name !== 'SuperAdmin') {
+    if (participants.length >= 2 && !populatedUser.role.permissions.includes("groupMeeting") ) {
         return { success: false, message: 'You can only schedule one-to-one meetings' };
     }
 

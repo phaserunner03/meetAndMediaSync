@@ -127,8 +127,8 @@ const AddUsers = () => {
 
   const filteredUsers = users.filter(user => user.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser || currentUser.role.name !== "SuperAdmin") {
-    return null; // Do not render if the user is not an admin
+  if (!currentUser || !currentUser.role.permissions.includes("viewUser")) {
+    return null; 
   }
 
   return (
@@ -194,7 +194,6 @@ const AddUsers = () => {
         </motion.div>
       )}
 
-      {/* Add User Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>
         <DialogTitle className="text-center font-bold text-2xl mb-4 ">Add User</DialogTitle>
         <div className="flex justify-center pt-px"> 
@@ -233,7 +232,6 @@ const AddUsers = () => {
         </div>
       </Dialog>
 
-      {/* Edit User Role Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseDialog(setOpenEditDialog)}>
         <DialogTitle>Edit User Role</DialogTitle>
         <div className="flex justify-center pt-px"> 

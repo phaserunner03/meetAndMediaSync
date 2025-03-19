@@ -11,7 +11,7 @@ interface UserDocument extends Document {
 }
 
 const UserSchema = new mongoose.Schema({
-    googleId: { type: String, unique: true },
+    googleId: { type: String, unique: true, sparse: true },
     displayName: { type: String },
     email: { type: String, required: true, unique: true },
     role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role', required: true },

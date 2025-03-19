@@ -3,12 +3,13 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/image.png"
 import {
   Home,
-  Plus,
   Inbox,
   Calendar,
   LogOut,
   Menu,
   CalendarPlus2,
+  User,
+  BadgeInfo,
   X
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -21,15 +22,15 @@ const Sidebar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
-  const canAddUser = currentUser?.role.permissions.includes("addUser");
+  const canViewUser = currentUser?.role.permissions.includes("viewAllUsers");
   const canAddRole = currentUser?.role.permissions.includes("addRole");
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
     { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
     { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
-    ...(canAddUser ? [{ title: "Add Users", url: "/dashboard/add-users", icon: Plus }] : []),
-    ...(canAddRole ? [{ title: "Add New Role", url: "/dashboard/add-role", icon: Plus }] : []),
+    ...(canViewUser ? [{ title: "Users", url: "/dashboard/add-users", icon: User }] : []),
+    ...(canAddRole ? [{ title: "Role", url: "/dashboard/add-role", icon: BadgeInfo }] : []),
   ];
   const handleLogOut = async () => {
     try {
@@ -42,10 +43,8 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Top Navbar */}
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="px-3 py-3 lg:px-5 lg:pl-3 flex items-center justify-between">
-          {/* Sidebar Toggle Button */}
           <button
             onClick={toggleSidebar}
             type="button"
@@ -54,7 +53,6 @@ const Sidebar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          {/* Logo */}
           <NavLink to="/" className="flex items-center ms-2 md:me-24">
           <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
             <span className="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white ml-2">
@@ -62,7 +60,6 @@ const Sidebar = () => {
             </span>
           </NavLink>
 
-          {/* User Greeting */}
           <div className="flex flex-row items-center space-x-4">
             {currentUser ? (
               <p className="text-lg font-semibold text-gray-800">
@@ -75,7 +72,6 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"

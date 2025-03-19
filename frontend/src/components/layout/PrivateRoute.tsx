@@ -11,6 +11,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ Component, ...rest }) => {
   const { userLoggedIn, currentUser } = useAuth();
   
   if (currentUser && currentUser?.role.name ==='NAU') {
+    console.log("Here")
     return <Navigate to="/unauthorized" replace />;
   }
   if (!userLoggedIn) {

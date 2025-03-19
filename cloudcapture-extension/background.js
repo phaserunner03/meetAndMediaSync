@@ -1,7 +1,6 @@
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "capture_screenshot") {
-        console.log("Capturing screenshot...");
-        
         chrome.tabs.captureVisibleTab(null, { format: "png" }, (image) => {
             if (chrome.runtime.lastError) {
                 console.error("Screenshot error:", chrome.runtime.lastError.message);
@@ -12,12 +11,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             sendResponse({ success: true, image: image });
         });
         
-        return true; // Keep sendResponse open
+        return true;
     }
     
     if (request.action === "upload_screenshot") {
-        console.log("Uploading screenshot...");
-        
         chrome.identity.getAuthToken({ interactive: true }, function (token) {
             if (chrome.runtime.lastError) {
                 console.error("OAuth Error:", chrome.runtime.lastError.message);
@@ -29,7 +26,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           getOrCreateDriveFolder(token, "CloudCapture").then((parentFolderId) => {
               return getOrCreateDriveFolder(token, request.meetingId, parentFolderId);
             }).then((meetingFolderId) => {
-                uploadToDrive(token, request.image, meetingFolderId, sendResponse);
+                uploadToDrive(token, request.image, meetingFolderId, request.fileName,sendResponse);
             }).catch((error) => {
                 console.error("Folder error:", error);
                 sendResponse({ success: false, message: "Failed to create/find folder" });
@@ -40,6 +37,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
+let activeMeetId = null;
+
 function fetchActiveMeetId() {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (tabs.length === 0 || !tabs[0].url) {
@@ -48,16 +47,13 @@ function fetchActiveMeetId() {
         }
 
         const url = tabs[0].url;
-        console.log("🌍 Active Tab URL:", url);
-
         const meetIdMatch = url.match(/meet\.google\.com\/([a-zA-Z0-9-]+)/);
+
         if (meetIdMatch) {
             const meetId = meetIdMatch[1].split("?")[0]; // Remove query params
             console.log("✅ Active Meet ID:", meetId);
             activeMeetId = meetId;
-
-            // Store the Meet ID for later use
-            chrome.runtime.sendMessage({ action: "store_meet_id", meetId: activeMeetId });
+            chrome.runtime.sendMessage({ action: "update_popup", meetId: activeMeetId });
         } else {
             console.warn("❌ No Meet ID found in URL.");
         }
@@ -66,9 +62,12 @@ function fetchActiveMeetId() {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "fetch_meet_id") {
-        console.log("📢 Returning stored Meet ID:", activeMeetId);
         sendResponse({ meetId: activeMeetId });
     }
+    if (request.action === "refresh_meet_id") {
+        fetchActiveMeetId();
+    }
+
 });
 
 chrome.tabs.onActivated.addListener(fetchActiveMeetId);
@@ -76,6 +75,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete" && tab.active) {
         fetchActiveMeetId();
     }
+
 });
 
 
@@ -114,7 +114,6 @@ function getOrCreateDriveFolder(token, folderName, parentFolderId = null) {
               })
               .then(response => response.json())
               .then(folderData => {
-                  console.log(`Folder "${folderName}" created:`, folderData.id);
                   resolve(folderData.id);
               })
               .catch(error => reject(error));
@@ -135,51 +134,48 @@ function base64ToBlob(base64, mimeType) {
 }
 
 // ✅ Function to Upload Screenshot to Drive
-function uploadToDrive(token, image, folderId, sendResponse) {
-  const blob = base64ToBlob(image, "image/png");
+function uploadToDrive(token, image, folderId, fileName, sendResponse) {
+    const blob = base64ToBlob(image, "image/png");
 
-  const metadata = {
-      name: `screenshot_${Date.now()}.png`,
-      parents: [folderId],
-      mimeType: "image/png"
-  };
+    const metadata = {
+        name: `${fileName}.png`,  // ✅ Use the filename received from popup.js
+        parents: [folderId],
+        mimeType: "image/png"
+    };
 
-  const formData = new FormData();
-  formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-  formData.append("file", blob);
+    const formData = new FormData();
+    formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+    formData.append("file", blob);
 
-  fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
-      method: "POST",
-      headers: {
-          Authorization: `Bearer ${token}`
-      },
-      body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log("Uploaded to Drive:", data);
-
-      // ✅ Make the file Viewable & Downloadable
-      fetch(`https://www.googleapis.com/drive/v3/files/${data.id}/permissions`, {
-          method: "POST",
-          headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ role: "reader", type: "anyone" }) // Publicly viewable
-      })
-      .then(() => {
-          const fileUrl = `https://drive.google.com/uc?id=${data.id}`;
-          sendResponse({ success: true, fileId: data.id, fileUrl: fileUrl });
-          console.log("File is now viewable at:", fileUrl);
-      })
-      .catch(error => {
-          console.error("Permission error:", error);
-          sendResponse({ success: false, message: "Failed to set permissions" });
-      });
-  })
-  .catch(error => {
-      console.error("Upload error:", error);
-      sendResponse({ success: false, message: "Upload failed" });
-  });
+    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        fetch(`https://www.googleapis.com/drive/v3/files/${data.id}/permissions`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ role: "reader", type: "anyone" })
+        })
+        .then(() => {
+            const fileUrl = `https://drive.google.com/uc?id=${data.id}`;
+            sendResponse({ success: true, fileId: data.id, fileUrl: fileUrl });
+            console.log("File is now viewable at:", fileUrl);
+        })
+        .catch(error => {
+            console.error("Permission error:", error);
+            sendResponse({ success: false, message: "Failed to set permissions" });
+        });
+    })
+    .catch(error => {
+        console.error("Upload error:", error);
+        sendResponse({ success: false, message: "Upload failed" });
+    });
 }

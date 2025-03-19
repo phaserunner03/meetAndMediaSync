@@ -22,8 +22,8 @@ const Sidebar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
-  const canViewUser = currentUser?.role.permissions.includes("viewAllUsers");
-  const canAddRole = currentUser?.role.permissions.includes("addRole");
+  const canViewUser = currentUser?.role.permissions?.includes("viewAllUsers");
+  const canAddRole = currentUser?.role.permissions?.includes("addRole");
   const menuItems = [
     { title: "Home", url: "/dashboard/home", icon: Home },
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },

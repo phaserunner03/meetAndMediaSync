@@ -35,7 +35,6 @@ const AddUsers = () => {
   }
 
   const [users, setUsers] = useState<User[]>([]);
-  const [email, setEmail] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -44,7 +43,7 @@ const AddUsers = () => {
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const canAddUser = currentUser?.role.permissions.includes("addUser");
+  const canAddUser = currentUser?.role.permissions?.includes("addUser");
 
   useEffect(() => {
     // Fetch roles and users from the backend
@@ -65,13 +64,14 @@ const AddUsers = () => {
     try {
       // Fetch roles from the backend
       const response = await axiosInstance.get("/api/roles/allRoles");
+    
       setRoles(response.data.data.roles);
+      
     } catch (error) {
+      setRoles([{ _id: "67cad2fed3dd89f49742abee", name: "NAU", permissions: [] }]);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
           toast.error("Unauthorized! Please log in again.");
-        } else {
-          toast.error(error.response?.data?.message || "Error updating role");
         }
       } else {
         toast.error("Something went wrong. Please try again.");

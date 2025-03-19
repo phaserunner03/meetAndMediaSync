@@ -139,9 +139,19 @@ const AddNewRole = () => {
           ? prevPermissions.filter((perm) => perm !== "addRole") // Unselect only "addRole"
           : [...prevPermissions, "addRole", "viewRoles"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
       }
+
+      if (permission === "addUser") {
+        return hasPermission
+          ? prevPermissions.filter((perm) => perm !== "addUser") // Unselect only "addRole"
+          : [...prevPermissions, "addUser", "viewAllUsers"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
+      }
   
       if (permission === "viewRoles" && hasPermission) {
         return prevPermissions.filter((perm) => perm !== "viewRoles" && perm !== "addRole");
+      }
+
+      if (permission === "viewAllUsers" && hasPermission) {
+        return prevPermissions.filter((perm) => perm !== "viewAllUsers" && perm !== "addUser");
       }
   
       return hasPermission
@@ -192,10 +202,10 @@ const AddNewRole = () => {
         />
       </motion.div>
       {loading && (
-  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-    <Loader2 className="animate-spin w-16 h-16 text-white" />
-  </div>
-)}
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[9999]">
+          <Loader2 className="animate-spin w-16 h-16 text-white" />
+        </div>
+      )}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

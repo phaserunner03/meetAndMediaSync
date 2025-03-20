@@ -5,8 +5,7 @@ import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
 import Unauthorized from "../page/error/Unauthorized";
 import NotFound from "../page/error/Unauthorized";
-
-import Dashboard from "../components/layout/Dashboard";
+import Dashboard from "../page/Dashboard";
 import DashboardHome from "../components/layout/Dashboard/DashboardHome";
 import Drive from "../components/layout/Dashboard/Drive";
 import Create from "../components/layout/Dashboard/Create";

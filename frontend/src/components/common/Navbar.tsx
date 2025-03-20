@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
-import { handleScrollToSection } from "./handleScrollToSection";
+import { handleScrollToSection } from "../layout/handleScrollToSection";
 
 const Navbar = () => {
   
@@ -11,13 +11,7 @@ const Navbar = () => {
 
 const navigate = useNavigate();
 
-const handleLogin = async () => {
-  try {
-      navigate("/login");
-  } catch (error) {
-      console.error("Login Error:", error);
-  }
-};
+const handleLogin = () => navigate("/login");
 
 const handleLogOut = async () => {
   try {
@@ -34,7 +28,6 @@ const handleLogOut = async () => {
 
       const sections = ["meditate", "journal", "contact"];
       let currentSection = "";
-
       sections.forEach((id) => {
         const section = document.getElementById(id);
         if (section) {

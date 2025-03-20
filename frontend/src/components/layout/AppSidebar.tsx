@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import logo from "../../assets/image.png"
+import { useState, useMemo, useCallback } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import logo from "../../assets/image.png";
 import {
   Home,
   Inbox,
@@ -12,50 +12,60 @@ import {
   BadgeInfo,
   X
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 
-
 const Sidebar = () => {
-  const { currentUser,logout  } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
-  const canViewUser = currentUser?.role.permissions?.includes("viewAllUsers");
-  const canAddRole = currentUser?.role.permissions?.includes("addRole");
-  const menuItems = [
-    { title: "Home", url: "/dashboard/home", icon: Home },
-    { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
-    { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
-    { title: "Drive", url: "/dashboard/drive", icon: HardDriveUpload },
 
-    ...(canViewUser ? [{ title: "Users", url: "/dashboard/add-users", icon: User }] : []),
-    ...(canAddRole ? [{ title: "Role", url: "/dashboard/add-role", icon: BadgeInfo }] : []),
-  ];
-  const handleLogOut = async () => {
+  const toggleSidebar = () => setIsOpen((prev) => !prev);
+
+  // Memoize role-based menu items
+  const menuItems = useMemo(() => {
+    const baseMenu = [
+      { title: "Home", url: "/dashboard/home", icon: Home },
+      { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
+      { title: "Create", url: "/dashboard/create", icon: CalendarPlus2 },
+      { title: "Drive", url: "/dashboard/drive", icon: HardDriveUpload },
+    ];
+
+    if (currentUser?.role.permissions?.includes("viewAllUsers")) {
+      baseMenu.push({ title: "Users", url: "/dashboard/add-users", icon: User });
+    }
+    if (currentUser?.role.permissions?.includes("addRole")) {
+      baseMenu.push({ title: "Role", url: "/dashboard/add-role", icon: BadgeInfo });
+    }
+    
+    return baseMenu;
+  }, [currentUser]);
+
+  // Handle Logout
+  const handleLogOut = useCallback(async () => {
     try {
       await logout();
-      navigate("/login"); // Redirect user to login page after logout
+      navigate("/login"); // Redirect to login
     } catch (error) {
       console.error("Logout Error:", error);
     }
-  };
+  }, [logout, navigate]);
 
   return (
     <>
+      {/* Navbar */}
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="px-3 py-3 lg:px-5 lg:pl-3 flex items-center justify-between">
           <button
             onClick={toggleSidebar}
             type="button"
-            className="inline-flex items-center p-2 text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-label="Toggle sidebar"
+            className="inline-flex items-center p-2 rounded-lg sm:hidden hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
           <NavLink to="/" className="flex items-center ms-2 md:me-24">
-          <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
+            <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
             <span className="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white ml-2">
               CloudCapture
             </span>
@@ -73,6 +83,7 @@ const Sidebar = () => {
         </div>
       </nav>
 
+      {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -93,18 +104,17 @@ const Sidebar = () => {
                     }`
                   }
                 >
-                  <Icon className="w-5 h-5 text-blue-500 transition duration-75 dark:text-gray-400" />
+                  <Icon className="w-5 h-5 text-blue-500 dark:text-gray-400" />
                   <span className="ms-3">{title}</span>
                 </NavLink>
               </li>
             ))}
 
-           
             {currentUser && (
               <li>
                 <button
                   onClick={handleLogOut}
-                  className="w-full flex items-center p-2 rounded-lg transition-all hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800"
+                  className="w-full flex items-center p-2 rounded-lg transition-all hover:bg-red-200 dark:hover:bg-red-800"
                 >
                   <LogOut className="w-5 h-5 text-red-500 dark:text-red-400" />
                   <span className="ms-3">Sign Out</span>

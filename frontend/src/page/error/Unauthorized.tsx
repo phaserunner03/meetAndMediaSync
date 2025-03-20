@@ -1,54 +1,53 @@
-import React, { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import { useAuth } from "../../context/authContext";
 import { toast } from "sonner";
 import { handleNotification } from "../../utils/notificationHandler";
-import { Loader2 } from "lucide-react";
+import Loader from "../../components/common/Loader"
 
 
 const Unauthorized = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [isLoading,setIsLoading]= useState(false)
-  
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (currentUser?.role.name !== "NAU") {
       navigate("/dashboard/home", { replace: true });
     }
-  }, [currentUser?.role, navigate]);
+  }, [currentUser, navigate]);
 
-  const sendNotification =async ()=>{
-    if (!currentUser){
-        toast.error("User not logged in");
-    };
+  const sendNotification = async () => {
+
     setIsLoading(true)
     toast.loading("Sending email");
     if (!currentUser) {
       toast.error("User not logged in");
       return;
     }
-    const result = await handleNotification(currentUser.displayName, currentUser.email);
 
-    setIsLoading(false);
-    toast.dismiss();
+    try {
+      const result = await handleNotification(currentUser.displayName, currentUser.email);
+      toast.dismiss();
 
-    if (result.success) {
-      toast.success(result.message || "Notification sent successfully!");
-    } else {
-      toast.error(result.message || "Failed to send notification.");
+      if (result.success) {
+        toast.success(result.message || "Notification sent successfully!");
+      } else {
+        toast.error(result.message || "Failed to send notification.");
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error("An error occurred while sending the notification.");
+    } finally {
+      setIsLoading(false);
     }
-
-
   }
 
   return (
     <section className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
-        {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-md z-50">
-          <Loader2 className="w-16 h-16 text-primary-600 dark:text-primary-500 animate-spin" />
-        </div>
+      {isLoading && (
+        <Loader />
       )}
       <div className="text-center">
         <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-primary-600 dark:text-primary-500">
@@ -60,10 +59,12 @@ const Unauthorized = () => {
         <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
           Notify admin to grant you access.
         </p>
-        <Button onClick={sendNotification} disabled={isLoading}>Send email</Button>
+        <Button onClick={sendNotification} disabled={isLoading}>{isLoading ? "Sending..." : "Send email"}</Button>
       </div>
     </section>
   );
 };
 
 export default Unauthorized;
+
+

@@ -4,7 +4,7 @@ import logo from "../../assets/image.png"
 import {
   Home,
   Inbox,
-  Calendar,
+  HardDriveUpload,
   LogOut,
   Menu,
   CalendarPlus2,
@@ -28,7 +28,8 @@ const Sidebar = () => {
     { title: "Home", url: "/dashboard/home", icon: Home },
     { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
     { title: "Create", url: "/dashboard/create", icon:CalendarPlus2  },
-    { title: "Avaibility", url: "/dashboard/avaibility", icon: Calendar },
+    { title: "Drive", url: "/dashboard/drive", icon: HardDriveUpload },
+
     ...(canViewUser ? [{ title: "Users", url: "/dashboard/add-users", icon: User }] : []),
     ...(canAddRole ? [{ title: "Role", url: "/dashboard/add-role", icon: BadgeInfo }] : []),
   ];

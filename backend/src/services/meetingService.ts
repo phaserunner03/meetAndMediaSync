@@ -7,7 +7,7 @@ import validateMeetingDetails from '../utils/meetingValidation';
 
 interface User extends Document {
     _id: string;
-    role: { _id: mongoose.Schema.Types.ObjectId, name: string };
+    role: { _id: mongoose.Schema.Types.ObjectId, name: string, permissions:string[] };
     refreshToken: string;
 }
 

@@ -7,7 +7,8 @@ import {Button} from "../../ui/button";
 import permissionsData from "../../../data/permissions.json";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import Loader from "../../common/Loader";
+import axios from "axios"
 
 const AddNewRole = () => {
   const { currentUser } = useAuth();
@@ -38,7 +39,15 @@ const AddNewRole = () => {
       const response = await axiosInstance.get("/api/roles/allRoles");
       setRoles(response.data.data.roles);
     } catch (error) {
-      toast.error("Error fetching roles");
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -55,7 +64,15 @@ const AddNewRole = () => {
       toast.success("Role added successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      toast.error("Error adding role");
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
       setOpenAddDialog(false);
@@ -74,7 +91,15 @@ const AddNewRole = () => {
       toast.success("Role updated successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      toast.error("Error updating role");
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
       setOpenEditDialog(false);
@@ -89,7 +114,15 @@ const AddNewRole = () => {
       toast.success("Role deleted successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {
-      toast.error("Error deleting role");
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
       setOpenDeleteDialog(false);
@@ -98,12 +131,35 @@ const AddNewRole = () => {
   };
 
   const handlePermissionChange = (permission: string) => {
-    setNewRolePermissions((prevPermissions) =>
-      prevPermissions.includes(permission)
+    setNewRolePermissions((prevPermissions) => {
+      const hasPermission = prevPermissions.includes(permission);
+
+      if (permission === "addRole") {
+        return hasPermission
+          ? prevPermissions.filter((perm) => perm !== "addRole") // Unselect only "addRole"
+          : [...prevPermissions, "addRole", "viewRoles"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
+      }
+
+      if (permission === "addUser") {
+        return hasPermission
+          ? prevPermissions.filter((perm) => perm !== "addUser") // Unselect only "addRole"
+          : [...prevPermissions, "addUser", "viewAllUsers"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
+      }
+  
+      if (permission === "viewRoles" && hasPermission) {
+        return prevPermissions.filter((perm) => perm !== "viewRoles" && perm !== "addRole");
+      }
+
+      if (permission === "viewAllUsers" && hasPermission) {
+        return prevPermissions.filter((perm) => perm !== "viewAllUsers" && perm !== "addUser");
+      }
+  
+      return hasPermission
         ? prevPermissions.filter((perm) => perm !== permission)
-        : [...prevPermissions, permission]
-    );
+        : [...prevPermissions, permission];
+    });
   };
+  
 
   const handleCloseDialog = (setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
     return (event: React.MouseEvent) => {
@@ -114,8 +170,8 @@ const AddNewRole = () => {
 
   const filteredRoles = roles.filter(role => role.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser || currentUser.role.name !== "SuperAdmin") {
-    return null; // Do not render if the user is not an admin
+  if (!currentUser || !currentUser.role.permissions.includes("viewRoles")) {
+    return null; 
   }
 
   return (
@@ -145,11 +201,9 @@ const AddNewRole = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </motion.div>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <Loader2 className="animate-spin" />
-        </div>
-      ) : (
+      {loading && (
+        <Loader/>
+      )}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -179,7 +233,7 @@ const AddNewRole = () => {
             </motion.div>
           ))}
         </motion.div>
-      )}
+    
 
       {/* Add Role Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>

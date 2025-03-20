@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { MoreVertical, Loader2 } from "lucide-react";
+import { MoreVertical, Copy, ExternalLink} from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { useMeetings } from "../../../context/meetingContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../../ui/dialog";
@@ -12,7 +12,8 @@ import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
 import { toast } from "sonner";
 import { cn } from "../../../lib/utils";
-
+import { motion } from "framer-motion";
+import Loader from "../../common/Loader"
 interface Meeting {
   id: string;
   title: string;
@@ -60,6 +61,21 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
+  const getMeetingStatusColor = (meeting: any) => {
+    const now = new Date();
+    const start = new Date(meeting.startTime.dateTime);
+    const end = new Date(meeting.endTime.dateTime);
+
+    if (now >= start && now <= end) return "bg-green-500"; 
+    if (now > end) return "bg-blue-500"; 
+    return "bg-purple-500";
+  };
+
+  const copyToClipboard = (meeting:any) => {
+    navigator.clipboard.writeText(meeting.meetLink);
+    toast.success("Meeting link copied!");
+  };
+
   const formatDateTimeLocal = (dateString: string) => {
     const date = new Date(dateString);
     return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
@@ -68,7 +84,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   };
 
   useEffect(() => {
-    
+
     if (editMeetingData) {
       reset({
         title: editMeetingData.title,
@@ -83,20 +99,20 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
 
   const onSubmit = async (data: any) => {
     if (!editMeetingData) return;
-  
+
     // Prepare the updated meeting data first
     const updatedMeetingData = {
       title: data.title,
       description: data.description,
       location: data.location,
       participants: data.participants.split(",").map((email: string) => email.trim()),
-      startTime: new Date(data.startTime).toISOString(), 
+      startTime: new Date(data.startTime).toISOString(),
       endTime: new Date(data.endTime).toISOString(),
     };
-    
+
     const result = await editMeeting(editMeetingData.id, updatedMeetingData);
-  
-    
+
+
     if (result.success) {
       toast.success("✅ Meeting updated successfully!");
       setEditMeetingData(null);
@@ -105,22 +121,27 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
       toast.error(`❌ Failed to update meeting: ${result.message}`);
     }
   };
-  
+
 
 
   return (
     <div className="relative mt-6">
       {loading ? (
-        <div className="flex justify-center items-center h-[200px]">
-          <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
-        </div>
+        <Loader/>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+
+
           {meetings.length === 0 ? (
             <div className="col-span-full text-center text-gray-500">No meetings found.</div>
           ) : (
             meetings.map((meeting, index) => (
               <Card key={meeting.id || index} className="relative p-4 shadow-md border border-gray-200 rounded-lg">
+                <div className={`absolute top-0 left-0 w-full h-1 ${getMeetingStatusColor(meeting)}`} />
                 <CardHeader className="flex  flex-row justify-between items-center">
                   <div className="flex-1">
                     <CardTitle className="whitespace-normal">{meeting.title}</CardTitle>
@@ -160,9 +181,19 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
                   <p className="text-gray-700">
                     <strong>Location:</strong> {meeting.location || "No location provided"}
                   </p>
-                  <a href={meeting.meetLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                    Join Meeting
-                  </a>
+                  <div className="flex gap-2">
+                   
+                    <Button variant="outline" onClick={() => copyToClipboard(meeting)}>
+                      <Copy size={16} className="mr-2" />
+                      Copy Link
+                    </Button>
+
+                   
+                    <Button variant="default" onClick={() => window.open(meeting.meetLink, "_blank")}>
+                      <ExternalLink size={16} className="mr-2" />
+                      Join Meeting
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))
@@ -200,7 +231,8 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
               </DialogContent>
             </Dialog>
           )}
-        </div>
+        </motion.div>
+
       )}
     </div>
   );

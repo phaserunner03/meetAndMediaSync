@@ -10,3 +10,14 @@ export async function getAllFolders(){
     }
 
 }
+
+export async function getFilesInFolder(folderId:string){
+    try{
+        const response = await axiosInstance.get(`/api/drive/folders/${folderId}`);
+        return response;
+    }
+    catch(error:any){
+        return { success: false, message: error.response?.data?.message , data:{} };
+    }
+
+}

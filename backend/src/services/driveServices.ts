@@ -1,0 +1,138 @@
+import {google,drive_v3} from 'googleapis';
+
+interface Payload {
+    type: string;
+    client_id: string;
+    client_secret: string;
+    refresh_token: string;
+}
+
+async function authorize(payload: Payload) {
+    const { client_id, client_secret, refresh_token } = payload;
+    const client = new google.auth.OAuth2(client_id, client_secret);
+    client.setCredentials({ refresh_token });
+    return client;
+}
+
+async function getCloudCaptureFolder(refresh_token:string){
+    const payload: Payload = {
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token,
+    };
+    const auth = await authorize(payload);
+    const drive = google.drive({ version: "v3", auth });
+
+    try{
+        const res = await drive.files.list({
+            q: "name='CloudCapture' and mimeType='application/vnd.google-apps.folder'",
+            fields: "files(id, name)",
+        })
+
+        let folder = await res.data.files?.[0];
+
+        return folder?.id
+    }
+    catch (error) {
+        console.error("Error getting/creating CloudCapture folder:", error);
+        throw new Error("Failed to get CloudCapture folder");
+    }
+
+
+}
+async function getAllFiles(refresh_token:string){
+    const folderId = await getCloudCaptureFolder(refresh_token)
+    if (!folderId) {
+        throw new Error("CloudCapture folder not found.");
+    }
+    const payload: Payload = {
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token,
+    };
+
+    const auth = await authorize(payload);
+    const drive = google.drive({ version: "v3", auth });
+
+    try {
+        const foldersRes = await drive.files.list({
+            q: `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder'`,
+            fields: "files(id, name)",
+        });
+        const folders = foldersRes.data.files || [];
+        const result: Record<string, any> = { folders: {}, allFiles: [] };
+
+        
+        for (const folder of folders) {
+            const folderFilesRes = await drive.files.list({
+                q: `'${folder.id}' in parents`,
+                fields: "files(id, name, webViewLink, webContentLink, mimeType)",
+            });
+
+            if (folder.name) {
+                result.folders[folder.name] = folderFilesRes.data.files || [];
+            }
+            result.allFiles.push(...(folderFilesRes.data.files || []));
+        }
+
+        return result;
+    } catch (error) {
+        console.error("Error fetching CloudCapture files:", error);
+        throw new Error("Failed to retrieve files");
+    }
+}
+
+async function getAllFolders(refresh_token:string){
+    const folderId = await getCloudCaptureFolder(refresh_token);
+    if (!folderId) throw new Error("CloudCapture folder not found.");
+
+    const auth = await authorize({
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token,
+    });
+
+    const drive = google.drive({ version: "v3", auth });
+    const foldersRes = await drive.files.list({
+        q: `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder'`,
+        fields: "files(id, name)",
+    });
+
+    return foldersRes.data.files || [];
+
+}
+
+async function getFilesInFolder(refresh_token:string, folderId:string){
+    console.log(folderId)
+    const auth = await authorize({
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token,
+    });
+
+    const drive = google.drive({ version: "v3", auth });
+    const filesRes = await drive.files.list({
+        q: `'${folderId}' in parents`,
+        fields: "files(id, name, webViewLink, webContentLink, mimeType)",
+    });
+
+    return filesRes.data.files || [];
+
+}
+
+async function deleteFile(refresh_token: string, fileId: string) {
+    const auth = await authorize({
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token,
+    });
+
+    const drive = google.drive({ version: "v3", auth });
+    await drive.files.delete({ fileId });
+}
+export {getCloudCaptureFolder,getFilesInFolder, getAllFolders, deleteFile};

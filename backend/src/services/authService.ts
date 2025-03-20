@@ -31,6 +31,7 @@ function getGoogleAuthURL(): string {
                 "profile",
                 "email",
                 "https://www.googleapis.com/auth/calendar",
+                "https://www.googleapis.com/auth/drive",
             ],
         });
     } catch (err) {

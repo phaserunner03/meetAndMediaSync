@@ -1,19 +1,14 @@
 import { google } from "googleapis";
 import User from "../models/User";
 import Role from "../models/Role";
+import { notifyAdminToAddUser } from "./userService";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
 import mongoose, { Document } from 'mongoose';
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-const SMTP_HOST = process.env.SMTP_HOST;
-const SMTP_PORT = parseInt(process.env.SMTP_PORT!);
-const SMTP_USER = process.env.SMTP_USER;
-const SMTP_PASS = process.env.SMTP_PASS;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -27,11 +22,6 @@ interface UserDocument extends Document {
     refreshToken: string;
 }
 
-interface RoleDocument extends Document {
-    name: string;
-    permissions: string[];
-}
-
 function getGoogleAuthURL(): string {
     try {
         return oauth2Client.generateAuthUrl({
@@ -41,6 +31,7 @@ function getGoogleAuthURL(): string {
                 "profile",
                 "email",
                 "https://www.googleapis.com/auth/calendar",
+                "https://www.googleapis.com/auth/drive",
             ],
         });
     } catch (err) {
@@ -97,46 +88,6 @@ async function processGoogleAuth(code: string) {
     }
 }
 
-async function notifyAdminToAddUser(userInfo: any) {
-    try {
-        const transporter = nodemailer.createTransport({
-            host: SMTP_HOST,
-            port: SMTP_PORT,
-            secure: false,
-            auth: {
-                user: SMTP_USER,
-                pass: SMTP_PASS,
-            },
-        });
-
-        const mailOptions = {
-            from: `"No Reply" <${SMTP_USER}>`,
-            to: ADMIN_EMAIL,
-            subject: "New User Access Request",
-            text: `A new user with email ${userInfo.email} has requested access.`,
-            html: `
-                <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-                    <h2 style="color: #333;">New User Access Request</h2>
-                    <p>A new user has requested access to the system. Here are the details:</p>
-                    <ul>
-                        <li><strong>Name:</strong> ${userInfo.name}</li>
-                        <li><strong>Email:</strong> ${userInfo.email}</li>
-                    </ul>
-                    <p>Please review and take the necessary action.</p>
-                    <p>Thank you,</p>
-                    <p><em>Your Team</em></p>
-                </div>
-            `,
-        };
-
-        await transporter.sendMail(mailOptions);
-        console.log(`Notification sent to admin for user: ${userInfo.email}`);
-    } catch (err) {
-        console.error("Error notifying admin:", err);
-        throw new Error("Failed to notify admin");
-    }
-}
-
 function generateJWT(user: UserDocument): string {
     try {
         return jwt.sign(
@@ -150,35 +101,16 @@ function generateJWT(user: UserDocument): string {
     }
 }
 
-async function getAuthenticatedUser(userId: string) {
+async function refreshJwtToken(refreshToken: string) {
     try {
-        const user = await User.findOne({ googleId: userId })
-            .select("-refreshToken")
-            .populate<{ role: typeof Role }>("role", "name permissions");
+        const user = await User.findOne({ refreshToken });
+        if (!user) throw new Error("User not found");
 
-        if (!user) {
-            throw new Error("User not found");
-        }
-        return {
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            role: {
-                name: user.role.name,
-                permissions: (user.role as unknown as RoleDocument).permissions,
-            }
-        };
-    } catch (err) {
-        console.error("Error fetching authenticated user:", err);
-        throw new Error("Failed to fetch user data");
-    }
-}
-
-async function refreshAccessToken(refreshToken: string) {
-    try {
-        oauth2Client.setCredentials({ refresh_token: refreshToken });
-        const { credentials } = await oauth2Client.refreshAccessToken();
-        const newToken = jwt.sign({ googleId: credentials.id_token }, SECRET_KEY, { expiresIn: "7d" });
+        const newToken = jwt.sign(
+            { uid: user.googleId, email: user.email },
+            process.env.SECRET_KEY!,
+            { expiresIn: "7d" }
+        );
 
         return newToken;
     } catch (err) {
@@ -187,102 +119,5 @@ async function refreshAccessToken(refreshToken: string) {
     }
 }
 
-async function addUser(email: string, roleId: string) {
-    try {
-        const roleDoc = await Role.findById(roleId); 
-        if (!roleDoc) {
-            throw new Error("Invalid role");
-        }
-
-        const user = new User({ email, role: roleDoc._id });
-        await user.save();
-        return user;
-    } catch (err) {
-        console.error("Error adding user:", err);
-        throw new Error("Failed to add user");
-    }
-}
-
-async function addRole(name: string, permissions: string[]) {
-    try {
-        const role = new Role({ name, permissions });
-        await role.save();
-        return role;
-    } catch (err) {
-        console.error("Error adding role:", err);
-        throw new Error("Failed to add role");
-    }
-}
-
-async function editUserRole(userId: string, newRole: mongoose.Schema.Types.ObjectId) {
-    try {
-        const roleDoc = await Role.findById(newRole);
-        if (!roleDoc) {
-            throw new Error("Invalid role");
-        }
-
-        const user = await User.findById(userId);
-        if (!user) {
-            throw new Error("User not found");
-        }
-
-        user.role = newRole;
-        await user.save();
-        return user;
-    } catch (err) {
-        console.error("Error editing user role:", err);
-        throw new Error("Failed to edit user role");
-    }
-}
-async function editRole(id: string, name: string, permissions: string[]) {
-    try {
-        const roleDoc = await Role.findById(id);
-        if (!roleDoc) {
-            throw new Error("Invalid role");
-        }
-        roleDoc.name = name;
-        roleDoc.permissions = permissions;
-        await roleDoc.save();
-        return roleDoc;
-    } catch (err) {
-        console.error("Error editing role:", err);
-        throw new Error("Failed to edit role");
-    }
-}
-
-async function deleteUser(userId: string) {
-    try {
-        const user = await User.findByIdAndDelete(userId);
-        if (!user) {
-            throw new Error("User not found");
-        }
-        return user;
-    } catch (err) {
-        console.error("Error deleting user:", err);
-        throw new Error("Failed to delete user");
-    }
-}
-
-async function deleteRole(id: string) {
-    try {
-        const role = await Role.findByIdAndDelete(id);
-        if (!role) {
-            throw new Error("Role not found");
-        }
-
-        const nauRole = await Role.findOne({ name: "NAU" });
-        if (!nauRole) {
-            throw new Error("NAU role not found");
-        }
-
-        await User.updateMany({ role: id }, { role: nauRole._id });
-
-        return role;
-    } catch (err) {
-        console.error("Error deleting Role:", err);
-        throw new Error("Failed to delete Role");
-    }
-}
-
-export { getGoogleAuthURL, processGoogleAuth, getAuthenticatedUser, refreshAccessToken, notifyAdminToAddUser, addUser, addRole, editUserRole, deleteUser ,editRole,deleteRole};
+export { getGoogleAuthURL, processGoogleAuth, refreshJwtToken };
 

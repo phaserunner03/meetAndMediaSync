@@ -3,8 +3,21 @@ import { useAuth } from "../../../context/authContext";
 import { TextField, Select, MenuItem, InputLabel, FormControl, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axiosInstance from "../../../utils/axiosConfig";
-import {Button} from "../../ui/button";
+import { Button } from "../../ui/button";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+
+const addUserSchema = z.object({
+  email: z.string().email("Invalid email format"),
+  role: z.string().nonempty("Role is required"),
+});
+
 
 const AddUsers = () => {
   const { currentUser } = useAuth();
@@ -13,7 +26,7 @@ const AddUsers = () => {
     name: string;
     permissions: string[];
   }
-  
+
   const [roles, setRoles] = useState<Role[]>([]);
   interface User {
     _id: string;
@@ -22,7 +35,6 @@ const AddUsers = () => {
   }
 
   const [users, setUsers] = useState<User[]>([]);
-  const [email, setEmail] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -30,6 +42,8 @@ const AddUsers = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const canAddUser = currentUser?.role.permissions?.includes("addUser");
 
   useEffect(() => {
     // Fetch roles and users from the backend
@@ -37,60 +51,137 @@ const AddUsers = () => {
     fetchUsers();
   }, []);
 
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(addUserSchema),
+    defaultValues: {
+      email: "",
+      role: "",
+    },
+  });
+
   const fetchRoles = async () => {
-    // Fetch roles from the backend
-    const response = await axiosInstance.get("/api/auth/allRoles");
-    setRoles(response.data.roles);
+    setLoading(true);
+    try {
+      // Fetch roles from the backend
+      const response = await axiosInstance.get("/api/roles/allRoles");
+    
+      setRoles(response.data.data.roles);
+      
+    } catch (error) {
+      setRoles([{ _id: "67cad2fed3dd89f49742abee", name: "NAU", permissions: [] }]);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchUsers = async () => {
-    // Fetch users from the backend
-    const response = await axiosInstance.get("/api/auth/allUsers");
-    setUsers(response.data.users);
+    setLoading(true);
+    try {
+      // Fetch users from the backend
+      const response = await axiosInstance.get("/api/users/allUsers");
+      setUsers(response.data.data.users);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleAddUser = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      const response = await axiosInstance.post("/api/auth/addUser", {
-        email,
-        role: selectedRole,
-      });
-      console.log(`User added: ${response.data}`);
-      fetchUsers(); // Refresh the user list
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
-    setOpenAddDialog(false);
-  };
+  const handleAddUser = async (data: { email: string; role: string }) => {
+      if (!data.email || !data.role) {
+        toast.error("Email and Role are required!");
+        return;
+      }
+  
+      setLoading(true);
+  
+      try {
+        await axiosInstance.post("/api/users/addUser", {
+          email: data.email.trim(), // Ensure no leading/trailing spaces
+          role: data.role,
+        });
+  
+        toast.success("User added successfully");
+        fetchUsers();
+        reset();
+  
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("Add User Error:", error.response?.data);
+          toast.error(error.response?.data?.message || "Error adding user");
+        } else {
+          toast.error("Something went wrong. Please try again.");
+        }
+      } finally {
+        setLoading(false);
+        setOpenAddDialog(false);
+      }
+    };
+
 
   const handleEditUserRole = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
-      const response = await axiosInstance.put('/api/auth/editUserRole', {
+      await axiosInstance.put('/api/users/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
-      console.log(`User role updated: ${response.data}`);
+      toast.success("User role updated successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
-      console.error("Error updating user role:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+      setOpenEditDialog(false);
     }
-    setOpenEditDialog(false);
   };
 
   const handleDeleteUser = async () => {
     if (!userToDelete) return;
+    setLoading(true);
     try {
-      const response = await axiosInstance.delete(`/api/auth/deleteUser/${userToDelete}`);
-      console.log(userToDelete);
-      console.log(`User deleted: ${response.data}`);
+      await axiosInstance.delete(`/api/users/deleteUser/${userToDelete}`);
+      toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
-      console.error("Error deleting user:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Unauthorized! Please log in again.");
+        } else {
+          toast.error(error.response?.data?.message || "Error updating role");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+      setOpenDeleteDialog(false);
+      setUserToDelete(null);
     }
-    setOpenDeleteDialog(false);
-    setUserToDelete(null);
   };
 
   const handleCloseDialog = (setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -102,12 +193,17 @@ const AddUsers = () => {
 
   const filteredUsers = users.filter(user => user.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser || currentUser.role.name !== "SuperAdmin") {
-    return null; // Do not render if the user is not an admin
+  if (!currentUser || !currentUser.role.permissions.includes("viewUser")) {
+    return null;
   }
 
   return (
     <div className="pt-12 sm:ml-64 px-4 ">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[9999]">
+          <Loader2 className="animate-spin w-16 h-16 text-white" />
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -116,7 +212,7 @@ const AddUsers = () => {
       >
         <h1 className="text-2xl font-bold">Users</h1>
         <IconButton color="primary" onClick={() => setOpenAddDialog(true)}>
-          <AddIcon />
+          {canAddUser && (<AddIcon />)}
         </IconButton>
       </motion.div>
       <motion.div
@@ -133,6 +229,8 @@ const AddUsers = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </motion.div>
+
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -163,72 +261,73 @@ const AddUsers = () => {
         ))}
       </motion.div>
 
-      {/* Add User Dialog */}
+
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>
         <DialogTitle className="text-center font-bold text-2xl mb-4 ">Add User</DialogTitle>
-        <div className="flex justify-center pt-px"> 
-        <DialogContent>
-          <form onSubmit={handleAddUser} className="flex flex-col gap-4">
-            <TextField
-              type="email"
-              label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              fullWidth
-              className="mb-4"
-            />
-            <FormControl fullWidth className="mb-4 mt-4">
-              <InputLabel>Select Role</InputLabel>
-              <Select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                required
-              >
-                <MenuItem value="" disabled>Select Role</MenuItem>
-                {roles.map((role) => (
-                  <MenuItem key={role._id} value={role._id}>
-                    {role.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <DialogActions>
-              <Button onClick={handleCloseDialog(setOpenAddDialog)} color="primary">Cancel</Button>
-              <Button type="submit" variant="default" color="primary">Add User</Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
+        <div className="flex justify-center pt-px">
+          <DialogContent>
+            <form onSubmit={handleSubmit(handleAddUser)} className="flex flex-col gap-4">
+              <TextField
+                type="email"
+                label="Email"
+                {...register("email")}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                fullWidth
+                className="mb-4"
+              />
+              <FormControl fullWidth className="mb-4">
+                <InputLabel>Select Role</InputLabel>
+                <Select
+                  {...register("role")}
+                  value={selectedRole || ""} 
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                  error={!!errors.role}
+                >
+                  <MenuItem value="" disabled>Select Role</MenuItem>
+                  {roles.map((role) => (
+                    <MenuItem key={role._id} value={role._id}>
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.role && <p className="text-red-500">{errors.role.message}</p>}
+              </FormControl>
+              <DialogActions>
+                <Button onClick={handleCloseDialog(setOpenAddDialog)} color="primary">Cancel</Button>
+                <Button type="submit" variant="default" color="primary">Add User</Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
         </div>
       </Dialog>
 
-      {/* Edit User Role Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseDialog(setOpenEditDialog)}>
         <DialogTitle>Edit User Role</DialogTitle>
-        <div className="flex justify-center pt-px"> 
-        <DialogContent>
-          <form onSubmit={handleEditUserRole}>
-            <FormControl fullWidth className="mb-4">
-              <InputLabel>Select Role</InputLabel>
-              <Select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                required
-              >
-                <MenuItem value="" disabled>Select Role</MenuItem>
-                {roles.map((role) => (
-                  <MenuItem key={role._id} value={role._id}>
-                    {role.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <DialogActions>
-              <Button onClick={handleCloseDialog(setOpenEditDialog)} color="primary">Cancel</Button>
-              <Button type="submit" variant="default" color="secondary">Edit Role</Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
+        <div className="flex justify-center pt-px">
+          <DialogContent>
+            <form onSubmit={handleEditUserRole}>
+              <FormControl fullWidth className="mb-4">
+                <InputLabel>Select Role</InputLabel>
+                <Select
+                  value={selectedRole}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                  required
+                >
+                  <MenuItem value="" disabled>Select Role</MenuItem>
+                  {roles.map((role) => (
+                    <MenuItem key={role._id} value={role._id}>
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <DialogActions>
+                <Button onClick={handleCloseDialog(setOpenEditDialog)} color="primary">Cancel</Button>
+                <Button type="submit" variant="default" color="secondary">Edit Role</Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
         </div>
       </Dialog>
 

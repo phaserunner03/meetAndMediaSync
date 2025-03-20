@@ -6,7 +6,7 @@ interface Meeting {
     title: string;
     description?: string;
     location: string;
-    participants: string;
+    participants: string[];
     startTime: { dateTime: string };
     endTime: { dateTime: string };
     meetLink: string;
@@ -26,7 +26,7 @@ interface MeetingContextType {
     setSearchQuery: (query: string) => void;
     setSelectedDay: (day: string | null) => void;
     createMeeting: (meetingData: any) => Promise<{ success: boolean; data?: any; message?: string }>;
-    editMeeting: (id: string, updateData: Partial<Meeting>) => Promise<void>;
+    editMeeting: (id: string, updateData: any) => Promise<{ success: boolean; message?: string }> 
     deleteMeeting: (id: string) => Promise<void>;
 }
 
@@ -41,8 +41,8 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const [isLoading, setIsLoading] = useState(false);
     
     // Month & Year states
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1); // Default: Current month
-    const [year, setYear] = useState<number>(new Date().getFullYear()); // Default: Current year
+    const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
+    const [year, setYear] = useState<number>(new Date().getFullYear()); 
 
     const fetchMeetings = async (fetchMonth = month, fetchYear = year) => {
         setIsLoading(true);
@@ -75,14 +75,22 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
         }
     };
 
-    const editMeeting = async (id: string, updatedData: Partial<Meeting>) => {
+    const editMeeting = async (id: string, updatedData: any) => {
         try {
-            await axiosInstance.put(`/api/meetings/update/${id}`, updatedData);
-            fetchMeetings(month,year); // Refresh meetings after update
-        } catch (error) {
-            console.error("Error updating meeting:", error);
+          const response = await axiosInstance.put(`/api/meetings/update/${id}`, updatedData);
+          
+          if (response.data.success) {
+            fetchMeetings(month, year); 
+            return { success: true };
+          } else {
+            return { success: false, message: response.data.message || "Unknown error" };
+          }
+        } catch (error: any) {
+          console.error("Error updating meeting:", error);
+          return { success: false, message: error.response?.data?.message || error.message };
         }
-    };
+      };
+      
 
     const deleteMeeting = async (id: string) => {
         try {

@@ -3,6 +3,9 @@ import databaseConnect from "./config/database";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import roleRoutes from "./routes/roleRoutes";
+import driveRoutes from "./routes/driveRoutes"
 import cookieParser from "cookie-parser";
 import meetingRoutes from "./routes/meetingRoutes";
 
@@ -25,12 +28,16 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/roles", roleRoutes);
 app.use("/api/meetings", meetingRoutes);
+app.use("/api/drive", driveRoutes);
 
 app.get("/", (req, res) => {
   return res.json({
     success: true,
     message: "Your server is up and running....",
+    data: {}
   });
 });
 

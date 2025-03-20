@@ -3,6 +3,7 @@
   "addUser",
   "editRole",
   "deleteRole",
+  "viewRoles",
   "editUserRole",
   "deleteUser",
   "viewUser",

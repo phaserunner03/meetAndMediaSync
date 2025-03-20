@@ -47,8 +47,7 @@ const MeetingForm = () => {
       startTime: new Date(data.startTime).toISOString(),
       endTime: new Date(data.endTime).toISOString(),
     };
-    console.log(meetingData.participants)
-
+    console.log(meetingData)
     try {
       const result = await createMeeting(meetingData);
 

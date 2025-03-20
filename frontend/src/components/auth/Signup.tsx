@@ -1,26 +1,11 @@
-import React from "react";
-import SignupForm from "./signupForm";
-import logo from "../../assets/image.png"
-import { Link } from "react-router-dom";
+import AuthNavbar from "../common/AuthNavbar";
+import SignupForm from "./SignupForm";
 
 const SignUp: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center p-4 shadow-md">
-        <div className="text-xl font-bold flex items-center">
-          <img src={logo} alt="CloudCapture Logo" className="h-8 mr-2" />
-          <span className="text-blue-600">CloudCapture</span>
-        </div>
-        <Link to="/login" className="text-blue-600 hover:underline">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          Log In
-        </button>
-        </Link>
-        
-      </nav>
+      <AuthNavbar buttonText="Log In" buttonLink="/login" />
 
-      {/* Content */}
       <div className="flex flex-col md:flex-row flex-1">
         {/* Left Section */}
         <div className="flex-1 bg-gray-100 p-10 flex flex-col justify-center">
@@ -37,7 +22,6 @@ const SignUp: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Section (Signup Form) */}
         <SignupForm />
       </div>
     </div>

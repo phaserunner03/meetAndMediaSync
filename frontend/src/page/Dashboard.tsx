@@ -1,18 +1,19 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { ReactNode } from "react";
-import AppSidebar from "./AppSidebar";
-import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
-import { useAuth }  from "../../context/authContext";
+import AppSidebar from "../components/layout/AppSidebar";
+import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
+import { useAuth } from "../context/authContext";
+
 
 interface DashboardProps {
   children?: ReactNode;
 }
 
 const Dashboard = ({ children }: DashboardProps) => {
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useAuth();
 
-  if (loading) return <p>Loading...</p>;
-  if (!currentUser) return <Navigate to="/login" />; 
+
+  if (!currentUser) return <Navigate to="/login" replace />;
 
   return (
     <SidebarProvider>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { MoreVertical, Loader2, Copy, ExternalLink} from "lucide-react";
+import { MoreVertical, Copy, ExternalLink} from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { useMeetings } from "../../../context/meetingContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../../ui/dialog";
@@ -13,6 +13,7 @@ import { Textarea } from "../../ui/textarea";
 import { toast } from "sonner";
 import { cn } from "../../../lib/utils";
 import { motion } from "framer-motion";
+import Loader from "../../common/Loader"
 interface Meeting {
   id: string;
   title: string;
@@ -126,9 +127,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   return (
     <div className="relative mt-6">
       {loading ? (
-        <div className="flex justify-center items-center h-[200px]">
-          <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
-        </div>
+        <Loader/>
       ) : (
         <motion.div initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

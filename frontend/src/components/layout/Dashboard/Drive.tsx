@@ -7,6 +7,7 @@ import { Button } from "../../ui/button";
 import { ScrollArea } from "../../ui/scroll-area";
 import axiosInstance from "../../../utils/axiosConfig";
 import { useDrive } from "../../../context/driveContext"
+import Loader from "../../common/Loader";
 
 const Drive = () => {
     const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();
@@ -75,9 +76,7 @@ const Drive = () => {
                 <h2 className="text-3xl font-bold mb-6">📁 Drive</h2>
 
                 {loading && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[9999]">
-                        <Loader2 className="animate-spin w-16 h-16 text-white" />
-                    </div>
+                    <Loader/>
                 )}
 
                 {!selectedFolder ? (

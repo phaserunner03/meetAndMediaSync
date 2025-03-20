@@ -6,22 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { ScrollArea } from "../../ui/scroll-area";
 import axiosInstance from "../../../utils/axiosConfig";
-
-interface FolderData {
-    id: string;
-    name: string;
-}
-
-interface FileData {
-    id: string;
-    name: string;
-    webViewLink?: string;
-}
+import { useDrive } from "../../../context/driveContext"
 
 const Drive = () => {
-    const [folders, setFolders] = useState<FolderData[]>([]);
-    const [selectedFolder, setSelectedFolder] = useState<FolderData | null>(null);
-    const [files, setFiles] = useState<FileData[]>([]);
+    const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();
     const [loading, setLoading] = useState(false);
     const [deleting, setDeleting] = useState<string | null>(null);
 
@@ -45,7 +33,7 @@ const Drive = () => {
         fetchFolders();
     }, []);
 
-    const handleFolderClick = async (folder: FolderData) => {
+    const handleFolderClick = async (folder: { id: string; name: string }) => {
         setSelectedFolder(folder);
         setLoading(true);
         try {
@@ -67,7 +55,6 @@ const Drive = () => {
     };
 
     const handleDeleteFile = async (fileId: string) => {
-        
         if (!selectedFolder) return;
         setDeleting(fileId);
         try {
@@ -86,15 +73,14 @@ const Drive = () => {
         <div className="p-6 sm:ml-64 min-h-screen">
             <div className="max-w-5xl mx-auto">
                 <h2 className="text-3xl font-bold mb-6">📁 Drive</h2>
-            {loading && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[9999]">
-                    <Loader2 className="animate-spin w-16 h-16 text-white" />
-                </div>
-            )}
 
+                {loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[9999]">
+                        <Loader2 className="animate-spin w-16 h-16 text-white" />
+                    </div>
+                )}
 
                 {!selectedFolder ? (
-                    // Show list of folders
                     <ScrollArea className="h-[500px]">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {folders.length === 0 ? (
@@ -121,11 +107,13 @@ const Drive = () => {
                         </div>
                     </ScrollArea>
                 ) : (
-                    // Show files inside selected folder
                     <div>
                         <Button
                             variant="outline"
-                            onClick={() => setSelectedFolder(null)}
+                            onClick={() => {
+                                setSelectedFolder(null);
+                                setFiles([]); // Reset files when going back
+                            }}
                             className="mb-4 flex items-center gap-2"
                         >
                             <ArrowLeft className="w-5 h-5" /> Back to Folders
@@ -141,33 +129,31 @@ const Drive = () => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                                     {files.map((file) => (
                                         <Card key={file.id} className="h-[140px] flex flex-col justify-between">
-                                        <CardHeader>
-                                            <CardTitle className="flex items-center gap-2">
-                                                <FileText className="w-6 h-6 text-gray-500" />
-                                                <span className="max-w-[180px] sm:max-w-full truncate">{file.name}</span>
-                                            </CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="flex gap-2 items-center">
-                                            <Button asChild variant="outline" className="flex items-center gap-2">
-                                                <a href={file.webViewLink} target="_blank" rel="noopener noreferrer">
-                                                    <Eye className="w-5 h-5" /> View
-                                                </a>
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                onClick={() => handleDeleteFile(file.id)}
-                                                className="flex items-center gap-2"
-                                                disabled={deleting === file.id}
-                                            >
-                                                {deleting === file.id ? (
-                                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                                ) : (
-                                                    <Trash2 className="w-5 h-5" />
-                                                )}
-                                                Delete
-                                            </Button>
-                                        </CardContent>
-                                    </Card>
+                                            <CardHeader>
+                                                <CardTitle className="flex items-center gap-2">
+                                                    <FileText className="w-6 h-6 text-gray-500" />
+                                                    <span className="max-w-[180px] sm:max-w-full truncate">
+                                                        {file.name}
+                                                    </span>
+                                                </CardTitle>
+                                            </CardHeader>
+                                            <CardContent className="flex gap-2 items-center">
+                                                <Button asChild variant="outline" className="flex items-center gap-2">
+                                                    <a href={file.webViewLink} target="_blank" rel="noopener noreferrer">
+                                                        <Eye className="w-5 h-5" /> View
+                                                    </a>
+                                                </Button>
+                                                <Button
+                                                    variant="destructive"
+                                                    onClick={() => handleDeleteFile(file.id)}
+                                                    className="flex items-center gap-2"
+                                                    disabled={deleting === file.id}
+                                                >
+                                                    {deleting === file.id ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
+                                                    Delete
+                                                </Button>
+                                            </CardContent>
+                                        </Card>
                                     ))}
                                 </div>
                             </ScrollArea>

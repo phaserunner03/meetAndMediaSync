@@ -1,41 +1,44 @@
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "capture_screenshot") {
+        if (!activeMeetId) {
+            console.warn("❌ No active Meet ID found. Cannot capture screenshot.");
+            sendResponse({ success: false, message: "No active Meet found." });
+            return;
+        }
+
         chrome.tabs.captureVisibleTab(null, { format: "png" }, (image) => {
             if (chrome.runtime.lastError) {
-                console.error("Screenshot error:", chrome.runtime.lastError.message);
-              sendResponse({ success: false, message: "Screenshot failed" });
-              return;
+                console.error("❌ Screenshot error:", chrome.runtime.lastError.message);
+                sendResponse({ success: false, message: "Screenshot failed" });
+                return;
             }
-            console.log("Screenshot taken");
+            console.log("✅ Screenshot taken");
             sendResponse({ success: true, image: image });
         });
-        
+
         return true;
     }
-    
+
     if (request.action === "upload_screenshot") {
-        chrome.identity.getAuthToken({ interactive: true }, function (token) {
-            if (chrome.runtime.lastError) {
-                console.error("OAuth Error:", chrome.runtime.lastError.message);
-                sendResponse({ success: false, message: "Authentication failed" });
-                return;
-          }
-          console.log("OAuth Token obtained");
-          
-          getOrCreateDriveFolder(token, "CloudCapture").then((parentFolderId) => {
-              return getOrCreateDriveFolder(token, request.meetingId, parentFolderId);
-            }).then((meetingFolderId) => {
-                uploadToDrive(token, request.image, meetingFolderId, request.fileName,sendResponse);
-            }).catch((error) => {
-                console.error("Folder error:", error);
+        const { token, image, fileName, meetingId } = request;
+        if (!token || !meetingId) {
+            sendResponse({ success: false, message: "❌ Missing required parameters." });
+            return;
+        }
+
+        getOrCreateDriveFolder(token, "CloudCapture")
+            .then((parentFolderId) => getOrCreateDriveFolder(token, meetingId, parentFolderId))
+            .then((meetingFolderId) => uploadToDrive(token, image, meetingFolderId, fileName, sendResponse))
+            .catch((error) => {
+                console.error("❌ Drive folder error:", error);
                 sendResponse({ success: false, message: "Failed to create/find folder" });
             });
-        });
-        
+
         return true;
     }
 });
+
 
 let activeMeetId = null;
 

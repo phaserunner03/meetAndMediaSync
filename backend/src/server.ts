@@ -15,7 +15,7 @@ const PORT = process.env.PORT ?? 5000;
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: [`${process.env.FRONTEND_URL}`, 'chrome-extension://eblacphkjhgedhmaegepjodbfhkkfogb'],
   credentials: true,
 }));
 app.use(express.json());

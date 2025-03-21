@@ -98,7 +98,7 @@ async function getAllFolders(refresh_token:string){
     const drive = google.drive({ version: "v3", auth });
     const foldersRes = await drive.files.list({
         q: `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder'`,
-        fields: "files(id, name)",
+        fields: "files(id, name, createdTime)",
     });
 
     return foldersRes.data.files || [];
@@ -106,7 +106,7 @@ async function getAllFolders(refresh_token:string){
 }
 
 async function getFilesInFolder(refresh_token:string, folderId:string){
-    console.log(folderId)
+    // console.log(folderId)
     const auth = await authorize({
         type: "authorized_user",
         client_id: process.env.GOOGLE_CLIENT_ID!,
@@ -124,6 +124,25 @@ async function getFilesInFolder(refresh_token:string, folderId:string){
 
 }
 
+async function fetchRecentMeetingFolders(driveFolderId: string) {
+    const auth = await authorize({
+        type: "authorized_user",
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        refresh_token: process.env.GOOGLE_REFRESH_TOKEN!,
+    });
+
+    const drive = google.drive({ version: "v3", auth });
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+
+    const response = await drive.files.list({
+        q: `'${driveFolderId}' in parents and mimeType='application/vnd.google-apps.folder' and modifiedTime > '${twoHoursAgo}'`,
+        fields: "files(id, name)",
+    });
+
+    return response.data.files || [];
+}
+
 async function deleteFile(refresh_token: string, fileId: string) {
     const auth = await authorize({
         type: "authorized_user",
@@ -135,4 +154,4 @@ async function deleteFile(refresh_token: string, fileId: string) {
     const drive = google.drive({ version: "v3", auth });
     await drive.files.delete({ fileId });
 }
-export {getCloudCaptureFolder,getFilesInFolder, getAllFolders, deleteFile};
+export {getCloudCaptureFolder,getFilesInFolder, getAllFolders, deleteFile,fetchRecentMeetingFolders,getAllFiles};

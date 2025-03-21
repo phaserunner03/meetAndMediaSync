@@ -8,6 +8,7 @@ import roleRoutes from "./routes/roleRoutes";
 import driveRoutes from "./routes/driveRoutes"
 import cookieParser from "cookie-parser";
 import meetingRoutes from "./routes/meetingRoutes";
+import transferRoutes from "./routes/transferRoutes";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ const PORT = process.env.PORT ?? 5000;
 const app = express();
 
 app.use(cors({
-  origin: [`${process.env.FRONTEND_URL}`, 'chrome-extension://eblacphkjhgedhmaegepjodbfhkkfogb'],
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/roles", roleRoutes);
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/drive", driveRoutes);
+app.use("/api/transfer", transferRoutes);
 
 app.get("/", (req, res) => {
   return res.json({

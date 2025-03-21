@@ -8,6 +8,8 @@ import roleRoutes from "./routes/roleRoutes";
 import driveRoutes from "./routes/driveRoutes"
 import cookieParser from "cookie-parser";
 import meetingRoutes from "./routes/meetingRoutes";
+import transferRoutes from "./routes/transferRoutes";
+import "./utils/cronJob";
 
 dotenv.config();
 
@@ -32,6 +34,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/roles", roleRoutes);
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/drive", driveRoutes);
+app.use("/api/transfer", transferRoutes);
 
 app.get("/", (req, res) => {
   return res.json({

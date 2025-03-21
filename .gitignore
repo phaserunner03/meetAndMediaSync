@@ -1,4 +1,8 @@
 **/.env
 node_modules
+dist
 credentials.json
 config.json
+gcp-service-key.json
+manifest.json
+

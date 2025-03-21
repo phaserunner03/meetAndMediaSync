@@ -33,7 +33,7 @@ async function handleToken(token: string, req: Request, res: Response) {
 
         if (!user) throw new Error("User not found");
 
-        return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+        return res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
     } catch (err) {
         console.log("JWT expired or invalid. Trying refresh token...");
         await handleRefreshToken(req, res);
@@ -59,7 +59,7 @@ async function handleRefreshToken(req: Request, res: Response) {
                 sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
-            return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+            return res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
         } catch (refreshErr) {
             console.log("Error refreshing access token:", refreshErr);
         }
@@ -113,6 +113,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
 
 async function logoutUser(req: Request, res: Response) {
     res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
+    res.clearCookie("refreshToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
     res.json({ success: true, message: "Logged out successfully", data: {} });
 }
 

@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import * as meetingService from '../services/meetingService';
-import { google } from 'googleapis';
+import { google } from "googleapis";
+import Meeting from '../models/Meeting';
+import User from "../models/User"
 
-// Extend the Request interface to include the user property
 interface AuthenticatedRequest extends Request {
     user: any;
 }
@@ -84,42 +85,53 @@ const deleteMeeting = async (req: AuthenticatedRequest, res: Response) => {
     }
 };
 
-async function authorize(payload: any) {
-    let client = google.auth.fromJSON(payload);
-    if (client) return client;
-}
-
 const test = async (req: Request, res: Response) => {
-    try {
-        const refreshToken = "1//0gyqD_rNDZbWGCgYIARAAGBASNwF-L9IrmCxmPuKYJsyy5ovaGyJQCk66iU3bV7S0nv1mp5Nyfl8F0HeRxbsRHsOQnj4Prt6MOh8";
-        const payload = {
-            type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID!,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-            refresh_token: refreshToken,
-        };
+    try{
+    const { meetingCode, token } = req.body;
+    if (!token || !meetingCode) {
+        return res.status(400).json({ success: false, message: "Missing parameters" });
+    }
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: token });
+    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
 
-        const auth = await authorize(payload);
-        const calendar = google.calendar({ version: 'v3', auth: auth as any });
+    const { data } = await oauth2.userinfo.get();
+    if (!data.id) {
+        return res.status(401).json({ success: false, message: "Invalid token" });
+    }
 
-        const response = await calendar.freebusy.query({
-            requestBody: {
-                timeMin: "2025-03-01T12:01:00Z",
-                timeMax: "2025-03-01T14:30:00Z",
-                timeZone: "UTC",
-                items: [{ id: "primary" }],
-            },
-        });
+    const userId = data.id; 
+    console.log("🔹 Verified User ID:", userId);
 
-        const calendars = response.data.calendars;
-        if (!calendars || !calendars.primary) {
-            return res.status(500).json({ success: false, message: 'Error in checking user availability' });
+    const user = await User.findOne({ googleId:userId });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
         }
-        const busySlots = calendars.primary.busy;
-        return res.status(200).json({ success: true, available: busySlots ? !busySlots.length : true });
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Error in checking user availability' });
+
+
+    const meetingLink = `https://meet.google.com/${meetingCode}`
+    const meeting = await Meeting.findOne({ meetLink: meetingLink, scheduledBy: user._id });
+    if (meeting) {
+        return res.json({ success: true, message: "Authorized" });
+    } else {
+        return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+}
+catch (error) {
+    console.error("❌ Error:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+}
+};
+
+const verifyMeeting = async (req: Request, res: Response) => {
+    try {
+        const { meetingCode, token } = req.body;
+        const result = await meetingService.verifyMeeting(meetingCode, token);
+        return res.json(result);
+    } catch (error: any) {
+        console.error("❌ Error:", error);
+        return res.status(error.status || 500).json({ success: false, message: error.message || "Server error" });
     }
 };
 
-export { scheduleMeeting, getAllMeetings, updateMeeting, deleteMeeting, test };
+export { scheduleMeeting, getAllMeetings, updateMeeting, deleteMeeting, test, verifyMeeting};

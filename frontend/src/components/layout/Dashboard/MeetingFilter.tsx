@@ -3,7 +3,7 @@ import { useMeetings } from "../../../context/meetingContext";
 import { Input } from "../../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import { toast } from "sonner"; // ✅ Import ShadCN Sonner
-import { Loader2 } from "lucide-react"; // ✅ Loading icon
+import Loader from "../../common/Loader" // ✅ Loading icon
 
 const months = [...Array(12)].map((_, i) => ({
   value: i + 1,
@@ -50,9 +50,7 @@ const MeetingFilter: React.FC = () => {
     <div className="relative">
       {/* Full-page loader */}
       {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 z-50">
-          <Loader2 className="w-10 h-10 text-gray-700 animate-spin" />
-        </div>
+       <Loader/>
       )}
 
       {/* Filter UI */}

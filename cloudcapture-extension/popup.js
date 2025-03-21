@@ -26,27 +26,64 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ✅ Capture Screenshot and Upload
-    screenshotButton.addEventListener("click", () => {
-        chrome.runtime.sendMessage({ action: "capture_screenshot" }, (response) => {
-            if (response.success) {
-                const fileName = prompt("Enter a file name for the screenshot:", `screenshot_${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}`);
-                statusText.textContent = "Uploading screenshot...";
-                uploadScreenshot(response.image, fileName);
-            } else {
-                statusText.textContent = "Failed to capture screenshot.";
+    // ✅ Capture Screenshot with Authorization Check
+    screenshotButton.addEventListener("click", async () => {
+        const meetId = meetIdElement.textContent;
+
+        if (!meetId || meetId === "No Meet Found") {
+            statusText.textContent = "❌ No active Meet found. Cannot take screenshot.";
+            return;
+        }
+
+        statusText.textContent = "🔄 Checking authorization...";
+
+        chrome.identity.getAuthToken({ interactive: true }, async (token) => {
+            if (chrome.runtime.lastError) {
+                statusText.textContent = "❌ Authentication failed.";
+                console.error("OAuth Error:", chrome.runtime.lastError.message);
+                return;
             }
+
+            console.log("✅ OAuth Token obtained:", token);
+
+            // ✅ Verify if user is authorized for the meeting
+            const response = await fetch("http://localhost:8000/api/meetings/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ meetingCode: meetId, token }),
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                statusText.textContent = `❌ Unauthorized: ${data.message}`;
+                return;
+            }
+
+            // ✅ Authorized: Take Screenshot
+            statusText.textContent = "📸 Taking screenshot...";
+            chrome.runtime.sendMessage({ action: "capture_screenshot" }, (response) => {
+                if (response.success) {
+                    const fileName = prompt("Enter a file name for the screenshot:", `screenshot_${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}`);
+                    statusText.textContent = "Uploading screenshot...";
+                    uploadScreenshot(response.image, fileName, token, meetId);
+                } else {
+                    statusText.textContent = "❌ Failed to capture screenshot.";
+                }
+            });
         });
     });
 
     // ✅ Upload Screenshot to Google Drive
-    function uploadScreenshot(image, fileName) {
-        chrome.runtime.sendMessage({ action: "upload_screenshot", image: image, fileName: fileName, meetingId: meetIdElement.textContent }, (response) => {
-            if (response.success) {
-                statusText.innerHTML = `Uploaded! <a href="${response.fileUrl}" target="_blank" class="text-blue-600 underline">View File</a>`;
-            } else {
-                statusText.textContent = "Upload failed.";
+    function uploadScreenshot(image, fileName, token, meetId) {
+        chrome.runtime.sendMessage(
+            { action: "upload_screenshot", image, fileName, token, meetingId: meetId },
+            (response) => {
+                if (response.success) {
+                    statusText.innerHTML = `✅ Uploaded! <a href="${response.fileUrl}" target="_blank" class="text-blue-600 underline">View File</a>`;
+                } else {
+                    statusText.textContent = `❌ Upload failed: ${response.message}`;
+                }
             }
-        });
+        );
     }
 });

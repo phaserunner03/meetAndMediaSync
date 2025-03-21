@@ -4,6 +4,8 @@ import Meeting from '../models/Meeting';
 import MeetingDetails from '../models/MeetingDetails';
 import { createEvent, listEvents, checkUserAvailability, updateEvent, deleteEvent } from '../utils/googleCalendar';
 import validateMeetingDetails from '../utils/meetingValidation';
+import User from "../models/User";
+import { google } from 'googleapis';
 
 interface User extends Document {
     _id: string;
@@ -167,4 +169,37 @@ const removeMeeting = async (user: User, eventId: string): Promise<MeetingRespon
     }
 };
 
-export { scheduleMeeting, getAllMeetings, modifyMeeting, removeMeeting };
+const verifyMeeting = async (meetingCode: string, token: string) => {
+    if (!token || !meetingCode) {
+        throw { status: 400, message: "Missing parameters" };
+    }
+
+    // ✅ Get Google ID from OAuth Token
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: token });
+    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+
+    const { data } = await oauth2.userinfo.get();
+    if (!data.id) {
+        throw { status: 401, message: "Invalid token" };
+    }
+
+    const userId = data.id;
+    const user = await User.findOne({ googleId: userId });
+    if (!user) {
+        throw { status: 404, message: "User not found" };
+    }
+
+    
+
+    // ✅ Check if User Created the Meeting
+    const meetingLink = `https://meet.google.com/${meetingCode}`;
+    const meeting = await Meeting.findOne({ meetLink: meetingLink, scheduledBy: user._id });
+
+    if (!meeting) {
+        throw { status: 403, message: "Meeting not created using CloudCapture" };
+    }
+
+    return { success: true, message: "Authorized" };
+};
+export { scheduleMeeting, getAllMeetings, modifyMeeting, removeMeeting, verifyMeeting };

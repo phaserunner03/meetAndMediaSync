@@ -9,6 +9,7 @@ import driveRoutes from "./routes/driveRoutes"
 import cookieParser from "cookie-parser";
 import meetingRoutes from "./routes/meetingRoutes";
 import transferRoutes from "./routes/transferRoutes";
+import "./utils/cronJob";
 
 dotenv.config();
 

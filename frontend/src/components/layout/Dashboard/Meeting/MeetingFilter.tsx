@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useMeetings } from "../../../context/meetingContext";
-import { Input } from "../../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { useMeetings } from "../../../../context/meetingContext";
+import { Input } from "../../../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../ui/select";
 import { toast } from "sonner"; // ✅ Import ShadCN Sonner
-import Loader from "../../common/Loader" // ✅ Loading icon
+import Loader from "../../../common/Loader" // ✅ Loading icon
 
 const months = [...Array(12)].map((_, i) => ({
   value: i + 1,

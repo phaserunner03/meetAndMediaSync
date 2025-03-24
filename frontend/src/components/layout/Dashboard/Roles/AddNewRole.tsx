@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../../context/authContext";
+import { useAuth } from "../../../../context/authContext";
 import { TextField, FormControl, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Checkbox } from "@mui/material";
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
-import axiosInstance from "../../../utils/axiosConfig";
-import {Button} from "../../ui/button";
-import permissionsData from "../../../data/permissions.json";
+import axiosInstance from "../../../../utils/axiosConfig";
+import {Button} from "../../../ui/button";
+import permissionsData from "../../../../data/permissions.json";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import Loader from "../../common/Loader";
+import Loader from "../../../common/Loader";
 import axios from "axios"
 
 const AddNewRole = () => {

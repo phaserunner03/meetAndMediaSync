@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
-import { Textarea } from "../../ui/textarea";
+import { Input } from "../../../ui/input";
+import { Button } from "../../../ui/button";
+import { Textarea } from "../../../ui/textarea";
 import { toast } from "sonner";
-import { useMeetings } from "../../../context/meetingContext";
+import { useMeetings } from "../../../../context/meetingContext";
 import { Loader2 } from "lucide-react";
 
 // Validation Schema

@@ -113,6 +113,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
 
 async function logoutUser(req: Request, res: Response) {
     res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
+    res.clearCookie("refreshToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
     res.json({ success: true, message: "Logged out successfully", data: {} });
 }
 

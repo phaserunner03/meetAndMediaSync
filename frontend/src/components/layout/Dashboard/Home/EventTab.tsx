@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import EventCard from "./EventCard";
-import { useMeetings } from "../../../context/meetingContext";
+import { useMeetings } from "../../../../context/meetingContext";
 import { isToday, isTomorrow, isYesterday, isAfter, isBefore } from "date-fns";
-import { Button } from "../../ui/button"; // shadcn button
+import { Button } from "../../../ui/button"; // shadcn button
 
 const EventTabs: React.FC = () => {
   const { allMeetings, ourMeetings } = useMeetings();

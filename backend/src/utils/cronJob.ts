@@ -8,7 +8,7 @@ interface RoleDocument extends Document {
     permissions: string[];
 }
 
-cron.schedule("0 */2 * * *", async () => { // Run every 1 minute
+cron.schedule("0 */2 * * *", async () => { 
     const users = await User.find({ refreshToken: { $exists: true } })
                         .populate<{ role: RoleDocument }>("role", "name permissions"); // Fetch users with refreshToken
 

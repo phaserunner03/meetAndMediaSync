@@ -1,6 +1,6 @@
 import MeetingFilter from "./MeetingFilter";
 import MeetingCardView from "./MeetingCardView";
-import { useMeetings } from "../../../context/meetingContext";
+import { useMeetings } from "../../../../context/meetingContext";
 
 const Meetings = () => {
   const { filteredMeetings } = useMeetings();

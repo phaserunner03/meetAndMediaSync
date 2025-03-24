@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Link as LinkIcon } from "lucide-react";
-import { Button } from "../../ui/button"; // Importing shadcn button
+import { Button } from "../../../ui/button"; // Importing shadcn button
 
 interface Event {
   id: string;

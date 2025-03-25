@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, createContext, ReactNode } from "react";
-import axiosInstance from "../utils/axiosConfig"; // Import axios instance
+import axiosInstance from "../utils/axiosConfig"; 
 
 interface AuthContextType {
     currentUser: User | null;

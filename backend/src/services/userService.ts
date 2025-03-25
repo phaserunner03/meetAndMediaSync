@@ -79,6 +79,7 @@ async function addUser(email: string, role: string) {
         }
         const user = new User({ email, role: roleDoc._id });
         await user.save();
+        console.log("User created",user._id)
 
         await sendWelcomeEmail(user);
 

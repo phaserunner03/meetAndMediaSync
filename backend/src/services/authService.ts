@@ -4,6 +4,8 @@ import Role from "../models/Role";
 import { notifyAdminToAddUser } from "./userService";
 import jwt from "jsonwebtoken";
 import mongoose, { Document } from 'mongoose';
+import { GoogleGCPScopes } from "../constants/scopes.constants";
+
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -28,10 +30,10 @@ function getGoogleAuthURL(): string {
             access_type: "offline",
             prompt: "consent",
             scope: [
-                "profile",
-                "email",
-                "https://www.googleapis.com/auth/calendar",
-                "https://www.googleapis.com/auth/drive",
+                GoogleGCPScopes.PROFILE,
+                GoogleGCPScopes.EMAIL,
+                GoogleGCPScopes.CALENDAR,
+                GoogleGCPScopes.DRIVE
             ],
         });
     } catch (err) {

@@ -18,6 +18,6 @@ const StorageLogSchema = new mongoose.Schema({
     transferredAt: { type: Date, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
-}, { timestamps: true });
+}, { timestamps: true ,versionKey:true});
 
 export default mongoose.model<StorageLogDocument>('StorageLog', StorageLogSchema);

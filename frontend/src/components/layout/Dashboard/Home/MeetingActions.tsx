@@ -1,6 +1,6 @@
 import { CalendarCheck, CalendarPlus } from "lucide-react";
-import { Button } from "../../ui/button";
-import { useMeetings } from "../../../context/meetingContext";
+import { Button } from "../../../ui/button";
+import { useMeetings } from "../../../../context/meetingContext";
 import { isToday } from "date-fns";
 import { useNavigate } from "react-router-dom";
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getAllFolders, getFilesInFolder } from "../../../utils/driveApi";
+import { getAllFolders, getFilesInFolder } from "../../../../utils/driveApi";
 import { toast } from "sonner";
 import { Folder, FileText, Trash2, ArrowLeft, Eye, Loader2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Button } from "../../ui/button";
-import { ScrollArea } from "../../ui/scroll-area";
-import axiosInstance from "../../../utils/axiosConfig";
-import { useDrive } from "../../../context/driveContext"
-import Loader from "../../common/Loader";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
+import { Button } from "../../../ui/button";
+import { ScrollArea } from "../../../ui/scroll-area";
+import axiosInstance from "../../../../utils/axiosConfig";
+import { useDrive } from "../../../../context/driveContext"
+import Loader from "../../../common/Loader";
 
 const Drive = () => {
     const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();

@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
 import { MoreVertical, Copy, ExternalLink} from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { useMeetings } from "../../../context/meetingContext";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../../ui/dialog";
-import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
-import { Textarea } from "../../ui/textarea";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
+import { useMeetings } from "../../../../context/meetingContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../../../ui/dialog";
+import { Button } from "../../../ui/button";
+import { Input } from "../../../ui/input";
+import { Textarea } from "../../../ui/textarea";
 import { toast } from "sonner";
-import { cn } from "../../../lib/utils";
+import { cn } from "../../../../lib/utils";
 import { motion } from "framer-motion";
-import Loader from "../../common/Loader"
+import Loader from "../../../common/Loader"
 interface Meeting {
   id: string;
   title: string;

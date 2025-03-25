@@ -98,7 +98,7 @@ async function getAllFolders(refresh_token:string){
     const drive = google.drive({ version: "v3", auth });
     const foldersRes = await drive.files.list({
         q: `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder'`,
-        fields: "files(id, name, createdTime)",
+        fields: "files(id, name, modifiedTime)",
     });
 
     return foldersRes.data.files || [];
@@ -117,7 +117,7 @@ async function getFilesInFolder(refresh_token:string, folderId:string){
     const drive = google.drive({ version: "v3", auth });
     const filesRes = await drive.files.list({
         q: `'${folderId}' in parents`,
-        fields: "files(id, name, webViewLink, webContentLink, mimeType)",
+        fields: "files(id, name, webViewLink, webContentLink, mimeType,modifiedTime)",
     });
 
     return filesRes.data.files || [];

@@ -1,23 +1,13 @@
-# Use an official Node.js runtime as base image
-FROM node:18-alpine
-
-# Set the working directory inside the container
+# build stage
+FROM node:lts-alpine as build-stage
 WORKDIR /app
-
-# Copy package.json and install dependencies
 COPY package*.json ./
-
-# Install dependencies (including TypeScript)
 RUN npm install
-
-# Copy the entire project to the container
 COPY . .
-
-# Compile TypeScript files
 RUN npm run build
 
-# Expose the port your backend runs on
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
-
-# Run the backend from the compiled dist/ folder
-CMD ["npm", "run", "start"]
+CMD ["nginx", "-g", "daemon off;"]

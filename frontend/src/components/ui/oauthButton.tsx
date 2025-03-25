@@ -12,7 +12,7 @@ const OAuthButton: React.FC = () => {
         if (data.valid) {
           window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
         } else if (data.token) {
-          // If a new token is returned, save it in cookies and redirect
+          
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
           window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
         } else {

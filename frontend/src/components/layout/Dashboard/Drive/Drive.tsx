@@ -70,6 +70,24 @@ const Drive = () => {
         }
     };
 
+    const handleTransferToGCP = async () => {
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post('/api/transfer/gcp');
+            if (response.status === 200) {
+                toast.success("Folder transferred to GCP successfully!");
+            } else {
+                toast.error("Failed to transfer folder to GCP!");
+            }
+        } catch (error) {
+            toast.error("Error transferring folder to GCP!");
+            console.error("Error transferring folder to GCP:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     return (
         <div className="p-6 sm:ml-64 min-h-screen">
             <div className="max-w-5xl mx-auto">
@@ -78,6 +96,16 @@ const Drive = () => {
                 {loading && (
                     <Loader/>
                 )}
+
+
+                <Button
+                    variant="outline"
+                    onClick={handleTransferToGCP}
+                    className="mb-4 flex items-center gap-2"
+                >
+                    Transfer to GCP
+                </Button>
+
 
                 {!selectedFolder ? (
                     <ScrollArea className="h-[500px]">

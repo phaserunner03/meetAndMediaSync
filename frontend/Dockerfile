@@ -21,7 +21,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 8080 (Cloud Run requires 8080)
-EXPOSE 8080
+EXPOSE 5173
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { API_URL } from "../constants/constants";
 
 const axiosInstance = axios.create({
-    baseURL: "https://backend-972397341408.us-central1.run.app",
+    baseURL: API_URL,
     withCredentials: true, 
 });
 

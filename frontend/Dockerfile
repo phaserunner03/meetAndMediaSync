@@ -1,17 +1,30 @@
-FROM node:18-alpine
+# Stage 1: Build React App
+FROM node:18-alpine AS builder
 
+# Set working directory
 WORKDIR /app
 
-COPY package.json .
+# Copy package.json and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install 
 
-RUN npm install
-
-RUN npm i -g serve
-
+# Copy the entire project and build
 COPY . .
-
 RUN npm run build
 
-EXPOSE 3000
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
 
-CMD [ "serve", "-s", "dist" ]
+# Set the correct port for Cloud Run
+ENV PORT=8080
+EXPOSE 8080
+
+# Remove default Nginx config and use a custom one
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy the built React app from `dist/` to Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

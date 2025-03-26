@@ -5,27 +5,28 @@ import axiosInstance from "../../utils/axiosConfig";
 
 
 const OAuthButton: React.FC = () => {
+  const apiUrl = "https://backend-972397341408.us-central1.run.app"
   const handleGoogleSignUp = async () => {
     try {
-      console.log(import.meta.env.VITE_API_URL);
+      
       const response = await axiosInstance.get('/api/auth/check-refresh');
 
       if (response.status === 200) {
         const data = response.data;
         if (data.valid) {
-          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+          window.location.href = `${apiUrl}/dashboard`;
         } else if (data.token) {
           
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
-          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+          window.location.href = `${apiUrl}/dashboard`;
         } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+          window.location.href = `${apiUrl}/api/auth/google`;
         }
       } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+        window.location.href = `${apiUrl}/api/auth/google`;
       }
     } catch (error) {
-      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+      window.location.href = `${apiUrl}/api/auth/google`;
     }
   };
 

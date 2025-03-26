@@ -2,9 +2,12 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import axiosInstance from "../../utils/axiosConfig";
 
+
+
 const OAuthButton: React.FC = () => {
   const handleGoogleSignUp = async () => {
     try {
+      console.log(import.meta.env.VITE_API_URL);
       const response = await axiosInstance.get('/api/auth/check-refresh');
 
       if (response.status === 200) {

@@ -105,7 +105,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
             });
         }
 
-        res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+        res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
     } catch (err) {
         res.status(401).json({ success: false, message: (err as Error).message, data: {} });
     }

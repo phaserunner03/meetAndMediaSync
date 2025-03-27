@@ -2,17 +2,18 @@ import { Collections } from "../constants/collections.constants";
 import nodemailer from "nodemailer";
 import mongoose from 'mongoose';
 import { newUserAccessRequestTemplate, welcomeUserTemplate } from "../utils/emailTemplate";
+import { secretVariables,environment } from "../constants/environments.constants";
 
 interface RoleDocument extends Document {
     name: string;
     permissions: string[];
 }
 
-const SMTP_HOST = process.env.SMTP_HOST;
-const SMTP_PORT = parseInt(process.env.SMTP_PORT!);
-const SMTP_USER = process.env.SMTP_USER;
-const SMTP_PASS = process.env.SMTP_PASS;
-const FRONTEND_URL = process.env.FRONTEND_URL;
+const SMTP_HOST = secretVariables.SMTP.HOST;
+const SMTP_PORT = parseInt(secretVariables.SMTP.PORT);
+const SMTP_USER = secretVariables.SMTP.USER;
+const SMTP_PASS = secretVariables.SMTP.PASS;
+const FRONTEND_URL = environment.FRONTEND_URL;
 
 async function notifyAdminToAddUser(userInfo: any) {
     try {
@@ -28,7 +29,7 @@ async function notifyAdminToAddUser(userInfo: any) {
 
         const mailOptions = {
             from: `"No Reply" <${SMTP_USER}>`,
-            to: process.env.ADMIN_EMAIL,
+            to: secretVariables.ADMIN_EMAIL,
             ...newUserAccessRequestTemplate(userInfo),
         };
 
@@ -56,7 +57,7 @@ async function sendWelcomeEmail(user: { email: string }) {
         const emailTemplate = welcomeUserTemplate({ email: user.email }, loginUrl);
 
         const mailOptions = {
-            from: `"CloudCapture" <${process.env.SMTP_USER}>`,
+            from: `"CloudCapture" <${secretVariables.SMTP.USER}>`,
             to: user.email,
             subject: emailTemplate.subject,
             text: emailTemplate.text,

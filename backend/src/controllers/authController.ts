@@ -5,6 +5,7 @@ import * as authService from "../services/authService";
 import jwt from "jsonwebtoken";
 import { Collections } from "../constants/collections.constants";
 import { StatusCodes } from "../constants/status-codes.constants";
+import { environment, secretVariables } from "../constants/environments.constants";
 
 // Extend the Request interface to include the user property
 export interface AuthenticatedRequest extends Request {
@@ -30,12 +31,12 @@ async function redirectToGoogle(req: Request, res: Response) {
 
 async function handleToken(token: string, req: Request, res: Response) {
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY!);
+        const decoded = jwt.verify(token, secretVariables.SECRET_KEY);
         const user = await Collections.USER.findOne({ googleId: (decoded as any).uid });
 
         if (!user) throw new Error("User not found");
 
-        return res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
+        return res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
     } catch (err) {
         console.log("JWT expired or invalid. Trying refresh token...");
         await handleRefreshToken(req, res);
@@ -51,17 +52,17 @@ async function handleRefreshToken(req: Request, res: Response) {
 
             const newToken = jwt.sign(
                 { uid: user.googleId, email: user.email },
-                process.env.SECRET_KEY!,
+                secretVariables.SECRET_KEY,
                 { expiresIn: "7d" }
             );
 
             res.cookie("token", newToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                secure: environment.NODE_ENV === "production", // Change for localhost testing
                 sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
-            return res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
+            return res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
         } catch (refreshErr) {
             console.log("Error refreshing access token:", refreshErr);
         }
@@ -78,21 +79,21 @@ async function handleGoogleCallback(req: Request, res: Response) {
     try {
         const { code } = req.query;
         if (!code) {
-            return res.status(400).json({ success: false, message: "Authorization code is missing", data: {} });
+            return res.status(StatusCodes.BAD_REQUEST).json({ success: false, message: "Authorization code is missing", data: {} });
         }
 
         const result = await authService.processGoogleAuth(code as string);
 
         if (!result.success) {
-            return res.status(401).json({ success: false, message: result.message, data: {} });
+            return res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: result.message, data: {} });
         }
         if(result.success && result.message === "You are not authorized to access this website") {
-            return res.redirect(`${process.env.FRONTEND_URL}/unauthorized`);
+            return res.redirect(`${environment.FRONTEND_URL}/unauthorized`);
         }
         if (result.token) {
             res.cookie("token", result.token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                secure: environment.NODE_ENV === "production", // Change for localhost testing
                 sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
@@ -101,21 +102,21 @@ async function handleGoogleCallback(req: Request, res: Response) {
         if (result.refresh_token) {
             res.cookie("refreshToken", result.refresh_token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                secure: environment.NODE_ENV === "production", // Change for localhost testing
                 sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             });
         }
 
-        res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+        res.redirect(`${environment.FRONTEND_URL}/dashboard`);
     } catch (err) {
         res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: (err as Error).message, data: {} });
     }
 }
 
 async function logoutUser(req: Request, res: Response) {
-    res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none"});
-    res.clearCookie("refreshToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none"});
+    res.clearCookie("token", { httpOnly: true, secure: environment.NODE_ENV === "production", sameSite: "none"});
+    res.clearCookie("refreshToken", { httpOnly: true, secure: environment.NODE_ENV === "production", sameSite: "none"});
     res.json({ success: true, message: "Logged out successfully", data: {} });
 }
 
@@ -127,7 +128,7 @@ async function refreshJwtToken(req: Request, res: Response) {
         }
 
         try {
-            jwt.verify(refreshToken, process.env.SECRET_KEY!);
+            jwt.verify(refreshToken, secretVariables.SECRET_KEY);
             return res.status(StatusCodes.OK).json({ success: true, message: "Token is still valid", data: { valid: true } });
         } catch (err) {
             console.log("Refresh token expired or invalid. Generating new token...");
@@ -137,7 +138,7 @@ async function refreshJwtToken(req: Request, res: Response) {
 
         res.cookie("token", newToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Change for localhost testing
+            secure: environment.NODE_ENV === "production", // Change for localhost testing
             sameSite: "none", // Cross-origin requests need "lax" or "none"
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });

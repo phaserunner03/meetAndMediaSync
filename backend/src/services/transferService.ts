@@ -3,6 +3,7 @@ import { uploadToGCP } from "./gcsService";
 import moment from "moment";
 import { google } from "googleapis";
 import { Readable } from "stream";
+import { secretVariables } from "../constants/environments.constants";
 
 async function transferScreenshotsToGCP(refresh_token: string, organizerEmail: string) {
     try {
@@ -54,8 +55,8 @@ async function processFile(file: any, refresh_token: string, gcpPath: string) {
 async function fetchFileBuffer(refresh_token: string, fileId: string): Promise<Buffer> {
     // Implement file download from Drive and convert it into a buffer
     const auth = new google.auth.OAuth2(
-        process.env.GOOGLE_CLIENT_ID,
-        process.env.GOOGLE_CLIENT_SECRET
+        secretVariables.GOOGLE_CLIENT_ID,
+        secretVariables.GOOGLE_CLIENT_SECRET
     );
     auth.setCredentials({ refresh_token });
 

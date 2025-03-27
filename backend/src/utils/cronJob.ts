@@ -1,15 +1,16 @@
 import cron from "node-cron";
 import { transferScreenshotsToGCP } from "../services/transferService";
-import User from "../models/User"; // Fetch users from MongoDB
+import { Collections } from "../constants/collections.constants";
 import { Document} from "mongoose";
+import { CronJobFrequencies } from "../constants/cron-jobs.constants";
 
 interface RoleDocument extends Document {
     name: string;
     permissions: string[];
 }
 
-cron.schedule("0 */2 * * *", async () => { 
-    const users = await User.find({ refreshToken: { $exists: true } })
+cron.schedule(CronJobFrequencies.EVERY_TWO_HOURS, async () => { 
+    const users = await Collections.USER.find({ refreshToken: { $exists: true } })
                         .populate<{ role: RoleDocument }>("role", "name permissions"); // Fetch users with refreshToken
 
     for (const user of users) {

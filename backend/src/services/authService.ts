@@ -1,10 +1,9 @@
 import { google } from "googleapis";
-import User from "../models/User";
-import Role from "../models/Role";
 import { notifyAdminToAddUser } from "./userService";
 import jwt from "jsonwebtoken";
 import mongoose, { Document } from 'mongoose';
 import { GoogleGCPScopes } from "../constants/scopes.constants";
+import { Collections } from "../constants/collections.constants";
 
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";
@@ -50,10 +49,10 @@ async function processGoogleAuth(code: string) {
         const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
         const { data } = await oauth2.userinfo.get();
 
-        let user = await User.findOne({ email: data.email });
+        let user = await Collections.USER.findOne({ email: data.email });
         if (!user) {
-            let role=await Role.findOne({name:"NAU"});
-            user = new User({
+            let role=await Collections.ROLE.findOne({name:"NAU"});
+            user = new Collections.USER({
                 email: data.email,
                 role: role?._id,
                 googleId: data.id,
@@ -105,7 +104,7 @@ function generateJWT(user: UserDocument): string {
 
 async function refreshJwtToken(refreshToken: string) {
     try {
-        const user = await User.findOne({ refreshToken });
+        const user = await Collections.USER.findOne({ refreshToken });
         if (!user) throw new Error("User not found");
 
         const newToken = jwt.sign(

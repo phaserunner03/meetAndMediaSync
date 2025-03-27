@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { transferScreenshotsToGCP } from "../services/transferService";
+import { StatusCodes } from "../constants/status-codes.constants";
 
 interface AuthenticatedRequest extends Request {
     user: any;
@@ -7,12 +8,16 @@ interface AuthenticatedRequest extends Request {
 
 async function triggerTransfer(req: AuthenticatedRequest, res: Response) {
     const { user } = req;
-    
+
     try {
         await transferScreenshotsToGCP(user.refreshToken, user.email);
-        res.status(200).json({ message: "Transfer initiated successfully" });
+        res.status(StatusCodes.OK).json({ success: true, message: "Transfer initiated successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Transfer failed", error });
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ 
+            success: false, 
+            message: "Transfer failed", 
+            error: (error as Error).message 
+        });
     }
 }
 

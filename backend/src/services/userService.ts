@@ -1,5 +1,4 @@
-import User from "../models/User";
-import Role from "../models/Role";
+import { Collections } from "../constants/collections.constants";
 import nodemailer from "nodemailer";
 import mongoose from 'mongoose';
 import { newUserAccessRequestTemplate, welcomeUserTemplate } from "../utils/emailTemplate";
@@ -73,11 +72,11 @@ async function sendWelcomeEmail(user: { email: string }) {
 
 async function addUser(email: string, role: string) {
     try {
-        const roleDoc = await Role.findById(role);
+        const roleDoc = await Collections.ROLE.findById(role);
         if (!roleDoc) {
             throw new Error("Invalid role");
         }
-        const user = new User({ email, role: roleDoc._id });
+        const user = new Collections.USER({ email, role: roleDoc._id });
         await user.save();
         console.log("User created",user._id)
 
@@ -92,9 +91,9 @@ async function addUser(email: string, role: string) {
 
 async function getAuthenticatedUser(userId: string) {
     try {
-        const user = await User.findOne({ googleId: userId })
+        const user = await Collections.USER.findOne({ googleId: userId })
             .select("-refreshToken")
-            .populate<{ role: typeof Role }>("role", "name permissions");
+            .populate<{ role: typeof Collections.ROLE }>("role", "name permissions");
 
         if (!user) {
             throw new Error("User not found");
@@ -116,7 +115,7 @@ async function getAuthenticatedUser(userId: string) {
 
 async function deleteUser(userId: string) {
     try {
-        const user = await User.findByIdAndDelete(userId);
+        const user = await Collections.USER.findByIdAndDelete(userId);
         if (!user) {
             throw new Error("User not found");
         }
@@ -129,12 +128,12 @@ async function deleteUser(userId: string) {
 
 async function editUserRole(userId: string, newRole: mongoose.Schema.Types.ObjectId) {
     try {
-        const roleDoc = await Role.findById(newRole);
+        const roleDoc = await Collections.ROLE.findById(newRole);
         if (!roleDoc) {
             throw new Error("Invalid role");
         }
 
-        const user = await User.findById(userId);
+        const user = await Collections.USER.findById(userId);
         if (!user) {
             throw new Error("User not found");
         }

@@ -1,9 +1,8 @@
-import Role from "../models/Role";
-import User from "../models/User";
+import { Collections } from "../constants/collections.constants";
 
 async function addRole(name: string, permissions: string[]) {
     try {
-        const role = new Role({ name, permissions });
+        const role = new Collections.ROLE({ name, permissions });
         await role.save();
         return role;
     } catch (err) {
@@ -14,7 +13,7 @@ async function addRole(name: string, permissions: string[]) {
 
 async function editRole(id: string, name: string, permissions: string[]) {
     try {
-        const roleDoc = await Role.findById(id);
+        const roleDoc = await Collections.ROLE.findById(id);
         if (!roleDoc) {
             throw new Error("Invalid role");
         }
@@ -30,16 +29,16 @@ async function editRole(id: string, name: string, permissions: string[]) {
 
 async function deleteRole(id: string) {
     try {
-        const role = await Role.findByIdAndDelete(id);
+        const role = await Collections.ROLE.findByIdAndDelete(id);
         if (!role) {
             throw new Error("Role not found");
         }
-        const nauRole = await Role.findOne({ name: "NAU" });
+        const nauRole = await Collections.ROLE.findOne({ name: "NAU" });
         if (!nauRole) {
             throw new Error("NAU role not found");
         }
 
-        await User.updateMany({ role: id }, { role: nauRole._id });
+        await Collections.USER.updateMany({ role: id }, { role: nauRole._id });
         return role;
     } catch (err) {
         console.error("Error deleting Role:", err);
@@ -49,7 +48,7 @@ async function deleteRole(id: string) {
 
 async function getAllRoles() {
     try {
-        const roles = await Role.find();
+        const roles = await Collections.ROLE.find();
         return roles;
     } catch (err) {
         console.error("Error fetching roles:", err);

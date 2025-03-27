@@ -1,11 +1,9 @@
 import mongoose, { Document } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import Meeting from '../models/Meeting';
-import MeetingDetails from '../models/MeetingDetails';
 import { createEvent, listEvents, checkUserAvailability, updateEvent, deleteEvent } from '../utils/googleCalendar';
 import validateMeetingDetails from '../utils/meetingValidation';
-import User from "../models/User";
 import { google } from 'googleapis';
+import { Collections } from '../constants/collections.constants';
 
 interface User extends Document {
     _id: string;
@@ -67,7 +65,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
         if (!response || !response.hangoutLink) throw new Error('Failed to generate Google Meet link');
         const meetLink = response.hangoutLink;
 
-        const newMeeting = new Meeting({
+        const newMeeting = new Collections.MEETINGS({
             title,
             location,
             description,
@@ -76,7 +74,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
         });
         const savedMeeting = await newMeeting.save();
         const meetingHistory = new Date(startTime) > new Date() ? 'upcoming' : 'past';
-        const newMeetingDetails = new MeetingDetails({
+        const newMeetingDetails = new Collections.MEETING_DETAILS({
             meetingID: savedMeeting._id,
             meetingDate: startTime,
             meetingHistory,
@@ -96,7 +94,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
 const getAllMeetings = async (user: User, year: number, month: number) => {
     try {
         const googleMeetings = await listEvents(user.refreshToken, year, month);
-        const platformMeetings = await Meeting.find({ scheduledBy: user._id }).lean();
+        const platformMeetings = await Collections.MEETINGS.find({ scheduledBy: user._id }).lean();
 
         const ourMeetings = googleMeetings.filter(meeting =>
             meeting.extendedProperties?.private?.source === "CloudCapture"
@@ -173,8 +171,6 @@ const verifyMeeting = async (meetingCode: string, token: string) => {
     if (!token || !meetingCode) {
         throw { status: 400, message: "Missing parameters" };
     }
-
-    // ✅ Get Google ID from OAuth Token
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: token });
     const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
@@ -185,7 +181,7 @@ const verifyMeeting = async (meetingCode: string, token: string) => {
     }
 
     const userId = data.id;
-    const user = await User.findOne({ googleId: userId });
+    const user = await Collections.USER.findOne({ googleId: userId });
     if (!user) {
         throw { status: 404, message: "User not found" };
     }
@@ -194,7 +190,7 @@ const verifyMeeting = async (meetingCode: string, token: string) => {
 
     // ✅ Check if User Created the Meeting
     const meetingLink = `https://meet.google.com/${meetingCode}`;
-    const meeting = await Meeting.findOne({ meetLink: meetingLink, scheduledBy: user._id });
+    const meeting = await Collections.MEETINGS.findOne({ meetLink: meetingLink, scheduledBy: user._id });
 
     if (!meeting) {
         throw { status: 403, message: "Meeting not created using CloudCapture" };

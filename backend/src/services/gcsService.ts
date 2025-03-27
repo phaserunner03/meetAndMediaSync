@@ -1,5 +1,4 @@
 import { storage, bucketName } from "../config/gcpConfig";
-import { Readable } from "stream";
 
 async function uploadToGCP(fileName: string, fileBuffer: Buffer, destinationPath: string) {
     const bucket = storage.bucket(bucketName);

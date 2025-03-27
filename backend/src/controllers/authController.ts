@@ -3,7 +3,8 @@ dotenv.config();
 import { Request, Response } from 'express';
 import * as authService from "../services/authService";
 import jwt from "jsonwebtoken";
-import User from "../models/User";
+import { Collections } from "../constants/collections.constants";
+import { StatusCodes } from "../constants/status-codes.constants";
 
 // Extend the Request interface to include the user property
 export interface AuthenticatedRequest extends Request {
@@ -11,6 +12,7 @@ export interface AuthenticatedRequest extends Request {
         googleId: string;
     };
 }
+
 
 async function redirectToGoogle(req: Request, res: Response) {
     try {
@@ -22,14 +24,14 @@ async function redirectToGoogle(req: Request, res: Response) {
             await handleNoToken(req, res);
         }
     } catch (err) {
-        res.status(500).json({ success: false, message: "Failed to authenticate", data: { error: (err as Error).message } });
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ success: false, message: "Failed to authenticate", data: { error: (err as Error).message } });
     }
 }
 
 async function handleToken(token: string, req: Request, res: Response) {
     try {
         const decoded = jwt.verify(token, process.env.SECRET_KEY!);
-        const user = await User.findOne({ googleId: (decoded as any).uid });
+        const user = await Collections.USER.findOne({ googleId: (decoded as any).uid });
 
         if (!user) throw new Error("User not found");
 
@@ -44,7 +46,7 @@ async function handleRefreshToken(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
     if (refreshToken) {
         try {
-            const user = await User.findOne({ refreshToken });
+            const user = await Collections.USER.findOne({ refreshToken });
             if (!user) throw new Error("User not found");
 
             const newToken = jwt.sign(
@@ -107,7 +109,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
 
         res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
     } catch (err) {
-        res.status(401).json({ success: false, message: (err as Error).message, data: {} });
+        res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: (err as Error).message, data: {} });
     }
 }
 
@@ -121,12 +123,12 @@ async function refreshJwtToken(req: Request, res: Response) {
     try {
         const { refreshToken } = req.cookies;
         if (!refreshToken) {
-            return res.status(400).json({ success: false, message: "Refresh token is missing", data: {} });
+            return res.status(StatusCodes.BAD_REQUEST).json({ success: false, message: "Refresh token is missing", data: {} });
         }
 
         try {
             jwt.verify(refreshToken, process.env.SECRET_KEY!);
-            return res.status(200).json({ success: true, message: "Token is still valid", data: { valid: true } });
+            return res.status(StatusCodes.OK).json({ success: true, message: "Token is still valid", data: { valid: true } });
         } catch (err) {
             console.log("Refresh token expired or invalid. Generating new token...");
         }
@@ -140,9 +142,9 @@ async function refreshJwtToken(req: Request, res: Response) {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.status(200).json({ success: true, message: "Token refreshed successfully", data: { token: newToken, valid: false } });
+        res.status(StatusCodes.OK).json({ success: true, message: "Token refreshed successfully", data: { token: newToken, valid: false } });
     } catch (err) {
-        res.status(401).json({ success: false, message: (err as Error).message, data: { valid: false } });
+        res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: (err as Error).message, data: { valid: false } });
     }
 }
 

@@ -1,7 +1,5 @@
 import mongoose, { Document } from 'mongoose';
-import { google } from 'googleapis';
-import Meeting from '../models/Meeting';
-import MeetingDetails from '../models/MeetingDetails';
+import { Collections } from '../constants/collections.constants';
 
 interface User extends Document {
     _id: string;
@@ -34,7 +32,7 @@ const validateMeetingDetails = async (user: User, participants: string[], startT
         return { success: false, message: 'You can only schedule one-to-one meetings' };
     }
 
-    const existingMeeting = await MeetingDetails.findOne({
+    const existingMeeting = await Collections.MEETING_DETAILS.findOne({
         startTime: { $gte: new Date(startTime), $lt: new Date(endTime) },
     }).populate({
         path: 'meetingID',

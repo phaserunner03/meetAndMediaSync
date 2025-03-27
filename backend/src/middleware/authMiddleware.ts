@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
 import { Request, Response, NextFunction } from 'express';
+import { Collections } from '../constants/collections.constants';
+import { StatusCodes } from '../constants/status-codes.constants';
 
 interface AuthRequest extends Request {
   user?: any;
@@ -9,31 +10,31 @@ interface AuthRequest extends Request {
 
 const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    let token = req.header('authToken');
+    let token = req.header('authToken') || req.cookies?.token;
+
     if (!token) {
-      token = req.cookies?.token;
-    }
-    if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: 'Unauthorized: No token provided' });
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY!);
-    const user = await User.findOne({ googleId: (decoded as any).uid }).populate('role');
+    const decoded = jwt.verify(token, process.env.SECRET_KEY as string) as { uid: string };
+
+    const user = await Collections.USER.findOne({ googleId: decoded.uid }).populate('role');
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: 'Unauthorized: User not found' });
     }
+
     req.user = user;
     req.token = token;
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: 'Unauthorized: Invalid or expired token' });
   }
 };
 
-const restrictTo = (permissions: string) => {
+const restrictTo = (requiredPermission: string) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
-    if (!req.user.role.permissions.includes(permissions)) {
-      return res.status(403).json({ message: 'Access denied: Insufficient permissions' });
+    if (!req.user?.role?.permissions.includes(requiredPermission)) {
+      return res.status(StatusCodes.FORBIDDEN).json({ success: false, message: 'Access denied: Insufficient permissions' });
     }
     next();
   };

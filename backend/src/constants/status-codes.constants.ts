@@ -23,7 +23,7 @@ export enum StatusCodes {
     SERVICE_UNAVAILABLE = 503, // Server is temporarily unavailable
     GATEWAY_TIMEOUT = 504, // Server did not receive a timely response
 
-    // Custom API Responses (If needed)
+    // Custom API Responses (4xx)
     VALIDATION_ERROR = 422, // Used when input validation fails
     SESSION_EXPIRED = 440, // Custom: Session expired
 }

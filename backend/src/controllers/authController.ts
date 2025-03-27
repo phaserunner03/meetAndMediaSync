@@ -13,6 +13,8 @@ import {
 export interface AuthenticatedRequest extends Request {
   user: {
     googleId: string;
+    email: string;
+    refreshToken: string;
   };
 }
 

@@ -1,7 +1,9 @@
 export enum Permissions{
 
     //meeting permissions
-    VIEW_MEETING="VIEW_MEETING",
+    VIEW_MEETING="viewMeeting",
+    
+
 
     //role permissions
     

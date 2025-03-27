@@ -5,15 +5,14 @@ import dotenv from "dotenv";
 import router from  "./routes/index";
 import cookieParser from "cookie-parser";
 import "./utils/cronJob";
-
 dotenv.config();
 
-const PORT = process.env.PORT ?? 5000;
+const PORT = process.env.PORT ?? 8080;
 const app = express();
 
 app.use(cors({
   origin: [`${process.env.FRONTEND_URL}`, 'chrome-extension://ngmabalmicmpbdjgabmogmkgdcbcbmmj'],
-  credentials: true,  // Important: This allows cookies to be sent
+  credentials: true,  
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
@@ -23,13 +22,11 @@ app.use(cookieParser());
 
 databaseConnect();
 
+app.use("/web", router);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-app.use("/cloudcapture/web", router);
-
-
 
 interface Error {
   stack?: string;

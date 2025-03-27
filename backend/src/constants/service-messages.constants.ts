@@ -24,5 +24,8 @@ export const ErrorResponseMessages = {
     UPDATED_FAILED: (resource: string) => `${resource} update failed`,
     NOTIFICATION_FAILED: "Notification failed",
     
-
 };
+
+export const ServerResponseMessages = {
+    SERVER:"Server is up and running"
+}

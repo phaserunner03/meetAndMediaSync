@@ -34,11 +34,11 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
         req.user = user;
         req.token = token;
 
-        console.log(`🔹 Authenticated User: ${user.email} (Role: ${user.role?.name || "No Role"})`);
+        console.log(`🔹 Authenticated User: ${user.email}`);
 
         next();
     } catch (error) {
-        console.error("❌ Authentication Error:", error);
+        console.error("Authentication Error:", error);
 
         return res.status(StatusCodes.UNAUTHORIZED).json({
             success: false,

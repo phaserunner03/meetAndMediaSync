@@ -13,7 +13,7 @@ export const ErrorResponseMessages = {
     NOT_FOUND: (resource: string) => `${resource} not found`,
     FORBIDDEN: (resource: string) => `Access denied for ${resource}`,
     BAD_REQUEST: (reason?: string) => `Bad request${reason ? `: ${reason}` : ''}`,
-    UNAUTHORIZED: "Unauthorized access",
+    UNAUTHORIZED: (reason?:string)=> `Unauthorized${reason ? `: ${reason}` : ''}`,
     INVALID_CREDENTIALS: "Invalid credentials provided",
     INTERNAL_ERROR: "An internal server error occurred",
     TOKEN_EXPIRED: "Authentication token has expired",

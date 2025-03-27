@@ -1,10 +1,21 @@
-export enum Permissions{
+export enum Permissions {
+    // Role management permissions
+    ADD_ROLE = "addRole",
+    EDIT_ROLE = "editRole",
+    DELETE_ROLE = "deleteRole",
+    VIEW_ROLES = "viewRoles",
 
-    //meeting permissions
-    VIEW_MEETING="VIEW_MEETING",
+    // User management permissions
+    ADD_USER = "addUser",
+    EDIT_USER_ROLE = "editUserRole",
+    DELETE_USER = "deleteUser",
+    VIEW_USER = "viewUser",
+    VIEW_ALL_USERS = "viewAllUsers",
 
-    //role permissions
-    
+    // Meeting permissions
+    VIEW_MEETING = "viewMeeting",
+    GROUP_MEETING = "groupMeeting",
+    CREATE_MEETING = "createMeeting",
+    EDIT_MEETING = "editMeeting",
+    DELETE_MEETING = "deleteMeeting",
 }
-
-//changed in db

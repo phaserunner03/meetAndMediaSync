@@ -3,6 +3,8 @@ import * as driveController from "../controllers/driveController";
 import { authMiddleware } from "../middleware/authMiddleware";
 import { AuthenticatedRequest } from "../controllers/authController";
 
+//restrictTo check
+
 const router = express.Router();
 router.get("/folders", authMiddleware, async (req, res, next) => driveController.getAllFolders(req as AuthenticatedRequest, res).catch(next));
 

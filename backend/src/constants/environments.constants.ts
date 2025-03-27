@@ -11,6 +11,12 @@ export const environment = {
 };
 
 export const secretVariables = {
+    AUTH_API_VERSION:"v1",
+    MEET_API_VERSION:"v1",
+    DRIVE_API_VERSION:"v1",
+    ROLE_API_VERSION:"v1",
+    USER_API_VERSION:"v1",
+    TRANSFER_API_VERSION:"v1",
     SECRET_KEY: process.env.SECRET_KEY ?? "",
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ?? "",
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ?? "",
@@ -28,3 +34,4 @@ export const secretVariables = {
         SERVICE_KEY_PATH: process.env.GCP_SERVICE_KEY_PATH ?? "",
     },
 };
+

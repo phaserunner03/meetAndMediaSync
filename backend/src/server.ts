@@ -6,10 +6,9 @@ import router from  "./routes/index";
 import cookieParser from "cookie-parser";
 import "./utils/cronJob";
 import { environment } from "./constants/environments.constants";
-
 dotenv.config();
 
-const PORT = environment.PORT || 5000;
+const PORT = environment.PORT || 8080;
 const app = express();
 
 app.use(cors({
@@ -24,13 +23,11 @@ app.use(cookieParser());
 
 databaseConnect();
 
+app.use("/web", router);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-app.use("/cloudcapture/web", router);
-
-
 
 interface Error {
   stack?: string;

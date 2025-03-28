@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import mongoose, { Document } from 'mongoose';
 import { GoogleGCPScopes } from "../constants/scopes.constants";
 import { Collections } from "../constants/collections.constants";
+import { UserDocument } from "../constants/types.constants";
 import { secretVariables } from "../constants/environments.constants";
 
 
@@ -13,16 +14,6 @@ const CLIENT_SECRET = secretVariables.GOOGLE_CLIENT_SECRET ;
 const REDIRECT_URI = secretVariables.GOOGLE_REDIRECT_URI;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-
-interface UserDocument extends Document {
-    googleId: string;
-    displayName: string;
-    email: string;
-    role: mongoose.Schema.Types.ObjectId;
-    photoURL: string;
-    accessToken: string;
-    refreshToken: string;
-}
 
 function getGoogleAuthURL(): string {
     try {

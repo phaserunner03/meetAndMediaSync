@@ -5,12 +5,13 @@ import mongoose, { Document } from 'mongoose';
 import { GoogleGCPScopes } from "../constants/scopes.constants";
 import { Collections } from "../constants/collections.constants";
 import { UserDocument } from "../constants/types.constants";
+import { secretVariables } from "../constants/environments.constants";
 
 
-const SECRET_KEY = process.env.SECRET_KEY ?? "default_secret_key";
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
+const SECRET_KEY = secretVariables.SECRET_KEY ?? "default_secret_key";
+const CLIENT_ID = secretVariables.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = secretVariables.GOOGLE_CLIENT_SECRET ;
+const REDIRECT_URI = secretVariables.GOOGLE_REDIRECT_URI;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -100,7 +101,7 @@ async function refreshJwtToken(refreshToken: string) {
 
         const newToken = jwt.sign(
             { uid: user.googleId, email: user.email },
-            process.env.SECRET_KEY!,
+            secretVariables.SECRET_KEY,
             { expiresIn: "7d" }
         );
 

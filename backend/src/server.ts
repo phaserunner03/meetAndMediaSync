@@ -5,14 +5,15 @@ import dotenv from "dotenv";
 import router from  "./routes/index";
 import cookieParser from "cookie-parser";
 import "./utils/cronJob";
+import { environment } from "./constants/environments.constants";
 dotenv.config();
 
-const PORT = process.env.PORT ?? 8080;
+const PORT = environment.PORT || 8080;
 const app = express();
 
 app.use(cors({
-  origin: [`${process.env.FRONTEND_URL}`, 'chrome-extension://ngmabalmicmpbdjgabmogmkgdcbcbmmj'],
-  credentials: true,  
+  origin: [`${environment.FRONTEND_URL}`, 'chrome-extension://ngmabalmicmpbdjgabmogmkgdcbcbmmj'],
+  credentials: true,  // Important: This allows cookies to be sent
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));

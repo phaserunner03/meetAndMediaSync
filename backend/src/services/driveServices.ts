@@ -1,4 +1,5 @@
-import {google,drive_v3} from 'googleapis';
+import {google} from 'googleapis';
+import { secretVariables } from '../constants/environments.constants';
 import {Payload} from '../constants/types.constants';
 
 async function authorize(payload: Payload) {
@@ -11,8 +12,8 @@ async function authorize(payload: Payload) {
 async function getCloudCaptureFolder(refresh_token:string){
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token,
     };
     const auth = await authorize(payload);
@@ -39,8 +40,8 @@ async function getAllFiles(refresh_token:string){
     }
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token,
     };
 
@@ -81,8 +82,8 @@ async function getAllFolders(refresh_token:string){
 
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token,
     };
 
@@ -102,8 +103,8 @@ async function getFilesInFolder(refresh_token:string, folderId:string){
     
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token,
     };
 
@@ -122,11 +123,10 @@ async function getFilesInFolder(refresh_token:string, folderId:string){
 async function fetchRecentMeetingFolders(driveFolderId: string) {
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-    };
-
-    const auth = await authorize(payload);
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
+        refresh_token: "",
+    });
 
     const drive = google.drive({ version: "v3", auth });
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
@@ -142,8 +142,8 @@ async function fetchRecentMeetingFolders(driveFolderId: string) {
 async function deleteFile(refresh_token: string, fileId: string) {
     const payload: Payload = {
         type: "authorized_user",
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token,
     };
 

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { environment } from "../constants/environments.constants";
 
 dotenv.config();
 
 const databaseConnect = async () => {
-  const databaseUrl = process.env.DATABASE_URL;
+  const databaseUrl = environment.DATABASE_URL;
   if (!databaseUrl) {
     console.error("DATABASE_URL is not defined in the environment variables");
     return;

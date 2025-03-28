@@ -1,4 +1,5 @@
 import { google, calendar_v3 } from 'googleapis';
+import { secretVariables } from '../constants/environments.constants';
 
 interface Payload {
     type: string;
@@ -17,8 +18,8 @@ async function authorize(payload: Payload) {
 export async function createEvent(refreshToken: string, eventData: calendar_v3.Schema$Event) {
     const payload: Payload = {
         type: 'authorized_user',
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token: refreshToken,
     };
 
@@ -39,8 +40,8 @@ export async function listEvents(refreshToken: string, year: number, month: numb
     try {
         const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID!,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+            client_id: secretVariables.GOOGLE_CLIENT_ID,
+            client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
             refresh_token: refreshToken,
         };
 
@@ -74,8 +75,8 @@ export async function listEvents(refreshToken: string, year: number, month: numb
 export async function checkUserAvailability(refreshToken: string, startTime: string, endTime: string) {
     const payload: Payload = {
         type: 'authorized_user',
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: secretVariables.GOOGLE_CLIENT_ID,
+        client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token: refreshToken,
     };
 
@@ -99,8 +100,8 @@ export async function updateEvent(refreshToken: string, eventId: string, updated
     try {
         const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID!,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+            client_id: secretVariables.GOOGLE_CLIENT_ID,
+            client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
             refresh_token: refreshToken,
         };
 
@@ -134,8 +135,8 @@ export async function deleteEvent(refreshToken: string, eventId: string) {
     try {
         const payload: Payload = {
             type: 'authorized_user',
-            client_id: process.env.GOOGLE_CLIENT_ID!,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+            client_id: secretVariables.GOOGLE_CLIENT_ID,
+            client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
             refresh_token: refreshToken,
         };
 

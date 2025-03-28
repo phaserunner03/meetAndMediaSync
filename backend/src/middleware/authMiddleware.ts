@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { Collections } from "../constants/collections.constants";
 import { StatusCodes } from "../constants/status-codes.constants";
 import { ErrorResponseMessages } from "../constants/service-messages.constants";
+import { secretVariables } from '../constants/environments.constants';
 
 interface AuthRequest extends Request {
     user?: any;
@@ -20,7 +21,7 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
             });
         }
 
-        const decoded = jwt.verify(token, process.env.SECRET_KEY as string) as { uid: string };
+        const decoded = jwt.verify(token, secretVariables.SECRET_KEY as string) as { uid: string };
 
         const user = await Collections.USER.findOne({ googleId: decoded.uid }).populate("role");
 

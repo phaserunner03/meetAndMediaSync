@@ -1,4 +1,4 @@
-import {google} from 'googleapis';
+import { google } from 'googleapis';
 import { secretVariables } from '../constants/environments.constants';
 
 interface Payload {

@@ -12,7 +12,7 @@ interface AuthRequest extends Request {
 
 const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-        let token = req.header("authToken") || req.cookies?.token;
+        let token = req.header("authToken") ?? req.cookies?.token;
 
         if (!token) {
             return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -21,7 +21,7 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
             });
         }
 
-        const decoded = jwt.verify(token, secretVariables.SECRET_KEY as string) as { uid: string };
+        const decoded = jwt.verify(token, secretVariables.SECRET_KEY) as { uid: string };
 
         const user = await Collections.USER.findOne({ googleId: decoded.uid }).populate("role");
 

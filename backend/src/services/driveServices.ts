@@ -126,8 +126,9 @@ async function fetchRecentMeetingFolders(driveFolderId: string) {
         client_id: secretVariables.GOOGLE_CLIENT_ID,
         client_secret: secretVariables.GOOGLE_CLIENT_SECRET,
         refresh_token: "",
-    });
+    }
 
+    const auth = await authorize(payload);
     const drive = google.drive({ version: "v3", auth });
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
 

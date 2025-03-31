@@ -11,7 +11,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { API_ENDPOINTS } from "../../../../constants";
+import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
 
 
 const addUserSchema = z.object({
@@ -72,10 +72,13 @@ const AddUsers = () => {
       setRoles([{ _id: "67cad2fed3dd89f49742abee", name: "NAU", permissions: [] }]);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
+        }
+        else {
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.FETCH_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -91,9 +94,9 @@ const AddUsers = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.FETCH_FAILED);
         }
       } else {
         toast.error("Something went wrong. Please try again.");
@@ -117,16 +120,16 @@ const AddUsers = () => {
           role: data.role,
         });
   
-        toast.success("User added successfully");
+        toast.success(SUCCESS_MESSAGES.USER.CREATE_SUCCESS);
         fetchUsers();
         reset();
   
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Add User Error:", error.response?.data);
-          toast.error(error.response?.data?.message || "Error adding user");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.CREATE_FAILED);
         } else {
-          toast.error("Something went wrong. Please try again.");
+          toast.error(ERROR_MESSAGES.NETWORK_ERROR);
         }
       } finally {
         setLoading(false);
@@ -143,17 +146,17 @@ const AddUsers = () => {
         userId: selectedUser,
         newRole: selectedRole,
       });
-      toast.success("User role updated successfully");
+      toast.success(SUCCESS_MESSAGES.USER.EDIT_ROLE_SUCCESS);
       fetchUsers(); // Refresh the user list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.EDIT_ROLE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -166,17 +169,17 @@ const AddUsers = () => {
     setLoading(true);
     try {
       await axiosInstance.delete(API_ENDPOINTS.USER.DELETE(userToDelete));
-      toast.success("User deleted successfully");
+      toast.success(SUCCESS_MESSAGES.USER.DELETE_SUCCESS);
       fetchUsers(); // Refresh the user list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.DELETE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);

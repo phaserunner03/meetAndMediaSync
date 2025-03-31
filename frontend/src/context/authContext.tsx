@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, createContext, ReactNode } from "react";
 import axiosInstance from "../utils/axiosConfig"; 
-import { API_ENDPOINTS } from "../constants";
+import { API_ENDPOINTS, ERROR_MESSAGES } from "../constants";
 
 interface AuthContextType {
     currentUser: User | null;
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setCurrentUser(null);
             setUserLoggedIn(false);
         } catch (error) {
-            console.error("Logout failed:", error);
+            console.error(ERROR_MESSAGES.AUTH.LOGOUT_FAILED, error);
         }
     };
 

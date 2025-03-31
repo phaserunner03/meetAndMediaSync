@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import axiosInstance from "../utils/axiosConfig";
-import { API_ENDPOINTS } from "../constants";
+import { API_ENDPOINTS, ERROR_MESSAGES } from "../constants";
 
 interface Meeting {
     id: string;
@@ -54,7 +54,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
             setOurMeetings(res.data.data.ourMeetings);
             setFilteredMeetings(res.data.data.allMeetings);
         } catch (error) {
-            console.error("Error fetching meetings:", error);
+            console.error(ERROR_MESSAGES.MEETINGS.FETCH_FAILED, error);
         } finally {
             setIsLoading(false);
         }
@@ -71,7 +71,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
             fetchMeetings(month,year); 
             return { success: true, data: res.data };
         } catch (error) {
-            return { success: false, message: "Error creating meeting" };
+            return { success: false, message: ERROR_MESSAGES.MEETINGS.CREATE_FAILED };
         } finally {
             setIsLoading(false);
         }
@@ -88,7 +88,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
             return { success: false, message: response.data.message || "Unknown error" };
           }
         } catch (error: any) {
-          console.error("Error updating meeting:", error);
+          console.error(`${ERROR_MESSAGES.MEETINGS.UPDATE_FAILED}`, error);
           return { success: false, message: error.response?.data?.message || error.message };
         }
       };
@@ -99,7 +99,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
             await axiosInstance.delete(API_ENDPOINTS.MEETINGS.DELETE(id));
             fetchMeetings(month,year); // Refresh meetings after deletion
         } catch (error) {
-            console.error("Error deleting meeting:", error);
+            console.error(`${ERROR_MESSAGES.MEETINGS.DELETE_FAILED}`, error);
         }
     };
 

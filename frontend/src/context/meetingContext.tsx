@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import axiosInstance from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../constants/api.constants";
 
 interface Meeting {
     id: string;
@@ -47,7 +48,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const fetchMeetings = async (fetchMonth = month, fetchYear = year) => {
         setIsLoading(true);
         try {
-            const res = await axiosInstance.get("/meetings/v1/all", { params: { month: fetchMonth, year: fetchYear } });
+            const res = await axiosInstance.get(API_ENDPOINTS.MEETINGS.ALL, { params: { month: fetchMonth, year: fetchYear } });
             console.log("Fetched meetings:", res.data);
             setAllMeetings(res.data.data.allMeetings);
             setOurMeetings(res.data.data.ourMeetings);
@@ -66,7 +67,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const createMeeting = async (meetingData: any) => {
         setIsLoading(true);
         try {
-            const res = await axiosInstance.post("/meetings/v1/schedule", meetingData);
+            const res = await axiosInstance.post(API_ENDPOINTS.MEETINGS.SCHEDULE, meetingData);
             fetchMeetings(month,year); 
             return { success: true, data: res.data };
         } catch (error) {
@@ -78,7 +79,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
 
     const editMeeting = async (id: string, updatedData: any) => {
         try {
-          const response = await axiosInstance.put(`/meetings/v1/update/${id}`, updatedData);
+          const response = await axiosInstance.put(API_ENDPOINTS.MEETINGS.UPDATE(id), updatedData);
           
           if (response.data.success) {
             fetchMeetings(month, year); 
@@ -95,7 +96,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
 
     const deleteMeeting = async (id: string) => {
         try {
-            await axiosInstance.delete(`/meetings/v1/delete/${id}`);
+            await axiosInstance.delete(API_ENDPOINTS.MEETINGS.DELETE(id));
             fetchMeetings(month,year); // Refresh meetings after deletion
         } catch (error) {
             console.error("Error deleting meeting:", error);

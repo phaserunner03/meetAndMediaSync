@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Loader from "../../../common/Loader";
 import axios from "axios"
+import { API_ENDPOINTS } from "../../../../constants";
 
 const AddNewRole = () => {
   const { currentUser } = useAuth();
@@ -36,7 +37,7 @@ const AddNewRole = () => {
   const fetchRoles = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get("/roles/v1/allRoles");
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
       setRoles(response.data.data.roles);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -57,7 +58,7 @@ const AddNewRole = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.post("/roles/v1/addRole", {
+      await axiosInstance.post(API_ENDPOINTS.ROLE.ADD, {
         name: newRoleName,
         permissions: newRolePermissions,
       });
@@ -84,7 +85,7 @@ const AddNewRole = () => {
     if (!selectedRole) return;
     setLoading(true);
     try {
-      await axiosInstance.put(`/roles/v1/editRole/${selectedRole._id}`, {
+      await axiosInstance.put(API_ENDPOINTS.ROLE.EDIT(selectedRole._id), {
         name: selectedRole.name,
         permissions: newRolePermissions,
       });
@@ -110,7 +111,7 @@ const AddNewRole = () => {
     if (!roleToDelete) return;
     setLoading(true);
     try {
-      await axiosInstance.delete(`/roles/v1/deleteRole/${roleToDelete}`);
+      await axiosInstance.delete(API_ENDPOINTS.ROLE.DELETE(roleToDelete));
       toast.success("Role deleted successfully");
       fetchRoles(); // Refresh the roles list
     } catch (error) {

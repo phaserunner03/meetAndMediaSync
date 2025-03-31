@@ -11,6 +11,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { API_ENDPOINTS } from "../../../../constants";
 
 
 const addUserSchema = z.object({
@@ -63,7 +64,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch roles from the backend
-      const response = await axiosInstance.get("/roles/v1/allRoles");
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
     
       setRoles(response.data.data.roles);
       
@@ -85,7 +86,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch users from the backend
-      const response = await axiosInstance.get("/users/v1/allUsers");
+      const response = await axiosInstance.get(API_ENDPOINTS.USER.ALL);
       setUsers(response.data.data.users);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -111,7 +112,7 @@ const AddUsers = () => {
       setLoading(true);
   
       try {
-        await axiosInstance.post("/users/v1/addUser", {
+        await axiosInstance.post(API_ENDPOINTS.USER.ADD, {
           email: data.email.trim(), // Ensure no leading/trailing spaces
           role: data.role,
         });
@@ -138,7 +139,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/users/v1/editUserRole', {
+      await axiosInstance.put(API_ENDPOINTS.USER.EDIT_ROLE, {
         userId: selectedUser,
         newRole: selectedRole,
       });
@@ -164,7 +165,7 @@ const AddUsers = () => {
     if (!userToDelete) return;
     setLoading(true);
     try {
-      await axiosInstance.delete(`/users/v1/deleteUser/${userToDelete}`);
+      await axiosInstance.delete(API_ENDPOINTS.USER.DELETE(userToDelete));
       toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {

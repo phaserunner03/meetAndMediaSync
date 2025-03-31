@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, createContext, ReactNode } from "react";
 import axiosInstance from "../utils/axiosConfig"; 
+import { API_ENDPOINTS } from "../constants";
 
 interface AuthContextType {
     currentUser: User | null;
@@ -37,7 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axiosInstance.get("/users/v1/user"); 
+                const response = await axiosInstance.get(API_ENDPOINTS.USER.ME); 
                 setCurrentUser(response.data.data.user);
                 setUserLoggedIn(true);
             } catch (error) {
@@ -52,7 +53,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logout = async () => {
         try {
-            await axiosInstance.post("/auth/v1/logout"); 
+            await axiosInstance.post(API_ENDPOINTS.AUTH.LOGOUT); 
             setCurrentUser(null);
             setUserLoggedIn(false);
         } catch (error) {

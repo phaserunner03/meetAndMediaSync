@@ -8,6 +8,7 @@ import { ScrollArea } from "../../../ui/scroll-area";
 import axiosInstance from "../../../../utils/axiosConfig";
 import { useDrive } from "../../../../context/driveContext"
 import Loader from "../../../common/Loader";
+import { API_ENDPOINTS } from "../../../../constants";
 
 const Drive = () => {
     const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();
@@ -59,7 +60,7 @@ const Drive = () => {
         if (!selectedFolder) return;
         setDeleting(fileId);
         try {
-            await axiosInstance.delete(`/drive/v1/files/${fileId}`);
+            await axiosInstance.delete(API_ENDPOINTS.DRIVE.FILE(fileId));
             setFiles(files.filter((file) => file.id !== fileId));
             toast.success("File deleted successfully!");
         } catch (error) {
@@ -73,7 +74,7 @@ const Drive = () => {
     const handleTransferToGCP = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post('/transfer/v1/gcp');
+            const response = await axiosInstance.post(API_ENDPOINTS.TRANSFER.GCP);
             if (response.status === 200) {
                 toast.success("Folder transferred to GCP successfully!");
             } else {

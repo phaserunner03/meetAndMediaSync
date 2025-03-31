@@ -6,6 +6,7 @@ import router from  "./routes/index";
 import cookieParser from "cookie-parser";
 import "./utils/cronJob";
 import { environment } from "./constants/environments.constants";
+import logger from "./utils/logger"
 dotenv.config();
 
 const PORT = environment.PORT || 8080;
@@ -26,7 +27,7 @@ databaseConnect();
 app.use("/web", router);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info({functionName:"Server",statusCode:"200", message: `Server running on port ${PORT}`,data:{} });
 });
 
 interface Error {

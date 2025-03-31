@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import { environment } from "../constants/environments.constants";
+import logger from "../utils/logger";
 
-dotenv.config();
-
+const functionName = {databaseConnect:"databaseConnect"}
 const databaseConnect = async () => {
   const databaseUrl = environment.DATABASE_URL;
   if (!databaseUrl) {
@@ -14,7 +13,7 @@ const databaseConnect = async () => {
   mongoose
     .connect(databaseUrl)
     .then(() => {
-      console.log("Connected to database");
+      logger.info({functionName:functionName.databaseConnect,statusCode:"200", message: "Connected to database",data:{} });
     })
     .catch((error) => {
       console.log("Error connecting to database");

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import axiosInstance from "../utils/axiosConfig";
-import { API_ENDPOINTS } from "../constants/api.constants";
+import { API_ENDPOINTS } from "../constants";
 
 interface Meeting {
     id: string;
@@ -13,6 +13,7 @@ interface Meeting {
     meetLink: string;
     isOwner: boolean;
 }
+
 
 interface MeetingContextType {
     allMeetings: Meeting[];
@@ -49,7 +50,6 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
         setIsLoading(true);
         try {
             const res = await axiosInstance.get(API_ENDPOINTS.MEETINGS.ALL, { params: { month: fetchMonth, year: fetchYear } });
-            console.log("Fetched meetings:", res.data);
             setAllMeetings(res.data.data.allMeetings);
             setOurMeetings(res.data.data.ourMeetings);
             setFilteredMeetings(res.data.data.allMeetings);

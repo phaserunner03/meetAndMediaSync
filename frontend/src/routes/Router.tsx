@@ -12,7 +12,7 @@ import Create from "../components/layout/Dashboard/Create/Create";
 import Meetings from "../components/layout/Dashboard/Meeting/Meetings";
 import AddUsers from "../components/layout/Dashboard/Roles/AddUsers";
 import AddNewRole from "../components/layout/Dashboard/Roles/AddNewRole";
-import { ROUTES } from "../constants/routes.constants";
+import { ROUTES } from "../constants";
 
 export const router = createBrowserRouter([
   { path: ROUTES.HOME, element: <Home /> },

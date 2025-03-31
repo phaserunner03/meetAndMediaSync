@@ -126,7 +126,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
             });
         }
 
-    res.redirect(`${environment.FRONTEND_URL}/dashboard`);
+    res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
   } catch (err) {
     res.status(StatusCodes.UNAUTHORIZED).json({
       success: false,

@@ -17,3 +17,7 @@
 {timestamp: 2025-03-31 12:19:01, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
 {timestamp: 2025-03-31 12:20:30, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-03-31 12:20:31, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-03-31 13:44:17, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-03-31 13:44:18, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-03-31 13:44:32, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-03-31 13:44:32, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}

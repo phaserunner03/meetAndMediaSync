@@ -9,7 +9,6 @@ import meetingRoutes from "./meetingRoutes";
 import transferRoutes from "./transferRoutes";
 import { ServerResponseMessages } from "../constants/service-messages.constants";
 import { secretVariables } from "../constants/environments.constants";
-import { secretVariables } from "../constants/environments.constants";
 
 
 

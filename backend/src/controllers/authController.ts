@@ -126,7 +126,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
             });
         }
 
-    res.redirect(`${environment.FRONTEND_URL}/dashboard`);
+    res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
   } catch (err) {
     res.status(StatusCodes.UNAUTHORIZED).json({
       success: false,
@@ -190,7 +190,7 @@ async function refreshJwtToken(req: Request, res: Response) {
       .status(StatusCodes.OK)
       .json({
         success: true,
-        message: "Token refreshed successfully",
+        message: SuccessResponseMessages.ACTION_SUCCESS("Token refreshed"),
         data: { token: newToken, valid: false },
       });
   } catch (err) {

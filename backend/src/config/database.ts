@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { environment } from "../constants/environments.constants";
 import logger from "../utils/logger";
+import { SuccessResponseMessages } from "../constants/service-messages.constants";
 
 const functionName = {databaseConnect:"databaseConnect"}
 const databaseConnect = async () => {
@@ -13,7 +14,7 @@ const databaseConnect = async () => {
   mongoose
     .connect(databaseUrl)
     .then(() => {
-      logger.info({functionName:functionName.databaseConnect,statusCode:"200", message: "Connected to database",data:{} });
+      logger.info({functionName:functionName.databaseConnect,statusCode:"200", message: SuccessResponseMessages.CONNECTED("database"),data:{} });
     })
     .catch((error) => {
       console.log("Error connecting to database");

@@ -4,6 +4,7 @@ import { createEvent, listEvents, checkUserAvailability, updateEvent, deleteEven
 import validateMeetingDetails from '../utils/meetingValidation';
 import { google } from 'googleapis';
 import { Collections } from '../constants/collections.constants';
+import {ErrorResponseMessages, SuccessResponseMessages} from '../constants/service-messages.constants';
 
 interface User extends Document {
     _id: string;
@@ -27,7 +28,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
 
         const isAvailable = await checkUserAvailability(user.refreshToken, startTime, endTime);
         if (!isAvailable) {
-            return { success: false, message: 'User is not available at the specified time' };
+            return { success: false, message: 'User is not available for the selected time slot' };
         }
 
         const event = {
@@ -84,7 +85,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
             endTime,
         });
         await newMeetingDetails.save();
-        return { success: true, message: 'Meeting scheduled successfully', meetLink: meetLink };
+        return { success: true, message: SuccessResponseMessages.CREATED("Meeting"), meetLink: meetLink };
     } catch (error) {
         console.error('Error scheduling meeting:', error);
         throw new Error(error instanceof Error ? error.message : 'Failed to schedule meeting');
@@ -149,7 +150,7 @@ const modifyMeeting = async (user: User, eventId: string, updatedData: any): Pro
             return { success: false, message: updatedEvent.message || 'Failed to update meeting' };
         }
 
-        return { success: true, message: 'Meeting updated successfully', updatedEvent };
+        return { success: true, message: SuccessResponseMessages.UPDATED("Meeting"), updatedEvent };
 
     } catch (error) {
         console.error('Error updating meeting:', error);
@@ -169,7 +170,7 @@ const removeMeeting = async (user: User, eventId: string): Promise<MeetingRespon
 
 const verifyMeeting = async (meetingCode: string, token: string) => {
     if (!token || !meetingCode) {
-        throw { status: 400, message: "Missing parameters" };
+        throw { status: 400, message: "Token and meeting code are required" };
     }
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: token });

@@ -6,6 +6,7 @@ export const SuccessResponseMessages = {
     VERIFIED: (resource:string) => `${resource} verified successfully`,
     ACTION_SUCCESS: (action: string) => `${action} completed successfully`,
     TRANSFER : (resource: string) => `${resource} transferred successfully`,
+    CONNECTED: (resource: string) => `${resource} connected successfully`,
     NOTIFIED: "Admin notified successfully",
 };
 

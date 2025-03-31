@@ -6,6 +6,7 @@ import { GoogleGCPScopes } from "../constants/scopes.constants";
 import { Collections } from "../constants/collections.constants";
 import { UserDocument } from "../constants/types.constants";
 import { secretVariables } from "../constants/environments.constants";
+import { ErrorResponseMessages, SuccessResponseMessages } from "../constants/service-messages.constants";
 
 
 const SECRET_KEY = secretVariables.SECRET_KEY ?? "default_secret_key";

@@ -59,7 +59,7 @@ const Drive = () => {
         if (!selectedFolder) return;
         setDeleting(fileId);
         try {
-            await axiosInstance.delete(`/api/drive/files/${fileId}`);
+            await axiosInstance.delete(`/drive/v1/files/${fileId}`);
             setFiles(files.filter((file) => file.id !== fileId));
             toast.success("File deleted successfully!");
         } catch (error) {
@@ -73,7 +73,7 @@ const Drive = () => {
     const handleTransferToGCP = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post('/api/transfer/gcp');
+            const response = await axiosInstance.post('/transfer/v1/gcp');
             if (response.status === 200) {
                 toast.success("Folder transferred to GCP successfully!");
             } else {

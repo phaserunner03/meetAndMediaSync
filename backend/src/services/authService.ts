@@ -68,7 +68,7 @@ async function processGoogleAuth(code: string) {
             user.googleId = data.id ?? user.googleId;
         }
         user.accessToken = tokens.access_token!;
-        user.refreshToken = tokens.refresh_token || user.refreshToken;
+        user.refreshToken = tokens.refresh_token ?? user.refreshToken;
 
         await user.save();
 

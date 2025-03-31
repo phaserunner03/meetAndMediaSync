@@ -62,7 +62,7 @@ const scheduleMeeting = async (user: User, title: string, location: string, desc
         };
 
         const response = await createEvent(user.refreshToken, event);
-        if (!response || !response.hangoutLink) throw new Error('Failed to generate Google Meet link');
+        if (!response?.hangoutLink) throw new Error('Failed to generate Google Meet link');
         const meetLink = response.hangoutLink;
 
         const newMeeting = new Collections.MEETINGS({
@@ -102,9 +102,9 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
 
         const allMeetings = googleMeetings.map((event) => ({
             id: event.id,
-            title: event.summary || "No Title",
-            description: event.description || "No Description",
-            meetLink: event.hangoutLink || "No Link",
+            title: event.summary ?? "No Title",
+            description: event.description ?? "No Description",
+            meetLink: event.hangoutLink ?? "No Link",
             meetingDate: event.start,
             startTime: event.start,
             endTime: event.end,
@@ -187,8 +187,6 @@ const verifyMeeting = async (meetingCode: string, token: string) => {
     }
 
     
-
-    // ✅ Check if User Created the Meeting
     const meetingLink = `https://meet.google.com/${meetingCode}`;
     const meeting = await Collections.MEETINGS.findOne({ meetLink: meetingLink, scheduledBy: user._id });
 

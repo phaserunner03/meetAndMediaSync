@@ -73,7 +73,7 @@ async function fetchFileBuffer(refresh_token: string, fileId: string): Promise<B
 
         return new Promise<Buffer>((resolve, reject) => {
             const chunks: Buffer[] = [];
-            const stream = response.data as Readable;
+            const stream = response.data;
 
             stream.on("data", (chunk) => chunks.push(chunk));
             stream.on("end", () => resolve(Buffer.concat(chunks)));

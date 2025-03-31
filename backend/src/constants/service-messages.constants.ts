@@ -12,8 +12,20 @@ export const SuccessResponseMessages = {
 export const ErrorResponseMessages = {
     NOT_FOUND: (resource: string) => `${resource} not found`,
     FORBIDDEN: (resource: string) => `Access denied for ${resource}`,
-    BAD_REQUEST: (reason?: string) => `Bad request${reason ? `: ${reason}` : ''}`,
-    UNAUTHORIZED: (reason?:string)=> `Unauthorized${reason ? `: ${reason}` : ''}`,
+    BAD_REQUEST: (reason?: string) => {
+        let message = "Bad request";
+        if (reason) {
+            message += `: ${reason}`;
+        }
+        return message;
+    },
+    UNAUTHORIZED: (reason?: string) => {
+        let message = "Unauthorized";
+        if (reason) {
+            message += `: ${reason}`;
+        }
+        return message;
+    },
     INVALID_CREDENTIALS: "Invalid credentials provided",
     INTERNAL_ERROR: "An internal server error occurred",
     TOKEN_EXPIRED: "Authentication token has expired",

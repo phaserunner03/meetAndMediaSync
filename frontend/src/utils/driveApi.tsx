@@ -2,7 +2,7 @@ import axiosInstance from "./axiosConfig";
 
 export async function getAllFolders(){
     try{
-        const response = await axiosInstance.get("/api/drive/folders");
+        const response = await axiosInstance.get("/drive/v1/folders");
         return response;
     }
     catch(error:any){
@@ -13,7 +13,7 @@ export async function getAllFolders(){
 
 export async function getFilesInFolder(folderId:string){
     try{
-        const response = await axiosInstance.get(`/api/drive/folders/${folderId}`);
+        const response = await axiosInstance.get(`/drive/v1/folders/${folderId}`);
         return response;
     }
     catch(error:any){

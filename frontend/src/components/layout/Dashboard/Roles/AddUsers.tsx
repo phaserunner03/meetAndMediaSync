@@ -63,7 +63,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch roles from the backend
-      const response = await axiosInstance.get("/api/roles/allRoles");
+      const response = await axiosInstance.get("/roles/v1/allRoles");
     
       setRoles(response.data.data.roles);
       
@@ -85,7 +85,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch users from the backend
-      const response = await axiosInstance.get("/api/users/allUsers");
+      const response = await axiosInstance.get("/users/v1/allUsers");
       setUsers(response.data.data.users);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -111,7 +111,7 @@ const AddUsers = () => {
       setLoading(true);
   
       try {
-        await axiosInstance.post("/api/users/addUser", {
+        await axiosInstance.post("/users/v1/addUser", {
           email: data.email.trim(), // Ensure no leading/trailing spaces
           role: data.role,
         });
@@ -138,7 +138,7 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/api/users/editUserRole', {
+      await axiosInstance.put('/users/v1/editUserRole', {
         userId: selectedUser,
         newRole: selectedRole,
       });
@@ -164,7 +164,7 @@ const AddUsers = () => {
     if (!userToDelete) return;
     setLoading(true);
     try {
-      await axiosInstance.delete(`/api/users/deleteUser/${userToDelete}`);
+      await axiosInstance.delete(`/users/v1/deleteUser/${userToDelete}`);
       toast.success("User deleted successfully");
       fetchUsers(); // Refresh the user list
     } catch (error) {
@@ -193,7 +193,7 @@ const AddUsers = () => {
 
   const filteredUsers = users.filter(user => user.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser || !currentUser.role.permissions.includes("viewUser")) {
+  if (!currentUser?.role?.permissions?.includes?.("viewUser")) {
     return null;
   }
 
@@ -279,7 +279,7 @@ const AddUsers = () => {
                 <Select
                   {...register("role")}
                   value={selectedRole || ""} 
-                  onChange={(e) => setSelectedRole(e.target.value)}
+                  onChange={(e) => setSelectedRole(e.target.value as string)}
                   error={!!errors.role}
                 >
                   <MenuItem value="" disabled>Select Role</MenuItem>

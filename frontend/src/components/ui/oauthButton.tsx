@@ -5,7 +5,7 @@ import axiosInstance from "../../utils/axiosConfig";
 const OAuthButton: React.FC = () => {
   const handleGoogleSignUp = async () => {
     try {
-      const response = await axiosInstance.get('/api/auth/check-refresh');
+      const response = await axiosInstance.get('/auth/v1/check-refresh');
 
       if (response.status === 200) {
         const data = response.data;
@@ -16,13 +16,13 @@ const OAuthButton: React.FC = () => {
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
           window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
         } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+          window.location.href = `${import.meta.env.VITE_API_URL}/auth/v1/google`;
         }
       } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/v1/google`;
       }
     } catch (error) {
-      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/v1/google`;
     }
   };
 

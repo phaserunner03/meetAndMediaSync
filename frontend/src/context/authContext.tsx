@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axiosInstance.get("/api/users/user"); 
+                const response = await axiosInstance.get("/users/v1/user"); 
                 setCurrentUser(response.data.data.user);
                 setUserLoggedIn(true);
             } catch (error) {
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logout = async () => {
         try {
-            await axiosInstance.post("/api/auth/logout"); 
+            await axiosInstance.post("/auth/v1/logout"); 
             setCurrentUser(null);
             setUserLoggedIn(false);
         } catch (error) {

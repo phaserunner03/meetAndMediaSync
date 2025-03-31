@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import axiosInstance from "../utils/axiosConfig";
 
 interface Meeting {
@@ -47,10 +47,11 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const fetchMeetings = async (fetchMonth = month, fetchYear = year) => {
         setIsLoading(true);
         try {
-            const res = await axiosInstance.get("/api/meetings/all", { params: { month: fetchMonth, year: fetchYear } });
-            setAllMeetings(res.data.allMeetings);
-            setOurMeetings(res.data.ourMeetings);
-            setFilteredMeetings(res.data.allMeetings);
+            const res = await axiosInstance.get("/meetings/v1/all", { params: { month: fetchMonth, year: fetchYear } });
+            console.log("Fetched meetings:", res.data);
+            setAllMeetings(res.data.data.allMeetings);
+            setOurMeetings(res.data.data.ourMeetings);
+            setFilteredMeetings(res.data.data.allMeetings);
         } catch (error) {
             console.error("Error fetching meetings:", error);
         } finally {
@@ -65,7 +66,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
     const createMeeting = async (meetingData: any) => {
         setIsLoading(true);
         try {
-            const res = await axiosInstance.post("/api/meetings/schedule", meetingData);
+            const res = await axiosInstance.post("/meetings/v1/schedule", meetingData);
             fetchMeetings(month,year); 
             return { success: true, data: res.data };
         } catch (error) {
@@ -77,7 +78,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
 
     const editMeeting = async (id: string, updatedData: any) => {
         try {
-          const response = await axiosInstance.put(`/api/meetings/update/${id}`, updatedData);
+          const response = await axiosInstance.put(`/meetings/v1/update/${id}`, updatedData);
           
           if (response.data.success) {
             fetchMeetings(month, year); 
@@ -94,7 +95,7 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
 
     const deleteMeeting = async (id: string) => {
         try {
-            await axiosInstance.delete(`/api/meetings/delete/${id}`);
+            await axiosInstance.delete(`/meetings/v1/delete/${id}`);
             fetchMeetings(month,year); // Refresh meetings after deletion
         } catch (error) {
             console.error("Error deleting meeting:", error);
@@ -115,21 +116,23 @@ export const MeetingProvider = ({ children }: { children: React.ReactNode }) => 
         if (searchQuery.trim()) {
             updatedMeetings = updatedMeetings.filter(meeting =>
                 meeting.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (meeting.description && meeting.description.toLowerCase().includes(searchQuery.toLowerCase()))
+                meeting.description?.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
 
         setFilteredMeetings(updatedMeetings);
     }, [searchQuery, selectedDay, allMeetings]);
 
+    const contextValue = useMemo(() => ({
+        allMeetings, ourMeetings, filteredMeetings,
+        month, year, isLoading,
+        setMonth, setYear,
+        fetchMeetings, setSearchQuery, setSelectedDay,
+        createMeeting, editMeeting, deleteMeeting
+    }), [allMeetings, ourMeetings, filteredMeetings, month, year, isLoading]);
+
     return (
-        <MeetingContext.Provider value={{
-            allMeetings, ourMeetings, filteredMeetings,
-            month, year, isLoading,
-            setMonth, setYear,
-            fetchMeetings, setSearchQuery, setSelectedDay,
-            createMeeting, editMeeting, deleteMeeting
-        }}>
+        <MeetingContext.Provider value={contextValue}>
             {children}
         </MeetingContext.Provider>
     );

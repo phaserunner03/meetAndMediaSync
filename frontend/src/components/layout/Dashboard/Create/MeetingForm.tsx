@@ -52,13 +52,13 @@ const MeetingForm = () => {
       const result = await createMeeting(meetingData);
 
       if (result.data.success) {
-        toast.success("✅ Meeting scheduled successfully!");
+        toast.success(" Meeting scheduled successfully!");
       } else {
         
-        toast.error(result.data.message||"❌ Failed to schedule meeting.");
+        toast.error(result.data.message||" Failed to schedule meeting.");
       }
     } catch (error: any) {
-      toast.error(error.message || "❌ Something went wrong.");
+      toast.error(error.message || "Something went wrong.");
     }
   };
 

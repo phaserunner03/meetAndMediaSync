@@ -50,6 +50,7 @@ async function notifyAdminToAddUser(userInfo: any) {
       message: `Notification sent to admin for user: ${userInfo.email}`,
       data: { userInfo },
     });
+    
   } catch (error) {
     logger.error({
       functionName: functionName.notifyAdminToAddUser,

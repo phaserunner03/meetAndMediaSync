@@ -16,11 +16,29 @@ export interface UserDocument extends Document {
 export interface RoleDocument extends Document {
     name: string;
     permissions: string[];
+
 }
+
+
+export interface AuthRequest extends Request {
+    header: any;
+    user?: any;
+    token?: string;
+}
+
+export interface MeetingResponse {
+    success: boolean;
+    message?: string;
+    meetLink?: string;
+    updatedEvent?: any;
+}
+
+
 
 export interface User extends Document {
     _id: string;
     role: { _id: mongoose.Schema.Types.ObjectId, name: string, permissions:string[] };
+    refreshToken: string;
 }
 
 

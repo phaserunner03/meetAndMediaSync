@@ -137,3 +137,120 @@
 {timestamp: 2025-03-31 15:05:33, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
 {timestamp: 2025-03-31 15:08:11, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-03-31 15:08:16, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:50:23, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:50:24, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:50:53, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:50:54, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:51:10, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:51:10, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:51:51, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:51:52, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:52:23, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:52:23, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:53:15, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:53:16, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:53:29, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:53:30, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:53:41, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:53:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 12:54:01, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 12:54:01, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 14:39:26, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 14:39:27, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 14:41:27, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 14:41:28, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 14:56:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 14:56:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 14:57:43, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 14:57:43, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:01:15, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:01:16, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:01:37, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:01:38, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:03:16, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:03:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:04:07, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:04:07, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:05:17, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:05:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:05:51, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:05:52, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:06:34, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:06:34, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:06:40, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:06:40, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:07:15, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:07:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:09:12, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:09:12, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:09:53, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:09:53, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:10:06, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:10:07, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:10:51, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:10:51, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:12:07, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:12:23, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:13:36, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:13:36, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:13:47, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:13:48, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:26:01, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:26:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:26:29, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:26:29, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:27:04, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:27:04, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:29:05, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:29:06, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:29:52, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:29:52, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:30:10, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:30:17, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:30:18, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:31:10, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:31:10, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:31:22, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:31:23, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:31:37, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:31:39, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:32:21, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:32:22, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:32:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:32:34, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:33:00, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:33:21, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:33:23, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:33:32, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:33:33, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:36:58, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:36:59, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 15:39:40, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:39:50, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 15:39:51, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 16:59:49, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 16:59:49, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:00:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:00:43, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:01:13, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:01:13, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:01:46, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:01:47, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:02:05, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:02:06, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:02:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:02:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:03:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:03:34, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:03:55, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:03:56, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:04:43, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:04:44, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:05:15, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:05:15, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:05:35, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:05:35, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:06:17, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:06:18, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-01 17:06:37, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-01 17:06:37, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}

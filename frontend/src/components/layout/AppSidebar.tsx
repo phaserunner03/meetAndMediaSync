@@ -13,6 +13,7 @@ import {
   X
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
+import { ERROR_MESSAGES, ROUTES } from "../../constants";
 
 const Sidebar = () => {
   const { currentUser, logout } = useAuth();
@@ -23,18 +24,19 @@ const Sidebar = () => {
 
   // Memoize role-based menu items
   const menuItems = useMemo(() => {
+    const dashboardPrefix = ROUTES.DASHBOARD;
     const baseMenu = [
-      { title: "Home", url: "/dashboard/home", icon: Home },
-      { title: "Meetings", url: "/dashboard/meetings", icon: Inbox },
-      { title: "Create", url: "/dashboard/create", icon: CalendarPlus2 },
-      { title: "Drive", url: "/dashboard/drive", icon: HardDriveUpload },
+      { title: "Home", url: `${dashboardPrefix}/${ROUTES.DASHBOARD_HOME}`, icon: Home },
+      { title: "Meetings", url: `${dashboardPrefix}/${ROUTES.MEETINGS}`, icon: Inbox },
+      { title: "Create", url: `${dashboardPrefix}/${ROUTES.CREATE_MEETING}`, icon: CalendarPlus2 },
+      { title: "Drive", url: `${dashboardPrefix}/${ROUTES.DRIVE}`, icon: HardDriveUpload },
     ];
 
     if (currentUser?.role.permissions?.includes("viewAllUsers")) {
-      baseMenu.push({ title: "Users", url: "/dashboard/add-users", icon: User });
+      baseMenu.push({ title: "Users", url: `${dashboardPrefix}/${ROUTES.ADD_USERS}`, icon: User });
     }
     if (currentUser?.role.permissions?.includes("addRole")) {
-      baseMenu.push({ title: "Role", url: "/dashboard/add-role", icon: BadgeInfo });
+      baseMenu.push({ title: "Role", url: `${dashboardPrefix}/${ROUTES.ADD_ROLE}`, icon: BadgeInfo });
     }
     
     return baseMenu;
@@ -44,9 +46,9 @@ const Sidebar = () => {
   const handleLogOut = useCallback(async () => {
     try {
       await logout();
-      navigate("/login"); // Redirect to login
+      navigate(ROUTES.LOGIN); // Redirect to login
     } catch (error) {
-      console.error("Logout Error:", error);
+      console.error(ERROR_MESSAGES.AUTH.LOGOUT_FAILED, error);
     }
   }, [logout, navigate]);
 

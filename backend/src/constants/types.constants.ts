@@ -19,12 +19,15 @@ export interface RoleDocument extends Document {
 
 }
 
-
-export interface AuthRequest extends Request {
-    header: any;
-    user?: any;
+export interface AuthenticatedRequest extends Request {
+    user?: User;
     token?: string;
+    params: Record<string, string>; 
+    header: Record<string, string>; 
+    cookies: Record<string, string>;
 }
+
+
 
 export interface MeetingResponse {
     success: boolean;
@@ -36,6 +39,8 @@ export interface MeetingResponse {
 
 
 export interface User extends Document {
+    email: any;
+    googleId: string
     _id: string;
     role: { _id: mongoose.Schema.Types.ObjectId, name: string, permissions:string[] };
     refreshToken: string;

@@ -79,7 +79,7 @@ const getAllMeetings = async (req: AuthenticatedRequest, res: Response) => {
     if (!year || !month) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ success: false, message: "Year and month are required" });
+        .json({ success: false, message: ErrorResponseMessages.BAD_REQUEST("Year and month are required") });
     }
     const result = await meetingService.getAllMeetings(
       req.user,

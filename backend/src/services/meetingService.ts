@@ -208,7 +208,15 @@ const removeMeeting = async (
 const verifyMeeting = async (meetingCode: string, token: string) => {
   try {
     if (!token || !meetingCode) {
-      throw { status: StatusCodes.BAD_REQUEST, message: "Missing parameters" };
+        throw { status: 400, message: "Token and meeting code are required" };
+    }
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: token });
+    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+
+    const { data } = await oauth2.userinfo.get();
+    if (!data.id) {
+        throw { status: 401, message: "Invalid token" };
     }
     const user = await getUserFromToken(token);
 

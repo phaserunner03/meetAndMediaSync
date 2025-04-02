@@ -10,7 +10,7 @@ const MeetingActions: React.FC = () => {
   const navigate = useNavigate();
 
   
-  const todayMeetingsCount = allMeetings?.filter((meeting) =>
+  const todayMeetingsCount = allMeetings.filter((meeting) =>
     isToday(new Date(meeting.startTime.dateTime))
   ).length;
 

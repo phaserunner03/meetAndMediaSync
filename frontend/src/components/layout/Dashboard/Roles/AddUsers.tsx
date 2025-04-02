@@ -11,6 +11,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
 
 
 const addUserSchema = z.object({
@@ -63,7 +64,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch roles from the backend
-      const response = await axiosInstance.get("/roles/v1/allRoles");
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
     
       setRoles(response.data.data.roles);
       
@@ -71,10 +72,13 @@ const AddUsers = () => {
       setRoles([{ _id: "67cad2fed3dd89f49742abee", name: "NAU", permissions: [] }]);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
+        }
+        else {
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.FETCH_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -85,14 +89,14 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch users from the backend
-      const response = await axiosInstance.get("/users/v1/allUsers");
+      const response = await axiosInstance.get(API_ENDPOINTS.USER.ALL);
       setUsers(response.data.data.users);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.FETCH_FAILED);
         }
       } else {
         toast.error("Something went wrong. Please try again.");
@@ -111,21 +115,21 @@ const AddUsers = () => {
       setLoading(true);
   
       try {
-        await axiosInstance.post("/users/v1/addUser", {
+        await axiosInstance.post(API_ENDPOINTS.USER.ADD, {
           email: data.email.trim(), // Ensure no leading/trailing spaces
           role: data.role,
         });
   
-        toast.success("User added successfully");
+        toast.success(SUCCESS_MESSAGES.USER.CREATE_SUCCESS);
         fetchUsers();
         reset();
   
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Add User Error:", error.response?.data);
-          toast.error(error.response?.data?.message || "Error adding user");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.CREATE_FAILED);
         } else {
-          toast.error("Something went wrong. Please try again.");
+          toast.error(ERROR_MESSAGES.NETWORK_ERROR);
         }
       } finally {
         setLoading(false);
@@ -138,21 +142,21 @@ const AddUsers = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/users/v1/editUserRole', {
+      await axiosInstance.put(API_ENDPOINTS.USER.EDIT_ROLE, {
         userId: selectedUser,
         newRole: selectedRole,
       });
-      toast.success("User role updated successfully");
+      toast.success(SUCCESS_MESSAGES.USER.EDIT_ROLE_SUCCESS);
       fetchUsers(); // Refresh the user list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.EDIT_ROLE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -164,18 +168,18 @@ const AddUsers = () => {
     if (!userToDelete) return;
     setLoading(true);
     try {
-      await axiosInstance.delete(`/users/v1/deleteUser/${userToDelete}`);
-      toast.success("User deleted successfully");
+      await axiosInstance.delete(API_ENDPOINTS.USER.DELETE(userToDelete));
+      toast.success(SUCCESS_MESSAGES.USER.DELETE_SUCCESS);
       fetchUsers(); // Refresh the user list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.DELETE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);

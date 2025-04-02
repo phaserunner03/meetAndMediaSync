@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Loader from "../../../common/Loader";
 import axios from "axios"
+import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
 
 const AddNewRole = () => {
   const { currentUser } = useAuth();
@@ -36,17 +37,17 @@ const AddNewRole = () => {
   const fetchRoles = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get("/roles/v1/allRoles");
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
       setRoles(response.data.data.roles);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.FETCH_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -57,21 +58,21 @@ const AddNewRole = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.post("/roles/v1/addRole", {
+      await axiosInstance.post(API_ENDPOINTS.ROLE.ADD, {
         name: newRoleName,
         permissions: newRolePermissions,
       });
-      toast.success("Role added successfully");
+      toast.success(SUCCESS_MESSAGES.ROLE.ADD_SUCCESS);
       fetchRoles(); // Refresh the roles list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.ADD_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -84,21 +85,21 @@ const AddNewRole = () => {
     if (!selectedRole) return;
     setLoading(true);
     try {
-      await axiosInstance.put(`/roles/v1/editRole/${selectedRole._id}`, {
+      await axiosInstance.put(API_ENDPOINTS.ROLE.EDIT(selectedRole._id), {
         name: selectedRole.name,
         permissions: newRolePermissions,
       });
-      toast.success("Role updated successfully");
+      toast.success(SUCCESS_MESSAGES.ROLE.UPDATE_SUCCESS);
       fetchRoles(); // Refresh the roles list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.UPDATE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);
@@ -110,18 +111,18 @@ const AddNewRole = () => {
     if (!roleToDelete) return;
     setLoading(true);
     try {
-      await axiosInstance.delete(`/roles/v1/deleteRole/${roleToDelete}`);
-      toast.success("Role deleted successfully");
+      await axiosInstance.delete(API_ENDPOINTS.ROLE.DELETE(roleToDelete));
+      toast.success(SUCCESS_MESSAGES.ROLE.DELETE_SUCCESS);
       fetchRoles(); // Refresh the roles list
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Unauthorized! Please log in again.");
+          toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || "Error updating role");
+          toast.error(error.response?.data?.message || ERROR_MESSAGES.ROLE.DELETE_FAILED);
         }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(ERROR_MESSAGES.NETWORK_ERROR);
       }
     } finally {
       setLoading(false);

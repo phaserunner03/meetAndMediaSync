@@ -8,6 +8,7 @@ import { ScrollArea } from "../../../ui/scroll-area";
 import axiosInstance from "../../../../utils/axiosConfig";
 import { useDrive } from "../../../../context/driveContext"
 import Loader from "../../../common/Loader";
+import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
 
 const Drive = () => {
     const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();
@@ -25,8 +26,8 @@ const Drive = () => {
                     toast.error("Failed to fetch folders!");
                 }
             } catch (error) {
-                toast.error("Error fetching folders!");
-                console.error("Error fetching folders:", error);
+                toast.error(ERROR_MESSAGES.DRIVE.FOLDER_FETCH_FAILED);
+                console.error(`${ERROR_MESSAGES.DRIVE.FOLDER_FETCH_FAILED}:`, error);
             } finally {
                 setLoading(false);
             }
@@ -42,14 +43,14 @@ const Drive = () => {
             if (response?.data?.success) {
                 setFiles(response.data.data.files || []);
                 if (response.data.data.files.length === 0) {
-                    toast.info("This folder has no files!");
+                    toast.info(ERROR_MESSAGES.DRIVE.NO_FILES);
                 }
             } else {
-                toast.error("Failed to fetch files!");
+                toast.error(ERROR_MESSAGES.DRIVE.FILE_FETCH_FAILED);
             }
         } catch (error) {
-            toast.error("Error fetching files!");
-            console.error("Error fetching files:", error);
+            toast.error(ERROR_MESSAGES.DRIVE.FILE_FETCH_FAILED);
+            console.error(`${ERROR_MESSAGES.DRIVE.FILE_FETCH_FAILED}:`, error);
         } finally {
             setLoading(false);
         }
@@ -59,12 +60,12 @@ const Drive = () => {
         if (!selectedFolder) return;
         setDeleting(fileId);
         try {
-            await axiosInstance.delete(`/drive/v1/files/${fileId}`);
+            await axiosInstance.delete(API_ENDPOINTS.DRIVE.FILE(fileId));
             setFiles(files.filter((file) => file.id !== fileId));
-            toast.success("File deleted successfully!");
+            toast.success(SUCCESS_MESSAGES.DRIVE.FILE_DELETE_SUCCESS);
         } catch (error) {
-            toast.error("Error deleting file!");
-            console.error("Error deleting file:", error);
+            toast.error(ERROR_MESSAGES.DRIVE.FILE_DELETE_FAILED);
+            console.error(`${ERROR_MESSAGES.DRIVE.FILE_DELETE_FAILED}:`, error);
         } finally {
             setDeleting(null);
         }
@@ -73,15 +74,15 @@ const Drive = () => {
     const handleTransferToGCP = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post('/transfer/v1/gcp');
+            const response = await axiosInstance.post(API_ENDPOINTS.TRANSFER.GCP);
             if (response.status === 200) {
-                toast.success("Folder transferred to GCP successfully!");
+                toast.success(SUCCESS_MESSAGES.TRANSFER.GCP_TRANSFER_SUCCESS);
             } else {
-                toast.error("Failed to transfer folder to GCP!");
+                toast.error(ERROR_MESSAGES.TRANSFER.GCP_TRANSFER_FAILED);
             }
         } catch (error) {
-            toast.error("Error transferring folder to GCP!");
-            console.error("Error transferring folder to GCP:", error);
+            toast.error(ERROR_MESSAGES.TRANSFER.GCP_TRANSFER_FAILED);
+            console.error(`${ERROR_MESSAGES.TRANSFER.GCP_TRANSFER_FAILED}:`, error);
         } finally {
             setLoading(false);
         }

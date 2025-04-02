@@ -24,7 +24,10 @@ async function authorize(payload: Payload) {
       functionName: functionName.authorize,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error authorizing user",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to authorize user");
   }
@@ -65,7 +68,10 @@ export async function createEvent(
       functionName: functionName.createEvent,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error creating event",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to create the event");
   }
@@ -103,20 +109,25 @@ export async function listEvents(
       orderBy: "startTime",
       timeZone,
     });
+    const events = response.data.items || [];
+    const eventCount = events.length;
     logger.info({
       functionName: functionName.listEvents,
       statusCode: StatusCodes.OK,
       message: "Event created successfully",
-      data: { event: response.data.items },
+      data: { eventCount },
     });
 
-    return response.data.items || [];
+    return events;
   } catch (error) {
     logger.error({
       functionName: functionName.listEvents,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error listing events",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to retrieve Google Calendar events");
   }
@@ -160,7 +171,10 @@ export async function checkUserAvailability(
       functionName: functionName.checkUserAvailability,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error checking user availability",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to check user availability");
   }
@@ -222,7 +236,10 @@ export async function updateEvent(
         functionName: functionName.updateEvent,
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         message: "Error updating event",
-        data: { error: error instanceof Error ? error.message : "Unknown error" },
+        data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
       });
     throw new Error("Failed to update the event");
   }
@@ -277,7 +294,10 @@ export async function deleteEvent(refreshToken: string, eventId: string) {
         functionName: functionName.deleteEvent,
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         message: "Error deleting event",
-        data: { error: error instanceof Error ? error.message : "Unknown error" },
+        data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
       });
     
     throw new Error("Failed to delete the event");

@@ -59,7 +59,10 @@ cron.schedule(CronJobFrequencies.EVERY_TWO_HOURS, async () => {
       functionName: functionName.transferCronJob,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error transferring screenshots",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
   }
 });

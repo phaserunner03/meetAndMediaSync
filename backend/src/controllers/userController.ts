@@ -10,11 +10,11 @@ import logger from "../utils/logger";
 
 const functionName = {
   getUser: "getUser",
-  addUser: "addUser",
+  addUser: "addUser",//yup
   deleteUser: "deleteUser",
   getAllUsers: "getAllUsers",
-  editUserRole: "editUserRole",
-  notifyAdmin: "notifyAdmin",
+  editUserRole: "editUserRole",//yup
+  notifyAdmin: "notifyAdmin",//yup
 };
 
 export interface AuthenticatedRequest extends Request {

@@ -92,7 +92,10 @@ const scheduleMeeting = async (
       functionName: functionName.scheduleMeeting,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error scheduling meeting",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to schedule meeting");
   }
@@ -100,10 +103,7 @@ const scheduleMeeting = async (
 
 const getAllMeetings = async (user: User, year: number, month: number) => {
   try {
-    logger.info({
-      functionName: functionName.getAllMeetings,
-      message: "Fetching Google Calendar meetings",
-    });
+    
     const googleMeetings = await listEvents(user.refreshToken, year, month);
     const platformMeetings = await Collections.MEETINGS.find({
       scheduledBy: user._id,
@@ -114,12 +114,25 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
         meeting.extendedProperties?.private?.source === "CloudCapture"
     );
 
-    const allMeetings = formatMeetings(googleMeetings);
+    const allMeetings = googleMeetings.map((event) => ({
+      id: event.id,
+      title: event.summary || "No Title",
+      description: event.description || "No Description",
+      meetLink: event.hangoutLink || "No Link",
+      meetingDate: event.start,
+      startTime: event.start,
+      endTime: event.end,
+      meetingType: event.attendees && event.attendees.length > 1 ? 'group' : 'one to one',
+      participants: event.attendees ? event.attendees.map(a => a.email) : [],
+      extendedProperties: event.extendedProperties || {},
+      location: event.location,
+  }));
 
     logger.info({
       functionName: functionName.getAllMeetings,
       statusCode: StatusCodes.OK,
       message: "Meetings fetched successfully",
+      data: { ourMeetingsLength: ourMeetings.length, allMeetingsLength: allMeetings.length, platformMeetingsLength: platformMeetings.length },
     });
 
     return { success: true, ourMeetings, allMeetings, platformMeetings };
@@ -128,7 +141,10 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
       functionName: functionName.getAllMeetings,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error fetching meetings",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to fetch meetings");
   }
@@ -175,7 +191,10 @@ const modifyMeeting = async (
       functionName: functionName.modifyMeeting,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error updating meeting",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to update meeting");
   }
@@ -199,7 +218,10 @@ const removeMeeting = async (
       functionName: functionName.removeMeeting,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error deleting meeting",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to delete meeting");
   }
@@ -241,7 +263,10 @@ const verifyMeeting = async (meetingCode: string, token: string) => {
 
     return { success: true, message: "Authorized" };
   } catch (error) {
-    logger.error({ functionName: functionName.verifyMeeting, statusCode:StatusCodes.INTERNAL_SERVER_ERROR, message: "Error verifying meeting", data: { error: error instanceof Error ? error.message : "Unknown error" }, });
+    logger.error({ functionName: functionName.verifyMeeting, statusCode:StatusCodes.INTERNAL_SERVER_ERROR, message: "Error verifying meeting", data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    } });
     throw new Error("Failed to verify meeting");
 
   }

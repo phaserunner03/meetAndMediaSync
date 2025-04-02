@@ -21,3 +21,4 @@ const StorageLogSchema = new mongoose.Schema({
 }, { timestamps: true ,versionKey:true});
 
 export default mongoose.model<StorageLogDocument>('StorageLog', StorageLogSchema);
+

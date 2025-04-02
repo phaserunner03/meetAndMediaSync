@@ -32,7 +32,10 @@ const databaseConnect = async () => {
       functionName: functionName.databaseConnect,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error connecting to database",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
   }
 };

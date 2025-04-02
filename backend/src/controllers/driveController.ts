@@ -49,7 +49,10 @@ const getAllFolders = async (req: AuthenticatedRequest, res: Response) => {
             functionName: functionName.getAllFolders,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error fetching folders",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+                name: (error as Error).name,
+                stack: (error as Error).stack
+            }
         });
         
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -117,7 +120,10 @@ const getFilesInFolder = async (req: AuthenticatedRequest, res: Response) => {
             functionName: functionName.getFilesInFolder,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error fetching files",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+                name: (error as Error).name,
+                stack: (error as Error).stack
+            }
         });
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,

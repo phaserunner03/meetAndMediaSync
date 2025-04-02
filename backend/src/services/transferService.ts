@@ -35,7 +35,10 @@ async function transferScreenshotsToGCP(
       functionName: functionName.transferScreenshotsToGCP,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error in transfer",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to transfer screenshots to GCP");
   }

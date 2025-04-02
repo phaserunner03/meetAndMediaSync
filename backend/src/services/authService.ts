@@ -53,7 +53,10 @@ function getGoogleAuthURL(): string {
       functionName: "getGoogleAuthURL",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error generating Google Auth URL",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
 
     throw new Error("Failed to generate Google Auth URL");
@@ -124,7 +127,10 @@ async function processGoogleAuth(code: string) {
       functionName: "processGoogleAuth",
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error processing Google OAuth",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
 
     throw new Error("Authentication failed");
@@ -152,7 +158,10 @@ function generateJWT(user: UserDocument): string {
         functionName: functionName.generateJWT,
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         message: "Error generating JWT",
-        data: { error: error instanceof Error ? error.message : "Unknown error" },
+        data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
 
     throw new Error("Failed to generate JWT");  }
@@ -192,7 +201,10 @@ async function refreshJwtToken(refreshToken: string) {
             functionName: functionName.refreshJwtToken,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error refreshing JWT",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         });
 
         throw new Error("Failed to refresh access token");

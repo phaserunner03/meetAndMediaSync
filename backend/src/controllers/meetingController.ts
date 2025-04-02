@@ -88,10 +88,11 @@ const getAllMeetings = async (req: AuthenticatedRequest, res: Response) => {
     );
 
     logger.info({
-      functionName,
+      functionName :functionName.getAllMeetings,
+      statusCode: StatusCodes.OK,
       message: "Meetings fetched successfully",
-      userId: req.user.googleId,
-      totalMeetings: result.ourMeetings.length,
+      data:{userId: req.user.googleId,
+      totalMeetings: result.ourMeetings.length}
     });
 
     res.status(StatusCodes.OK).json({

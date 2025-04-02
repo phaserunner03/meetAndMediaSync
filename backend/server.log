@@ -3765,3 +3765,422 @@
 }}
 {timestamp: 2025-04-02 15:54:52, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-02 15:54:52, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-02 15:57:31, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-02 15:57:32, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-02 15:58:01, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-02 15:58:02, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-02 15:59:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 15:59:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-02 15:59:44, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-02 15:59:44, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 15:59:45, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-02 15:59:46, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-02 15:59:46, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 1,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 4
+}}
+{timestamp: 2025-04-02 15:59:46, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 1
+}}
+{timestamp: 2025-04-02 15:59:46, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 15:59:46, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-02 15:59:47, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-02 15:59:47, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 1,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 4
+}}
+{timestamp: 2025-04-02 15:59:47, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 1
+}}
+{timestamp: 2025-04-02 16:00:00, level:[info], function: transferCronJob, statusCode: 200,message: Scheduled transfer task started., data: {}}
+{timestamp: 2025-04-02 16:00:00, level:[info], function: transferCronJob, statusCode: 200,message: Transferring screenshots for user: ridam.chhapiya@searce.com, data: {}}
+{timestamp: 2025-04-02 16:00:01, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:02, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-02 16:00:02, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-02 16:00:02, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-02 16:00:02, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1Q4-MqasA06enK7dxGLf5VyBANvnSGyA8",
+    "folderName": "aco-fwws-fee"
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: getAllFolders, statusCode: 200,message: Folders fetched successfully, data: {
+    "folderCount": 10
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1Q4-MqasA06enK7dxGLf5VyBANvnSGyA8",
+    "totalFiles": 6
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: processFile, statusCode: 200,message: Processing file, data: {
+    "fileId": "1jaRjP0Q-Uhe-yMO33d5mgAgclw_nMg7z",
+    "fileName": "Ridam3.png"
+}}
+{timestamp: 2025-04-02 16:00:03, level:[info], function: fetchFileBuffer, statusCode: 200,message: Fetching file from Google Drive, data: {
+    "fileId": "1jaRjP0Q-Uhe-yMO33d5mgAgclw_nMg7z"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:04, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllFolders, statusCode: 200,message: Folders fetched successfully, data: {
+    "folderCount": 10
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:05, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: uploadToGCP, statusCode: 200,message: File uploaded successfully to GCP, data: {
+    "fileName": "Ridam3.png",
+    "destinationPath": "2025-04-02/ridam.chhapiya@searce.com/aco-fwws-fee/"
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: processFile, statusCode: 200,message: File uploaded to GCP, data: {
+    "fileName": "Ridam3.png",
+    "gcpPath": "2025-04-02/ridam.chhapiya@searce.com/aco-fwws-fee/"
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1-0NgUEDLwBj5B-KUpovmMGVmmHQxwiDo",
+    "folderName": "rpu-iyfb-etq"
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-02 16:00:07, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1-0NgUEDLwBj5B-KUpovmMGVmmHQxwiDo",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1cs_3b9oq1oQNhB8RTyRXh64EpDZgl2Rf",
+    "folderName": "gtj-uyth-xge"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1cs_3b9oq1oQNhB8RTyRXh64EpDZgl2Rf",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:08, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1jUH99dpjdDzVD_t2nxjkeMUG5fVzVWPc",
+    "folderName": "ftx-cvma-gzq"
+}}
+{timestamp: 2025-04-02 16:00:09, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1jUH99dpjdDzVD_t2nxjkeMUG5fVzVWPc",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:09, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "14bTcJOetWW7DE6hTvZFt_-JDgqqby7Rz",
+    "folderName": "vfg-ajft-xsa"
+}}
+{timestamp: 2025-04-02 16:00:10, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "14bTcJOetWW7DE6hTvZFt_-JDgqqby7Rz",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-02 16:00:10, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1_aCjcwaWPIpVoLBUl_FHFhE-3R8-H_GA",
+    "folderName": "ehq-zmkn-gsi"
+}}
+{timestamp: 2025-04-02 16:00:10, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1_aCjcwaWPIpVoLBUl_FHFhE-3R8-H_GA",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:10, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1aBIZwgfw4I-NEokNkDFwO-WEzfxkGx85",
+    "folderName": "rcf-nzie-hyc"
+}}
+{timestamp: 2025-04-02 16:00:11, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1aBIZwgfw4I-NEokNkDFwO-WEzfxkGx85",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:11, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1dUmD4-7AYnQpRnh63yuXjmlCdOV6Wjpz",
+    "folderName": "landing"
+}}
+{timestamp: 2025-04-02 16:00:12, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1dUmD4-7AYnQpRnh63yuXjmlCdOV6Wjpz",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:12, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "11SKmAdHJvpc42fLlVkQqp8T4ENx1cto9",
+    "folderName": "jmr-cunq-bbz"
+}}
+{timestamp: 2025-04-02 16:00:13, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "11SKmAdHJvpc42fLlVkQqp8T4ENx1cto9",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-02 16:00:13, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1eArhMnawjSabhO2pFWBEWekeB1nePjo2",
+    "folderName": "ridam"
+}}
+{timestamp: 2025-04-02 16:00:14, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1eArhMnawjSabhO2pFWBEWekeB1nePjo2",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:14, level:[info], function: transferScreenshotsToGCP, statusCode: 200,message: Transfer complete, data: {
+    "organizerEmail": "ridam.chhapiya@searce.com"
+}}
+{timestamp: 2025-04-02 16:00:14, level:[info], function: transferCronJob, statusCode: 200,message: Transferring screenshots for user: bhavya.shah@searce.com, data: {}}
+{timestamp: 2025-04-02 16:00:14, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1ZFe7k_745VcaFE_KpQChaK4aZJNAB2VK"
+}}
+{timestamp: 2025-04-02 16:00:15, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-02 16:00:15, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "15E7p5EgUtmPtZVRo-pA2ee1BQyHpSzuy",
+    "folderName": "nhp-ozje-voy"
+}}
+{timestamp: 2025-04-02 16:00:16, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "15E7p5EgUtmPtZVRo-pA2ee1BQyHpSzuy",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:16, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1sZxbf7-a7ZSoB7WQWm3M0azE6mQoblQg",
+    "folderName": "uzx-uvcw-ten"
+}}
+{timestamp: 2025-04-02 16:00:16, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1sZxbf7-a7ZSoB7WQWm3M0azE6mQoblQg",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-02 16:00:16, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1X5AH7FAieHwm6Wg1YcapaHFdn5SHZEoi",
+    "folderName": "tin-zcmy-cvp"
+}}
+{timestamp: 2025-04-02 16:00:17, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1X5AH7FAieHwm6Wg1YcapaHFdn5SHZEoi",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:17, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1zBzMai7H4ct-jNpuCSOwOInpRucpFqMa",
+    "folderName": "No Meet Found"
+}}
+{timestamp: 2025-04-02 16:00:17, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1zBzMai7H4ct-jNpuCSOwOInpRucpFqMa",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:17, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1ryQ2i_c6e7llBprFExMPvtEgVDq8noxv",
+    "folderName": "ohv-bnah-ouq"
+}}
+{timestamp: 2025-04-02 16:00:18, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1ryQ2i_c6e7llBprFExMPvtEgVDq8noxv",
+    "totalFiles": 4
+}}
+{timestamp: 2025-04-02 16:00:18, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1zSYs_u1QYF6Ecui07t7QkFhkQJecOL7p",
+    "folderName": "eiw-nawp-urt"
+}}
+{timestamp: 2025-04-02 16:00:18, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1zSYs_u1QYF6Ecui07t7QkFhkQJecOL7p",
+    "totalFiles": 0
+}}
+{timestamp: 2025-04-02 16:00:18, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1AxrHmiAyW6QZ1vH-xBdpzLXQbuef60rN",
+    "folderName": "uzb-zjoy-zij"
+}}
+{timestamp: 2025-04-02 16:00:19, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1AxrHmiAyW6QZ1vH-xBdpzLXQbuef60rN",
+    "totalFiles": 7
+}}
+{timestamp: 2025-04-02 16:00:19, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1wJlXjd0ZSxRRXlYnjWoZArRlnMmk6n8X",
+    "folderName": "cef-fsns-syo"
+}}
+{timestamp: 2025-04-02 16:00:20, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1wJlXjd0ZSxRRXlYnjWoZArRlnMmk6n8X",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-02 16:00:20, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1u9Lonpx4yrbKvAk-azgaa6M8iw4fle4A",
+    "folderName": "eib-vmds-yxn"
+}}
+{timestamp: 2025-04-02 16:00:20, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1u9Lonpx4yrbKvAk-azgaa6M8iw4fle4A",
+    "totalFiles": 0
+}}
+{timestamp: 2025-04-02 16:00:20, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1CaEMSlPy7Mvv4CgsNOXYARwQGl7XgoN_",
+    "folderName": "css-bzoc-tfb"
+}}
+{timestamp: 2025-04-02 16:00:21, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1CaEMSlPy7Mvv4CgsNOXYARwQGl7XgoN_",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-02 16:00:21, level:[info], function: transferScreenshotsToGCP, statusCode: 200,message: Transfer complete, data: {
+    "organizerEmail": "bhavya.shah@searce.com"
+}}
+{timestamp: 2025-04-02 16:00:21, level:[info], function: cronJob, statusCode: 200,message: Scheduled transfer task completed, data: {}}

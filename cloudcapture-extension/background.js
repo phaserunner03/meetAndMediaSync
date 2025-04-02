@@ -171,6 +171,8 @@ function uploadToDrive(token, image, folderId, fileName, sendResponse) {
             const fileUrl = `https://drive.google.com/uc?id=${data.id}`;
             sendResponse({ success: true, fileId: data.id, fileUrl: fileUrl });
             console.log("File is now viewable at:", fileUrl);
+
+            notifyBackend(fileUrl, fileName, sendResponse);
         })
         .catch(error => {
             console.error("Permission error:", error);
@@ -180,5 +182,34 @@ function uploadToDrive(token, image, folderId, fileName, sendResponse) {
     .catch(error => {
         console.error("Upload error:", error);
         sendResponse({ success: false, message: "Upload failed" });
+    });
+}
+
+function notifyBackend(fileUrl, fileName, sendResponse) {
+    const backendApiUrl = "http://localhost:8080/web/drive/v1/mediaLogs"; 
+    const payload = {
+        meetingID: activeMeetId,
+        type: "screenshot",
+        fileUrl: fileUrl,
+        storedIn: "Google Drive",
+        movedToGCP: false,
+        timestamp: new Date().toISOString()
+    };
+
+    fetch(backendApiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Backend API response:", data);
+        sendResponse({ success: true, fileUrl: fileUrl });
+    })
+    .catch(error => {
+        console.error("Backend API error:", error);
+        sendResponse({ success: false, message: "Failed to notify backend" });
     });
 }

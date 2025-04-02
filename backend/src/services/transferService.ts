@@ -4,6 +4,9 @@ import moment from "moment";
 import { google } from "googleapis";
 import { Readable } from "stream";
 import { secretVariables } from "../constants/environments.constants";
+import StorageLog from "../models/StorageLog";
+import Meeting from "../models/Meeting";
+import Media from "../models/Media";
 
 async function transferScreenshotsToGCP(refresh_token: string, organizerEmail: string) {
     try {
@@ -34,16 +37,47 @@ async function processFolder(folder: any, twoHoursAgo: moment.Moment, refresh_to
     for (const file of files) {
         const fileModifiedTime = moment(file.modifiedTime);
         if (fileModifiedTime.isAfter(twoHoursAgo)) {
-            await processFile(file, refresh_token, gcpPath);
+            console.log(file);
+            await processFile(file ,folder ,refresh_token , gcpPath);
         }
     }
 }
 
-async function processFile(file: any, refresh_token: string, gcpPath: string) {
+async function processFile(file: any, folder: any ,refresh_token: string, gcpPath: string) {
     if (file.id) {
+        const Url=`https://drive.google.com/uc?id=${file.id}`;
+        const existingLog = await StorageLog.findOne({ fileUrl: Url});
+        if (existingLog) {
+            console.log(`File ${file.name} already exists in StorageLog, skipping upload.`);
+            return;
+        }
+
         const fileData = await fetchFileBuffer(refresh_token, file.id);
         if (file.name) {
-            await uploadToGCP(file.name, fileData, gcpPath);
+            const fileUrl = await uploadToGCP(file.name, fileData, gcpPath);
+
+            console.log(Url);
+            const link=`https://meet.google.com/${folder.name}`;
+            const meetingID =await Meeting.findOne({ meetLink: link });
+            if (!meetingID) {
+                console.warn(`Meeting not found for link ${link}, skipping.`);
+                return;
+            }
+            
+            const storageLog = new StorageLog({
+                meetingID: meetingID?._id,
+                fileName: file.name,
+                fileUrl: Url,
+                transferredAt: new Date(),
+            });
+
+            await storageLog.save();
+            const existingMedia = await Media.findOne({ fileUrl: Url });
+            if (existingMedia) {
+                existingMedia.storedIn = "GCP";
+                existingMedia.movedToGCP = true;
+                await existingMedia.save();
+            }
         } else {
             console.warn(`File id ${file.id} does not have a name, skipping.`);
         }

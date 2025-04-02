@@ -1,6 +1,8 @@
 import { google } from 'googleapis';
 import { secretVariables } from '../constants/environments.constants';
 import {Payload} from '../constants/types.constants';
+import Media from '../models/Media';
+import Meeting from '../models/Meeting';
 
 async function authorize(payload: Payload) {
     const { client_id, client_secret, refresh_token } = payload;
@@ -153,4 +155,41 @@ async function deleteFile(refresh_token: string, fileId: string) {
     const drive = google.drive({ version: "v3", auth });
     await drive.files.delete({ fileId });
 }
-export {getCloudCaptureFolder,getFilesInFolder, getAllFolders, deleteFile,fetchRecentMeetingFolders,getAllFiles};
+
+const mediaLog = async (
+    meetID: string,
+    type: "screenshot" | "recording",
+    fileUrl: string,
+    storedIn: "Google Drive" | "GCP",
+    movedToGCP: boolean,
+    timestamp: string
+) => {
+    try {
+        const fullMeetLink = `https://meet.google.com/${meetID}`;
+        console.log("fullMeetLink", fullMeetLink);
+        const Id = await Meeting.findOne({ meetLink: fullMeetLink });
+        if (!Id) {
+            throw new Error("Meeting not found");
+        }
+        const meetingID = Id._id;
+        const newMedia = new Media({
+            meetingID,
+            type: type || "screenshot",
+            fileUrl,
+            storedIn: storedIn || "Google Drive",
+            movedToGCP: movedToGCP || false,
+            timestamp,
+        });
+
+        return await newMedia.save();
+
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message || "Failed to create media record.");
+        } else {
+            throw new Error("Failed to create media record.");
+        }
+    }
+};
+
+export {getCloudCaptureFolder,getFilesInFolder, getAllFolders, deleteFile,fetchRecentMeetingFolders,getAllFiles,mediaLog};

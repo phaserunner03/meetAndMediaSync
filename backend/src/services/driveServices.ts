@@ -1,8 +1,7 @@
 import { google } from 'googleapis';
 import { secretVariables } from '../constants/environments.constants';
 import {Payload} from '../constants/types.constants';
-import Media from '../models/Media';
-import Meeting from '../models/Meeting';
+import { Collections } from '../constants/collections.constants';
 
 async function authorize(payload: Payload) {
     const { client_id, client_secret, refresh_token } = payload;
@@ -167,12 +166,12 @@ const mediaLog = async (
     try {
         const fullMeetLink = `https://meet.google.com/${meetID}`;
         console.log("fullMeetLink", fullMeetLink);
-        const Id = await Meeting.findOne({ meetLink: fullMeetLink });
+        const Id = await Collections.MEETINGS.findOne({ meetLink: fullMeetLink });
         if (!Id) {
             throw new Error("Meeting not found");
         }
         const meetingID = Id._id;
-        const newMedia = new Media({
+        const newMedia = new Collections.MEDIA({
             meetingID,
             type: type || "screenshot",
             fileUrl,

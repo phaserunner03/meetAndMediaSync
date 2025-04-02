@@ -5,8 +5,7 @@ import { google } from "googleapis";
 import { Readable } from "stream";
 import { secretVariables } from "../constants/environments.constants";
 import StorageLog from "../models/StorageLog";
-import Meeting from "../models/Meeting";
-import Media from "../models/Media";
+import { Collections } from "../constants/collections.constants";
 
 async function transferScreenshotsToGCP(refresh_token: string, organizerEmail: string) {
     try {
@@ -46,7 +45,7 @@ async function processFolder(folder: any, twoHoursAgo: moment.Moment, refresh_to
 async function processFile(file: any, folder: any ,refresh_token: string, gcpPath: string) {
     if (file.id) {
         const Url=`https://drive.google.com/uc?id=${file.id}`;
-        const existingLog = await StorageLog.findOne({ fileUrl: Url});
+        const existingLog = await Collections.STORAGE_LOG.findOne({ fileUrl: Url});
         if (existingLog) {
             console.log(`File ${file.name} already exists in StorageLog, skipping upload.`);
             return;
@@ -58,13 +57,13 @@ async function processFile(file: any, folder: any ,refresh_token: string, gcpPat
 
             console.log(Url);
             const link=`https://meet.google.com/${folder.name}`;
-            const meetingID =await Meeting.findOne({ meetLink: link });
+            const meetingID =await Collections.MEETINGS.findOne({ meetLink: link });
             if (!meetingID) {
                 console.warn(`Meeting not found for link ${link}, skipping.`);
                 return;
             }
             
-            const storageLog = new StorageLog({
+            const storageLog = new Collections.STORAGE_LOG({
                 meetingID: meetingID?._id,
                 fileName: file.name,
                 fileUrl: Url,
@@ -72,7 +71,7 @@ async function processFile(file: any, folder: any ,refresh_token: string, gcpPat
             });
 
             await storageLog.save();
-            const existingMedia = await Media.findOne({ fileUrl: Url });
+            const existingMedia = await Collections.MEDIA.findOne({ fileUrl: Url });
             if (existingMedia) {
                 existingMedia.storedIn = "GCP";
                 existingMedia.movedToGCP = true;

@@ -11,7 +11,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
+import { API_ENDPOINTS, ERROR_MESSAGES, Permissions, SUCCESS_MESSAGES } from "../../../../constants";
 
 
 const addUserSchema = z.object({
@@ -44,7 +44,7 @@ const AddUsers = () => {
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const canAddUser = currentUser?.role.permissions?.includes("addUser");
+  const canAddUser = currentUser?.role.permissions?.includes(Permissions.ADD_USER);
 
   useEffect(() => {
     // Fetch roles and users from the backend
@@ -197,7 +197,7 @@ const AddUsers = () => {
 
   const filteredUsers = users.filter(user => user.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser?.role?.permissions?.includes?.("viewUser")) {
+  if (!currentUser?.role?.permissions?.includes?.(Permissions.VIEW_USER)) {
     return null;
   }
 

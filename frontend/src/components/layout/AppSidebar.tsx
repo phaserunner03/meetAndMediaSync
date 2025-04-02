@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
 import { ERROR_MESSAGES, ROUTES } from "../../constants";
+import { Permissions } from "../../constants";
 
 const Sidebar = () => {
   const { currentUser, logout } = useAuth();
@@ -32,21 +33,20 @@ const Sidebar = () => {
       { title: "Drive", url: `${dashboardPrefix}/${ROUTES.DRIVE}`, icon: HardDriveUpload },
     ];
 
-    if (currentUser?.role.permissions?.includes("viewAllUsers")) {
+    if (currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_USERS)) {
       baseMenu.push({ title: "Users", url: `${dashboardPrefix}/${ROUTES.ADD_USERS}`, icon: User });
     }
-    if (currentUser?.role.permissions?.includes("addRole")) {
+    if (currentUser?.role.permissions?.includes(Permissions.ADD_ROLE)) {
       baseMenu.push({ title: "Role", url: `${dashboardPrefix}/${ROUTES.ADD_ROLE}`, icon: BadgeInfo });
     }
     
     return baseMenu;
   }, [currentUser]);
 
-  // Handle Logout
   const handleLogOut = useCallback(async () => {
     try {
       await logout();
-      navigate(ROUTES.LOGIN); // Redirect to login
+      navigate(ROUTES.LOGIN); 
     } catch (error) {
       console.error(ERROR_MESSAGES.AUTH.LOGOUT_FAILED, error);
     }

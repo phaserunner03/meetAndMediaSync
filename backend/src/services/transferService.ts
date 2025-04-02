@@ -4,7 +4,9 @@ import moment from "moment";
 import { google } from "googleapis";
 import { secretVariables } from "../constants/environments.constants";
 import logger from "../utils/logger";
+import { Collections } from "../constants/collections.constants";
 import { StatusCodes } from "../constants/status-codes.constants";
+
 
 const functionName = {
   transferScreenshotsToGCP: "transferScreenshotsToGCP",
@@ -73,10 +75,13 @@ async function processFolder(
     const gcpPath = `${datePath}/${organizerEmail}/${folder.name}/`;
 
     for (const file of files) {
-      const fileModifiedTime = moment(file.modifiedTime);
-      if (fileModifiedTime.isAfter(twoHoursAgo)) {
-        await processFile(file, refresh_token, gcpPath);
-      }
+
+        const fileModifiedTime = moment(file.modifiedTime);
+        if (fileModifiedTime.isAfter(twoHoursAgo)) {
+            console.log(file);
+            await processFile(file ,folder ,refresh_token , gcpPath);
+        }
+
     }
   } catch (error) {
     logger.error({
@@ -91,34 +96,54 @@ async function processFolder(
   }
 }
 
-async function processFile(file: any, refresh_token: string, gcpPath: string) {
-    try {
-        if (!file.id) {
-          logger.warn({
-            functionName: functionName.processFile,
-            statusCode: StatusCodes.BAD_REQUEST,
-            message: "File does not have an ID, skipping",
-            data: { fileName: file.name },
-          });
-          return;
+async function processFile(file: any, folder: any ,refresh_token: string, gcpPath: string) {
+  try {
+    if (file.id) {
+        const Url=`https://drive.google.com/uc?id=${file.id}`;
+        const existingLog = await Collections.STORAGE_LOG.findOne({ fileUrl: Url});
+        if (existingLog) {
+            console.log(`File ${file.name} already exists in StorageLog, skipping upload.`);
+            return;
         }
-    
         logger.info({
           functionName: functionName.processFile,
           statusCode: StatusCodes.OK,
           message: "Processing file",
           data: { fileId: file.id, fileName: file.name },
         });
-    
         const fileData = await fetchFileBuffer(refresh_token, file.id);
-        await uploadToGCP(file.name, fileData, gcpPath);
-    
-        logger.info({
-          functionName: functionName.processFile,
-          statusCode: StatusCodes.OK,
-          message: "File uploaded to GCP",
-          data: { fileName: file.name, gcpPath },
-        });
+        if (file.name) {
+            const fileUrl = await uploadToGCP(file.name, fileData, gcpPath);
+             logger.info({
+               functionName: functionName.processFile,
+               statusCode: StatusCodes.OK,
+               message: "File uploaded to GCP",
+               data: { fileName: file.name, gcpPath },
+               });
+
+            const link=`https://meet.google.com/${folder.name}`;
+            const meetingID =await Collections.MEETINGS.findOne({ meetLink: link });
+            if (!meetingID) {
+                console.warn(`Meeting not found for link ${link}, skipping.`);
+                return;
+            }
+            
+            const storageLog = new Collections.STORAGE_LOG({
+                meetingID: meetingID?._id,
+                fileName: file.name,
+                fileUrl: Url,
+                transferredAt: new Date(),
+            });
+
+            await storageLog.save();
+            const existingMedia = await Collections.MEDIA.findOne({ fileUrl: Url });
+            if (existingMedia) {
+                existingMedia.storedIn = "GCP";
+                existingMedia.movedToGCP = true;
+                await existingMedia.save();
+            }
+        } 
+    }
       } catch (error) {
         logger.error({
           functionName: functionName.processFile,

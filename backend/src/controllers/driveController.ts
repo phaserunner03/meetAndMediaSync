@@ -5,11 +5,18 @@ import { ErrorResponseMessages, SuccessResponseMessages } from "../constants/ser
 import { AuthenticatedRequest } from "../constants/types.constants";
 import logger from "../utils/logger";
 
+
+
+// interface AuthenticatedRequest extends Request {
+//     user: any;
+// }
+
 const functionName = {
     getAllFolders: "getAllFolders",
     getFilesInFolder: "getFilesInFolder",
     deleteFile: "deleteFile",
 };
+
 
 // Fetch all folders inside CloudCapture
 const getAllFolders = async (req: AuthenticatedRequest, res: Response) => {
@@ -171,4 +178,26 @@ const deleteFile = async (req: AuthenticatedRequest, res: Response) => {
     }
 };
 
-export { getAllFolders, getFilesInFolder, deleteFile };
+const mediaLog = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        const { meetingID, type, fileUrl, storedIn, movedToGCP, timestamp } = req.body;
+
+        if (!meetingID || !fileUrl || !timestamp) {
+            return res.status(400).json({ success: false, message: "Missing required fields." });
+        }
+
+        const media = await driveService.mediaLog(meetingID, type, fileUrl, storedIn, movedToGCP, timestamp);
+
+        return res.status(201).json({
+            success: true,
+            message: "Media record created successfully.",
+            media,
+        });
+
+    } catch (error) {
+        console.error("Error creating media record:", error);
+        return res.status(500).json({ success: false, message: "Internal server error." });
+    }
+};
+
+export { getAllFolders, getFilesInFolder, deleteFile, mediaLog };

@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Loader from "../../../common/Loader";
 import axios from "axios"
-import { API_ENDPOINTS, ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
+import { API_ENDPOINTS, ERROR_MESSAGES, Permissions, SUCCESS_MESSAGES } from "../../../../constants";
 
 const AddNewRole = () => {
   const { currentUser } = useAuth();
@@ -171,7 +171,7 @@ const AddNewRole = () => {
 
   const filteredRoles = roles.filter(role => role.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  if (!currentUser || !currentUser.role.permissions.includes("viewRoles")) {
+  if (!currentUser || !currentUser.role.permissions.includes(Permissions.VIEW_ROLES)) {
     return null; 
   }
 

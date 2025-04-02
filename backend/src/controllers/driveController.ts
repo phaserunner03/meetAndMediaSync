@@ -2,17 +2,34 @@ import { Request, Response } from "express";
 import * as driveService from "../services/driveServices";
 import { StatusCodes } from "../constants/status-codes.constants";
 import { ErrorResponseMessages, SuccessResponseMessages } from "../constants/service-messages.constants";
+import { AuthenticatedRequest } from "../constants/types.constants";
+import logger from "../utils/logger";
 
 
-interface AuthenticatedRequest extends Request {
-    user: any;
-}
+
+// interface AuthenticatedRequest extends Request {
+//     user: any;
+// }
+
+const functionName = {
+    getAllFolders: "getAllFolders",
+    getFilesInFolder: "getFilesInFolder",
+    deleteFile: "deleteFile",
+};
+
 
 // Fetch all folders inside CloudCapture
 const getAllFolders = async (req: AuthenticatedRequest, res: Response) => {
     try {
         const { user } = req;
+        
         if (!user?.refreshToken) {
+            logger.warn({
+                functionName: functionName.getAllFolders,
+                statusCode: StatusCodes.UNAUTHORIZED,
+                message: "Unauthorized request - No refresh token",
+                data: {},
+            });
             return res.status(StatusCodes.UNAUTHORIZED).json({
                 success: false,
                 message: ErrorResponseMessages.UNAUTHORIZED,
@@ -20,18 +37,35 @@ const getAllFolders = async (req: AuthenticatedRequest, res: Response) => {
             });
         }
         const folders = await driveService.getAllFolders(user.refreshToken);
+
+        logger.info({
+            functionName: functionName.getAllFolders,
+            statusCode: StatusCodes.OK,
+            message: "Folders fetched successfully",
+            data: { folderCount: folders.length },
+        });
+
         res.status(StatusCodes.OK).json({
             success: true,
             message: SuccessResponseMessages.FETCHED("Folders"),
             data: { folders },
         });
 
-    } catch (err) {
-        console.error("Error fetching folders:", err);
+    } catch (error) {
+        logger.error({
+            functionName: functionName.getAllFolders,
+            statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Error fetching folders",
+            data: {
+                name: (error as Error).name,
+                stack: (error as Error).stack
+            }
+        });
+        
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: ErrorResponseMessages.INTERNAL_ERROR,
-            data: { error: (err as Error).message },
+            data: { error: (error as Error).message },
         });
         
     }
@@ -44,6 +78,14 @@ const getFilesInFolder = async (req: AuthenticatedRequest, res: Response) => {
         const { folderId } = req.params;
 
         if (!user?.refreshToken) {
+            
+            logger.warn({
+                functionName: functionName.getFilesInFolder,
+                statusCode: StatusCodes.UNAUTHORIZED,
+                message: "Unauthorized request - No refresh token",
+                data: {},
+            });
+
             return res.status(StatusCodes.UNAUTHORIZED).json({
                 success: false,
                 message: ErrorResponseMessages.UNAUTHORIZED,
@@ -52,6 +94,13 @@ const getFilesInFolder = async (req: AuthenticatedRequest, res: Response) => {
         }
 
         if (!folderId) {
+            logger.warn({
+                functionName: functionName.getFilesInFolder,
+                statusCode: StatusCodes.BAD_REQUEST,
+                message: "Folder ID is required",
+                data: {},
+            });
+
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 message: ErrorResponseMessages.BAD_REQUEST("Folder ID is required"),
@@ -60,18 +109,33 @@ const getFilesInFolder = async (req: AuthenticatedRequest, res: Response) => {
         }
 
         const files = await driveService.getFilesInFolder(user.refreshToken, folderId);
+        logger.info({
+            functionName: functionName.getFilesInFolder,
+            statusCode: StatusCodes.OK,
+            message: "Files fetched successfully",
+            data: { fileCount: files.length },
+        });
+
         res.status(StatusCodes.OK).json({
             success: true,
             message: SuccessResponseMessages.FETCHED("Files"),
             data: { files },
         });
 
-    } catch (err) {
-        console.error("Error fetching files:", err);
+    } catch (error) {
+        logger.error({
+            functionName: functionName.getFilesInFolder,
+            statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Error fetching files",
+            data: {
+                name: (error as Error).name,
+                stack: (error as Error).stack
+            }
+        });
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: ErrorResponseMessages.INTERNAL_ERROR,
-            data: { error: (err as Error).message },
+            data: { error: (error as Error).message },
         });
     }
 };

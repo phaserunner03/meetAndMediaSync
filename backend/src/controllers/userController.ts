@@ -199,8 +199,8 @@ async function getAllUsers(req: AuthenticatedRequest, res: Response) {
 
 async function editUserRole(req: AuthenticatedRequest, res: Response) {
   try {
-    const { userId, newRole } = req.body;
-    const user = await userService.editUserRole(userId, newRole);
+    const { email, newRole } = req.body;
+    const user = await userService.editUserRole(email, newRole);
     if (!user) {
       logger.warn({
         functionName: functionName.editUserRole,

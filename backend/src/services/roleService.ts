@@ -57,7 +57,10 @@ async function editRole(id: string, name: string, permissions: string[]) {
             functionName: functionName.editRole,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error editing role",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         });
         throw new Error("Failed to edit role");
     }
@@ -90,7 +93,10 @@ async function deleteRole(id: string) {
             functionName: functionName.deleteRole,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error deleting role",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         });
         throw new Error("Failed to delete role");
     }
@@ -112,7 +118,10 @@ async function getAllRoles() {
             functionName: functionName.getAllRoles,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error fetching roles",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         });
         throw new Error("Failed to fetch roles");
     }

@@ -75,7 +75,10 @@ const authMiddleware = async (
       functionName: functionName.authMiddleware,
       statusCode: StatusCodes.UNAUTHORIZED,
       message: "Authentication failed - Invalid or expired token",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
 
     return res.status(StatusCodes.UNAUTHORIZED).json({

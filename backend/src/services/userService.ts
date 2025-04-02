@@ -56,7 +56,10 @@ async function notifyAdminToAddUser(userInfo: any) {
       functionName: functionName.notifyAdminToAddUser,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error notifying admin",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to notify admin");
   }
@@ -89,7 +92,10 @@ async function sendWelcomeEmail(user: { email: string }) {
       functionName: functionName.sendWelcomeEmail,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error sending welcome email",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to send welcome email");
   }
@@ -118,7 +124,10 @@ async function addUser(email: string, role: string) {
       functionName: functionName.addUser,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error adding user",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to add user");
   }
@@ -156,7 +165,10 @@ async function getAuthenticatedUser(userId: string) {
       functionName: functionName.getAuthenticatedUser,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error fetching user data",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to fetch user data");
   }
@@ -180,7 +192,10 @@ async function deleteUser(userId: string) {
       functionName: functionName.deleteUser,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error deleting user",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to delete user");
   }
@@ -219,7 +234,10 @@ async function editUserRole(
         functionName: functionName.editUserRole,
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         message: "Error editing user role",
-        data: { error: error instanceof Error ? error.message : "Unknown error" },
+        data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         
       });
     throw new Error("Failed to edit user role");

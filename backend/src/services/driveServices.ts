@@ -48,7 +48,10 @@ async function getCloudCaptureFolder(refresh_token: string) {
       functionName: functionName.getCloudCaptureFolder,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error getting CloudCapture folder",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to get CloudCapture folder");
   }
@@ -99,7 +102,10 @@ async function getAllFiles(refresh_token: string) {
       functionName: functionName.getAllFiles,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error fetching CloudCapture files",
-      data: { error: error instanceof Error ? error.message : "Unknown error" },
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
     });
     throw new Error("Failed to retrieve files");
   }
@@ -138,7 +144,10 @@ async function getAllFolders(refresh_token: string) {
             functionName: functionName.getAllFolders,
             statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
             message: "Error fetching CloudCapture folders",
-            data: { error: error instanceof Error ? error.message : "Unknown error" },
+            data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
         });
         throw new Error("Failed to fetch folders");
     }

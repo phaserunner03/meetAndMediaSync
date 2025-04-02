@@ -106,7 +106,10 @@ const validateMeetingDetails = async (
         functionName: functionName.validateMeetingDetails,
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         message: "Error validating meeting details",
-        data: { data: { error: error instanceof Error ? error.message : "Unknown error" }, },
+        data: { data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    } },
       });
   
       return { success: false, message: "Internal server error" };

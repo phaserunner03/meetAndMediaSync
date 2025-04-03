@@ -4071,3 +4071,259 @@
 {timestamp: 2025-04-03 11:27:22, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
 {timestamp: 2025-04-03 11:27:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-03 11:27:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:43:11, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:43:11, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:43:19, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:43:20, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:49:46, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:49:47, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:50:51, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:50:51, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:55:44, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:55:44, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:58:59, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:59:00, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:00:00, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:00:01, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:02:16, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:02:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:12:22, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:12:23, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:12:38, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:12:38, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:17:30, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:30, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: listEvents, statusCode: 500,message: Error listing events, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:95:26)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: getAllMeetings, statusCode: 500,message: Error fetching meetings, data: {
+    "name": "Error",
+    "stack": "Error: Failed to retrieve Google Calendar events\n    at listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:124:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: [object Object], statusCode: 500,message: Error fetching meetings, data: {
+    "error": "Failed to fetch meetings"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: listEvents, statusCode: 500,message: Error listing events, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:95:26)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: getAllMeetings, statusCode: 500,message: Error fetching meetings, data: {
+    "name": "Error",
+    "stack": "Error: Failed to retrieve Google Calendar events\n    at listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:124:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-03 12:17:31, level:[error], function: [object Object], statusCode: 500,message: Error fetching meetings, data: {
+    "error": "Failed to fetch meetings"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getCloudCaptureFolder, statusCode: 500,message: Error getting CloudCapture folder, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async getCloudCaptureFolder (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:42:21)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:121:26)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getAllFolders, statusCode: 500,message: Error fetching CloudCapture folders, data: {
+    "name": "Error",
+    "stack": "Error: Failed to get CloudCapture folder\n    at getCloudCaptureFolder (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:65:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:121:26)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getAllFolders, statusCode: 500,message: Error fetching folders, data: {
+    "name": "Error",
+    "stack": "Error: Failed to fetch folders\n    at Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:154:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getCloudCaptureFolder, statusCode: 500,message: Error getting CloudCapture folder, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async getCloudCaptureFolder (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:42:21)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:121:26)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getAllFolders, statusCode: 500,message: Error fetching CloudCapture folders, data: {
+    "name": "Error",
+    "stack": "Error: Failed to get CloudCapture folder\n    at getCloudCaptureFolder (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:65:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:121:26)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:33, level:[error], function: getAllFolders, statusCode: 500,message: Error fetching folders, data: {
+    "name": "Error",
+    "stack": "Error: Failed to fetch folders\n    at Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/driveServices.js:154:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllFolders (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/driveController.js:67:25)"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:17:41, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:17:42, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:17:53, level:[info], function: logoutUser, statusCode: 200,message: User logged out successfully, data: {}}
+{timestamp: 2025-04-03 12:17:57, level:[warn], function: [object Object], statusCode: 400,message: Refresh token is missing, data: {}}
+{timestamp: 2025-04-03 12:17:57, level:[info], function: handleNoToken, statusCode: 200,message: No valid session. Redirecting to Google OAuth, data: {}}
+{timestamp: 2025-04-03 12:17:57, level:[info], function: getGoogleAuthURL, statusCode: 200,message: Generated Google authentication URL successfully, data: {
+    "authUrl": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=profile%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&response_type=code&client_id=972397341408-c42t0kj0h5l577coac8u20ke4gqvs7br.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fauth%2Fv1%2Fgoogle%2Fcallback"
+}}
+{timestamp: 2025-04-03 12:18:05, level:[info], function: generateJWT, statusCode: 200,message: JWT generated successfully, data: {
+    "email": "ridam.chhapiya@searce.com"
+}}
+{timestamp: 2025-04-03 12:18:05, level:[info], function: processGoogleAuth, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:18:05, level:[info], function: handleGoogleCallback, statusCode: 200,message: Google authentication successful, data: {
+    "result": {
+        "success": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMDI5ODM0OTQ4MDgyODg4NjI5MjciLCJlbWFpbCI6InJpZGFtLmNoaGFwaXlhQHNlYXJjZS5jb20iLCJpYXQiOjE3NDM2NjI4ODUsImV4cCI6MTc0NDI2NzY4NX0.2y76href1L_TRUgE0tpNmcmit1fyWuUqjZZaCP0QXHg",
+        "refresh_token": "1//0gvo2R0x3WWqjCgYIARAAGBASNwF-L9Ir_cTQ-nCG0ELt9P7S_qBTBTPH7PM6Knus2XeSUO4ZqiI98fcYIgW7JQvv7a8H4Yh8434"
+    }
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-03 12:18:06, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 12:18:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:18:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:18:08, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 12:18:08, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 1,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 4
+}}
+{timestamp: 2025-04-03 12:18:08, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 1
+}}
+{timestamp: 2025-04-03 12:18:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:18:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:18:09, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 12:18:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 1,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 4
+}}
+{timestamp: 2025-04-03 12:18:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 1
+}}
+{timestamp: 2025-04-03 12:19:29, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:19:29, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:20:03, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:20:03, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}

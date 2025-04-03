@@ -1,6 +1,5 @@
 import { useAuth } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import Logo from "./Logo";
 

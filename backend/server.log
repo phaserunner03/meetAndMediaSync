@@ -1,2 +1,262 @@
 {timestamp: 2025-04-03 12:22:14, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-03 12:22:15, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:22:38, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:22:38, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:25:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:25:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "createMeeting"
+}}
+{timestamp: 2025-04-03 12:25:44, level:[info], function: validateMeetingDetails, statusCode: 200,message: Meeting validation successful, data: {
+    "userId": "67da9195ff7e40d08808cba7",
+    "participants": [
+        "bhavya.shah@searce.com"
+    ],
+    "startTime": "2025-04-03T08:00:00.000Z",
+    "endTime": "2025-04-03T09:00:00.000Z"
+}}
+{timestamp: 2025-04-03 12:25:45, level:[info], function: checkUserAvailability, statusCode: 200,message: User availability checked successfully, data: {
+    "busy": []
+}}
+{timestamp: 2025-04-03 12:25:47, level:[info], function: createEvent, statusCode: 200,message: Event created successfully, data: {
+    "event": {
+        "kind": "calendar#event",
+        "etag": "\"3487326697922110\"",
+        "id": "srnmg01vp4ui4mbvkmdjudming",
+        "status": "confirmed",
+        "htmlLink": "https://www.google.com/calendar/event?eid=c3JubWcwMXZwNHVpNG1idmttZGp1ZG1pbmcgcmlkYW0uY2hoYXBpeWFAc2VhcmNlLmNvbQ",
+        "created": "2025-04-03T06:55:48.000Z",
+        "updated": "2025-04-03T06:55:48.961Z",
+        "summary": "yup test ",
+        "description": "testing",
+        "location": "india",
+        "colorId": "1",
+        "creator": {
+            "email": "ridam.chhapiya@searce.com",
+            "self": true
+        },
+        "organizer": {
+            "email": "ridam.chhapiya@searce.com",
+            "self": true
+        },
+        "start": {
+            "dateTime": "2025-04-03T13:30:00+05:30",
+            "timeZone": "Asia/Kolkata"
+        },
+        "end": {
+            "dateTime": "2025-04-03T14:30:00+05:30",
+            "timeZone": "Asia/Kolkata"
+        },
+        "iCalUID": "srnmg01vp4ui4mbvkmdjudming@google.com",
+        "sequence": 0,
+        "attendees": [
+            {
+                "email": "bhavya.shah@searce.com",
+                "responseStatus": "needsAction"
+            }
+        ],
+        "extendedProperties": {
+            "private": {
+                "source": "CloudCapture"
+            }
+        },
+        "hangoutLink": "https://meet.google.com/jrs-evsj-iep",
+        "conferenceData": {
+            "createRequest": {
+                "requestId": "3de29a43-52d0-45eb-948a-330d8b9720c7",
+                "conferenceSolutionKey": {
+                    "type": "hangoutsMeet"
+                },
+                "status": {
+                    "statusCode": "success"
+                }
+            },
+            "entryPoints": [
+                {
+                    "entryPointType": "video",
+                    "uri": "https://meet.google.com/jrs-evsj-iep",
+                    "label": "meet.google.com/jrs-evsj-iep"
+                },
+                {
+                    "entryPointType": "more",
+                    "uri": "https://tel.meet/jrs-evsj-iep?pin=5033251254507",
+                    "pin": "5033251254507"
+                },
+                {
+                    "regionCode": "US",
+                    "entryPointType": "phone",
+                    "uri": "tel:+1-210-951-8518",
+                    "label": "+1 210-951-8518",
+                    "pin": "479662741"
+                }
+            ],
+            "conferenceSolution": {
+                "key": {
+                    "type": "hangoutsMeet"
+                },
+                "name": "Google Meet",
+                "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+            },
+            "conferenceId": "jrs-evsj-iep"
+        },
+        "reminders": {
+            "useDefault": false,
+            "overrides": [
+                {
+                    "method": "popup",
+                    "minutes": 10
+                },
+                {
+                    "method": "email",
+                    "minutes": 1440
+                }
+            ]
+        },
+        "eventType": "default"
+    }
+}}
+{timestamp: 2025-04-03 12:25:47, level:[info], function: scheduleMeeting, statusCode: 200,message: Meeting scheduled successfully, data: {
+    "meetLink": "https://meet.google.com/jrs-evsj-iep"
+}}
+{timestamp: 2025-04-03 12:25:47, level:[info], function: scheduleMeeting, statusCode: 201,message: Meeting scheduled successfully, data: {
+    "eventId": {
+        "success": true,
+        "message": "Meeting scheduled successfully",
+        "meetLink": "https://meet.google.com/jrs-evsj-iep"
+    }
+}}
+{timestamp: 2025-04-03 12:25:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:25:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 12:25:48, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-03 12:25:48, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-03 12:25:48, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:26:15, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:26:16, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 12:26:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "addUser"
+}}
+{timestamp: 2025-04-03 12:26:38, level:[info], function: addUser, statusCode: 201,message: New user created, data: {
+    "userId": "67ee31264a0dfffe748b3b52",
+    "email": "ridamchhapiya15@gmail.com",
+    "role": "NAU"
+}}
+{timestamp: 2025-04-03 12:26:41, level:[info], function: sendWelcomeEmail, statusCode: 200,message: Welcome email sent to ridamchhapiya15@gmail.com, data: {
+    "userEmail": "ridamchhapiya15@gmail.com"
+}}
+{timestamp: 2025-04-03 12:26:41, level:[info], function: addUser, statusCode: 201,message: User created successfully, data: {
+    "user": {
+        "email": "ridamchhapiya15@gmail.com",
+        "role": "67cad2fed3dd89f49742abee",
+        "_id": "67ee31264a0dfffe748b3b52",
+        "__v": 0
+    }
+}}
+{timestamp: 2025-04-03 12:26:41, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:41, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:26:41, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 7
+}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "deleteUser"
+}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {
+    "userId": "67ee31264a0dfffe748b3b52"
+}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-03 12:26:58, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 12:26:59, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 12:28:56, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:28:57, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 12:29:13, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 12:29:13, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}

@@ -25,7 +25,7 @@ const EventTabs: React.FC = () => {
     if (activeTab === "today") return isToday(meetingDate);
     if (activeTab === "future") return showAllFuture ? isAfter(meetingDate, today) : isTomorrow(meetingDate);
     if (activeTab === "past") return showAllPast ? isBefore(meetingDate, today) : isYesterday(meetingDate);
-    if (activeTab === "ourMeetings") return ourMeetings.some((m) => m.id === meeting.id);
+    if (activeTab === "myMeetings") return ourMeetings.some((m) => m.id === meeting.id);
     return true;
   });
 
@@ -37,7 +37,7 @@ const EventTabs: React.FC = () => {
           { key: "today", label: "Today", count: todayCount },
           { key: "future", label: "Future", count: futureCount },
           { key: "past", label: "Past", count: pastCount },
-          { key: "ourMeetings", label: "Our Meetings", count: ourMeetingsCount },
+          { key: "myMeetings", label: "My Meetings", count: ourMeetingsCount },
           { key: "allMeetings", label: "All Meetings", count: allMeetingsCount }
         ].map(({ key, label, count }) => (
           <button

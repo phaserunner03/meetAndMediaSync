@@ -10,7 +10,8 @@ import {
   CalendarPlus2,
   User,
   BadgeInfo,
-  X
+  X,
+  NotebookTabs
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
 import { ERROR_MESSAGES, ROUTES } from "../../constants";
@@ -31,6 +32,7 @@ const Sidebar = () => {
       { title: "Meetings", url: `${dashboardPrefix}/${ROUTES.MEETINGS}`, icon: Inbox },
       { title: "Create", url: `${dashboardPrefix}/${ROUTES.CREATE_MEETING}`, icon: CalendarPlus2 },
       { title: "Drive", url: `${dashboardPrefix}/${ROUTES.DRIVE}`, icon: HardDriveUpload },
+      { title: "Report", url: `${dashboardPrefix}/${ROUTES.REPORT}`, icon: NotebookTabs },
     ];
 
     if (currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_USERS)) {

@@ -1,4 +1,4 @@
-export const API_BASE_URL = "https://backend-972397341408.us-central1.run.app";
+export const API_BASE_URL = "https://backend-972397341408.us-central1.run.app/web";
 export const API_URL = "https://cloudcapture-972397341408.us-central1.run.app";
 
 export const API_ENDPOINTS = {

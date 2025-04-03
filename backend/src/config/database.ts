@@ -24,7 +24,7 @@ const databaseConnect = async () => {
     logger.info({
       functionName: functionName.databaseConnect,
       statusCode: StatusCodes.OK,
-      message: "Connected to database",
+      message: SuccessResponseMessages.CONNECTED("database"),
       data: {},
     });
   } catch (error) {

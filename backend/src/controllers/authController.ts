@@ -185,7 +185,7 @@ async function handleGoogleCallback(req: Request, res: Response) {
       functionName: functionName.handleGoogleCallback,
       statusCode: StatusCodes.OK,
       message: "Google authentication successful",
-      data: { result },
+      data: { },
     });
 
     res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);

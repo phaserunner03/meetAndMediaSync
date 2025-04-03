@@ -4,6 +4,7 @@ import axiosInstance from "../../utils/axiosConfig";
 import { API_ENDPOINTS,API_URL } from "../../constants";
 
 const OAuthButton: React.FC = () => {
+  
   const handleGoogleSignUp = async () => {
     try {
       const response = await axiosInstance.get(API_ENDPOINTS.AUTH.CHECK_REFRESH );
@@ -13,7 +14,7 @@ const OAuthButton: React.FC = () => {
         if (data.valid) {
           window.location.href = `${API_URL}/dashboard`;
         } else if (data.token) {
-          // If a new token is returned, save it in cookies and redirect
+          
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
           window.location.href = `${API_URL}/dashboard`;
         } else {

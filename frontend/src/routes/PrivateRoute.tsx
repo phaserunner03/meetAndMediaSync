@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { ROUTES } from "../constants";
 
 interface PrivateRouteProps {
   Component: React.ComponentType;
@@ -8,8 +9,8 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ Component }: PrivateRouteProps) => {
   const { userLoggedIn, currentUser } = useAuth();
 
-  if (!userLoggedIn) return <Navigate to="/" replace />;
-  if (currentUser?.role?.name === "NAU") return <Navigate to="/unauthorized" replace />;
+  if (!userLoggedIn) return <Navigate to={ROUTES.HOME} replace />;
+  if (currentUser?.role?.name === "NAU") return <Navigate to={ROUTES.UNAUTHORIZED} replace />;
 
   return <Component />;
 };

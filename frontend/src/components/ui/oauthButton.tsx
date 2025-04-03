@@ -1,16 +1,13 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import axiosInstance from "../../utils/axiosConfig";
-import { API_URL } from "../../constants/constants";
-
-
+import { API_ENDPOINTS,API_URL } from "../../constants";
 
 const OAuthButton: React.FC = () => {
   
   const handleGoogleSignUp = async () => {
     try {
-      
-      const response = await axiosInstance.get('/api/auth/check-refresh');
+      const response = await axiosInstance.get(API_ENDPOINTS.AUTH.CHECK_REFRESH );
 
       if (response.status === 200) {
         const data = response.data;
@@ -21,13 +18,13 @@ const OAuthButton: React.FC = () => {
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
           window.location.href = `${API_URL}/dashboard`;
         } else {
-          window.location.href = `${API_URL}/api/auth/google`;
+          window.location.href = API_ENDPOINTS.AUTH.LOGIN.GOOGLE;
         }
       } else {
-        window.location.href = `${API_URL}/api/auth/google`;
+        window.location.href = API_ENDPOINTS.AUTH.LOGIN.GOOGLE;
       }
     } catch (error) {
-      window.location.href = `${API_URL}/api/auth/google`;
+      window.location.href = API_ENDPOINTS.AUTH.LOGIN.GOOGLE;
     }
   };
 

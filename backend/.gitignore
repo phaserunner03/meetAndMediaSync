@@ -4,3 +4,4 @@ dist
 config/config.json
 config/googleCredentials.json
 config/gcp-service-key.json
+server.log

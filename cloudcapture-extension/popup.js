@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("✅ OAuth Token obtained:", token);
 
             // ✅ Verify if user is authorized for the meeting
-            const response = await fetch("https://cloudcapture-backend-972397341408.us-central1.run.app/api/meetings/verify", {
+            const response = await fetch("https://cloudcapture-backend-972397341408.us-central1.run.app/web/meetings/v1/verify", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ meetingCode: meetId, token }),

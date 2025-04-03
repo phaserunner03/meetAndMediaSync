@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import AppSidebar from "../components/layout/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { useAuth } from "../context/authContext";
+import { ROUTES } from "../constants";
 
 
 interface DashboardProps {
@@ -13,7 +14,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   const { currentUser } = useAuth();
 
 
-  if (!currentUser) return <Navigate to="/login" replace />;
+  if (!currentUser) return <Navigate to={ROUTES.LOGIN} replace />;
 
   return (
     <SidebarProvider>

@@ -15,7 +15,7 @@ const MediaSchema = new mongoose.Schema({
     meetingID: { type: mongoose.Schema.Types.ObjectId, ref: 'Meeting', required: true },
     type: { type: String, enum: ['screenshot', 'recording'], default:"screenshot", required: true },
     fileUrl: { type: String, required: true },
-    storedIn: { type: String, enum: ['Google Drive', 'GCP'], required: true },
+    storedIn: { type: String, enum: ['Google Drive', 'GCP'],default:"Google Drive", required: true },
     movedToGCP: { type: Boolean, default: false },
     timestamp: { type: Date, required: true },
     createdAt: { type: Date, default: Date.now },

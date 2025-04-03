@@ -1,24 +1,43 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+import { environment } from "../constants/environments.constants";
+import logger from "../utils/logger";
+import { SuccessResponseMessages } from "../constants/service-messages.constants";
+import { StatusCodes } from "../constants/status-codes.constants";
 
-dotenv.config();
+const functionName = {databaseConnect:"databaseConnect"}
 
 const databaseConnect = async () => {
-  const databaseUrl = process.env.DATABASE_URL;
+  const databaseUrl = environment.DATABASE_URL;
+
   if (!databaseUrl) {
-    console.error("DATABASE_URL is not defined in the environment variables");
+    logger.error({
+      functionName: functionName.databaseConnect,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "DATABASE_URL is not defined in the environment variables",
+      data: {},
+    });
     return;
   }
 
-  mongoose
-    .connect(databaseUrl)
-    .then(() => {
-      console.log("Connected to database");
-    })
-    .catch((error) => {
-      console.log("Error connecting to database");
-      console.error(error);
+  try {
+    await mongoose.connect(databaseUrl);
+    logger.info({
+      functionName: functionName.databaseConnect,
+      statusCode: StatusCodes.OK,
+      message: SuccessResponseMessages.CONNECTED("database"),
+      data: {},
     });
+  } catch (error) {
+    logger.error({
+      functionName: functionName.databaseConnect,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error connecting to database",
+      data: {
+        name: (error as Error).name,
+        stack: (error as Error).stack
+    }
+    });
+  }
 };
 
 export default databaseConnect;

@@ -1,69 +1,279 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 import * as userService from "../services/userService";
-import User from "../models/User";
+import { Collections } from "../constants/collections.constants";
+import { StatusCodes } from "../constants/status-codes.constants";
+import {
+  SuccessResponseMessages,
+  ErrorResponseMessages,
+} from "../constants/service-messages.constants";
+import logger from "../utils/logger";
 
-// Extend the Request interface to include the user property
+const functionName = {
+  getUser: "getUser",
+  addUser: "addUser",//yup
+  deleteUser: "deleteUser",
+  getAllUsers: "getAllUsers",
+  editUserRole: "editUserRole",//yup
+  notifyAdmin: "notifyAdmin",//yup
+};
+
 export interface AuthenticatedRequest extends Request {
-    user: {
-        googleId: string;
-    };
+  user: {
+    googleId: string;
+  };
 }
 
 async function getUser(req: AuthenticatedRequest, res: Response) {
-    try {
-        const user = await userService.getAuthenticatedUser(req.user.googleId);
-        res.json({ success: true, message: "User fetched successfully", data: { user } });
-    } catch (err) {
-        res.status(500).json({ success: false, message: (err as Error).message, data: {} });
+  try {
+    const user = await userService.getAuthenticatedUser(req.user.googleId);
+    if (!user) {
+      logger.warn({
+        functionName: functionName.getUser,
+        statusCode: StatusCodes.NOT_FOUND,
+        message: "User not found",
+        userId: req.user.googleId,
+      });
+
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: ErrorResponseMessages.NOT_FOUND("User"),
+        data: {},
+      });
     }
+
+    logger.info({
+      functionName: functionName.getUser,
+      message: "User fetched successfully",
+      userId: req.user.googleId,
+    });
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.FETCHED("User"),
+      data: { user },
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.getUser,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error fetching user",
+      error: (err as Error).message,
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 }
 
 async function addUser(req: AuthenticatedRequest, res: Response) {
-    try {
-        const { email, role } = req.body;
-        const user = await userService.addUser(email, role);
-        res.status(201).json({ success: true, message: "User added successfully", data: { user } });
-    } catch (err) {
-        res.status(400).json({ success: false, message: (err as Error).message, data: {} });
+  try {
+    const { email, role } = req.body;
+    const user = await userService.addUser(email, role);
+    if (!user) {
+      logger.warn({
+        functionName: functionName.addUser,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "User creation failed",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.CREATED_FAILED("User"),
+        data: {},
+      });
     }
+    logger.info({
+      functionName: functionName.addUser,
+      statusCode: StatusCodes.CREATED,
+      message: "User created successfully",
+      data: { user },
+    });
+    res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: SuccessResponseMessages.CREATED("User"),
+      data: { user },
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.addUser,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error adding user",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 }
 
 async function deleteUser(req: AuthenticatedRequest, res: Response) {
-    try {
-        const { userId } = req.params;
-        await userService.deleteUser(userId);
-        res.status(200).json({ success: true, message: "User deleted successfully", data: {} });
-    } catch (err) {
-        res.status(400).json({ success: false, message: (err as Error).message, data: {} });
+  try {
+    const { userId } = req.params;
+    const result = await userService.deleteUser(userId);
+    if (!result) {
+      logger.warn({
+        functionName: functionName.deleteUser,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "User deletion failed",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.DELETION_FAILED("User"),
+        data: {},
+      });
     }
+    logger.info({
+      functionName: functionName.deleteUser,
+      statusCode: StatusCodes.OK,
+      message: "User deleted successfully",
+      data: {},
+    });
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.DELETED("User"),
+      data: {},
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.deleteUser,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error deleting user",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 }
 
 async function getAllUsers(req: AuthenticatedRequest, res: Response) {
-    try {
-        const users = await User.find().populate('role', 'name permissions');
-        res.status(200).json({ success: true, message: "Users fetched successfully", data: { users } });
-    } catch (err) {
-        res.status(500).json({ success: false, message: (err as Error).message, data: {} });
+  try {
+    const users = await Collections.USER.find().populate(
+      "role",
+      "name permissions"
+    );
+    if (!users || users.length === 0) {
+      logger.warn({
+        functionName: functionName.getAllUsers,
+        statusCode: StatusCodes.NOT_FOUND,
+        message: "Users not found",
+      });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: ErrorResponseMessages.NOT_FOUND("Users"),
+        data: {},
+      });
     }
+    logger.info({
+      functionName: functionName.getAllUsers,
+      statusCode: StatusCodes.OK,
+      message: "Users fetched successfully",
+      data: { userCount: users.length },
+    });
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.FETCHED("User"),
+      data: { users },
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.getAllUsers,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error fetching users",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 }
 
 async function editUserRole(req: AuthenticatedRequest, res: Response) {
-    try {
-        const { userId, newRole } = req.body;
-        const user = await userService.editUserRole(userId, newRole);
-        res.status(200).json({ success: true, message: "User role updated successfully", data: { user } });
-    } catch (err) {
-        res.status(400).json({ success: false, message: (err as Error).message, data: {} });
+  try {
+    const { email, newRole } = req.body;
+    const user = await userService.editUserRole(email, newRole);
+    if (!user) {
+      logger.warn({
+        functionName: functionName.editUserRole,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "User role update failed",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.UPDATED_FAILED("User"),
+        data: {},
+      });
     }
+    logger.info({
+      functionName: functionName.editUserRole,
+      statusCode: StatusCodes.OK,
+      message: "User role updated successfully",
+      data: { user },
+    });
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.UPDATED("User"),
+      data: { user },
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.editUserRole,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error updating user role",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 }
 
 async function notifyAdmin(req: Request, res: Response) {
-    try {
-        const { email,name } = req.body;
-        await userService.notifyAdminToAddUser({ email ,name});
-        res.json({ success: true, message: "Admin notified successfully" });
-    } catch (err) {
-        res.status(500).json({ success: false, message: (err as Error).message });
+  try {
+    const { email, name } = req.body;
+    const result = await userService.notifyAdminToAddUser({ email, name });
+    if (result === undefined || result === null) {
+      logger.warn({
+        functionName: functionName.notifyAdmin,
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+        message: "Notification failed",
+      });
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: ErrorResponseMessages.NOTIFICATION_FAILED,
+      });
     }
+    logger.info({
+      functionName: functionName.notifyAdmin,
+      statusCode: StatusCodes.OK,
+      message: "Notification sent successfully",
+    });
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: SuccessResponseMessages.NOTIFIED });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.notifyAdmin,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error sending notification",
+      data: { error: (err as Error).message },
+    });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: ErrorResponseMessages.INTERNAL_ERROR });
+  }
 }
-export { getUser, addUser, deleteUser, getAllUsers,notifyAdmin, editUserRole };
+
+export { getUser, addUser, deleteUser, getAllUsers, notifyAdmin, editUserRole };

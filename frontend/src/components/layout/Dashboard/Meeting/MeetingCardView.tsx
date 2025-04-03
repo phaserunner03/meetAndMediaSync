@@ -53,6 +53,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const { editMeeting, deleteMeeting } = useMeetings();
   const [editMeetingData, setEditMeetingData] = useState<Meeting | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(editMeetingSchema),
   });
@@ -100,7 +101,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const onSubmit = async (data: any) => {
     if (!editMeetingData) return;
 
-    // Prepare the updated meeting data first
+    setIsSaving(true); // Start loader
     const updatedMeetingData = {
       title: data.title,
       description: data.description,
@@ -112,14 +113,14 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
 
     const result = await editMeeting(editMeetingData.id, updatedMeetingData);
 
-
     if (result.success) {
-      toast.success("✅ Meeting updated successfully!");
+      toast.success(" Meeting updated successfully!");
       setEditMeetingData(null);
       reset();
     } else {
-      toast.error(`❌ Failed to update meeting: ${result.message}`);
+      toast.error(` Failed to update meeting: ${result.message}`);
     }
+    setIsSaving(false); // Stop loader
   };
 
 
@@ -224,8 +225,12 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
                   {errors.endTime && <p className="text-red-500 text-sm">{errors.endTime.message}</p>}
 
                   <DialogFooter>
-                    <Button variant="outline" type="button" onClick={() => setEditMeetingData(null)}>Cancel</Button>
-                    <Button type="submit">Save</Button>
+                    <Button variant="outline" type="button" onClick={() => setEditMeetingData(null)} disabled={isSaving}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={isSaving}>
+                      {isSaving ? <Loader /> : "Save"}
+                    </Button>
                   </DialogFooter>
                 </form>
               </DialogContent>

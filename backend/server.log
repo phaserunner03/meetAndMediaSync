@@ -4065,3 +4065,9 @@
     "userId": "101325236299671743156",
     "totalMeetings": 0
 }}
+{timestamp: 2025-04-03 11:25:20, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:25:20, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:27:21, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:27:22, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 11:27:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 11:27:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}

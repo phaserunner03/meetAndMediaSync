@@ -5915,3 +5915,640 @@
 }}
 {timestamp: 2025-04-03 15:56:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-03 15:56:34, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-03 16:00:00, level:[info], function: transferCronJob, statusCode: 200,message: Scheduled transfer task started., data: {}}
+{timestamp: 2025-04-03 16:00:00, level:[info], function: transferCronJob, statusCode: 200,message: Transferring screenshots for user: ridam.chhapiya@searce.com, data: {}}
+{timestamp: 2025-04-03 16:00:01, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-03 16:00:02, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-03 16:00:02, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1Q4-MqasA06enK7dxGLf5VyBANvnSGyA8",
+    "folderName": "aco-fwws-fee"
+}}
+{timestamp: 2025-04-03 16:00:03, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1Q4-MqasA06enK7dxGLf5VyBANvnSGyA8",
+    "totalFiles": 6
+}}
+{timestamp: 2025-04-03 16:00:03, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1-0NgUEDLwBj5B-KUpovmMGVmmHQxwiDo",
+    "folderName": "rpu-iyfb-etq"
+}}
+{timestamp: 2025-04-03 16:00:04, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1-0NgUEDLwBj5B-KUpovmMGVmmHQxwiDo",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:04, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1cs_3b9oq1oQNhB8RTyRXh64EpDZgl2Rf",
+    "folderName": "gtj-uyth-xge"
+}}
+{timestamp: 2025-04-03 16:00:05, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1cs_3b9oq1oQNhB8RTyRXh64EpDZgl2Rf",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:05, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1jUH99dpjdDzVD_t2nxjkeMUG5fVzVWPc",
+    "folderName": "ftx-cvma-gzq"
+}}
+{timestamp: 2025-04-03 16:00:06, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1jUH99dpjdDzVD_t2nxjkeMUG5fVzVWPc",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:06, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "14bTcJOetWW7DE6hTvZFt_-JDgqqby7Rz",
+    "folderName": "vfg-ajft-xsa"
+}}
+{timestamp: 2025-04-03 16:00:06, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "14bTcJOetWW7DE6hTvZFt_-JDgqqby7Rz",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-03 16:00:06, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1_aCjcwaWPIpVoLBUl_FHFhE-3R8-H_GA",
+    "folderName": "ehq-zmkn-gsi"
+}}
+{timestamp: 2025-04-03 16:00:07, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1_aCjcwaWPIpVoLBUl_FHFhE-3R8-H_GA",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:07, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1aBIZwgfw4I-NEokNkDFwO-WEzfxkGx85",
+    "folderName": "rcf-nzie-hyc"
+}}
+{timestamp: 2025-04-03 16:00:08, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1aBIZwgfw4I-NEokNkDFwO-WEzfxkGx85",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:08, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1dUmD4-7AYnQpRnh63yuXjmlCdOV6Wjpz",
+    "folderName": "landing"
+}}
+{timestamp: 2025-04-03 16:00:09, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1dUmD4-7AYnQpRnh63yuXjmlCdOV6Wjpz",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:09, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "11SKmAdHJvpc42fLlVkQqp8T4ENx1cto9",
+    "folderName": "jmr-cunq-bbz"
+}}
+{timestamp: 2025-04-03 16:00:10, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "11SKmAdHJvpc42fLlVkQqp8T4ENx1cto9",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-03 16:00:10, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1eArhMnawjSabhO2pFWBEWekeB1nePjo2",
+    "folderName": "ridam"
+}}
+{timestamp: 2025-04-03 16:00:11, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1eArhMnawjSabhO2pFWBEWekeB1nePjo2",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:11, level:[info], function: transferScreenshotsToGCP, statusCode: 200,message: Transfer complete, data: {
+    "organizerEmail": "ridam.chhapiya@searce.com"
+}}
+{timestamp: 2025-04-03 16:00:11, level:[info], function: transferCronJob, statusCode: 200,message: Transferring screenshots for user: bhavya.shah@searce.com, data: {}}
+{timestamp: 2025-04-03 16:00:11, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1ZFe7k_745VcaFE_KpQChaK4aZJNAB2VK"
+}}
+{timestamp: 2025-04-03 16:00:12, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-03 16:00:12, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "15E7p5EgUtmPtZVRo-pA2ee1BQyHpSzuy",
+    "folderName": "nhp-ozje-voy"
+}}
+{timestamp: 2025-04-03 16:00:13, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "15E7p5EgUtmPtZVRo-pA2ee1BQyHpSzuy",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:13, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1sZxbf7-a7ZSoB7WQWm3M0azE6mQoblQg",
+    "folderName": "uzx-uvcw-ten"
+}}
+{timestamp: 2025-04-03 16:00:13, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1sZxbf7-a7ZSoB7WQWm3M0azE6mQoblQg",
+    "totalFiles": 2
+}}
+{timestamp: 2025-04-03 16:00:13, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1X5AH7FAieHwm6Wg1YcapaHFdn5SHZEoi",
+    "folderName": "tin-zcmy-cvp"
+}}
+{timestamp: 2025-04-03 16:00:14, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1X5AH7FAieHwm6Wg1YcapaHFdn5SHZEoi",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:14, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1zBzMai7H4ct-jNpuCSOwOInpRucpFqMa",
+    "folderName": "No Meet Found"
+}}
+{timestamp: 2025-04-03 16:00:14, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1zBzMai7H4ct-jNpuCSOwOInpRucpFqMa",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:14, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1ryQ2i_c6e7llBprFExMPvtEgVDq8noxv",
+    "folderName": "ohv-bnah-ouq"
+}}
+{timestamp: 2025-04-03 16:00:15, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1ryQ2i_c6e7llBprFExMPvtEgVDq8noxv",
+    "totalFiles": 4
+}}
+{timestamp: 2025-04-03 16:00:15, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1zSYs_u1QYF6Ecui07t7QkFhkQJecOL7p",
+    "folderName": "eiw-nawp-urt"
+}}
+{timestamp: 2025-04-03 16:00:16, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1zSYs_u1QYF6Ecui07t7QkFhkQJecOL7p",
+    "totalFiles": 0
+}}
+{timestamp: 2025-04-03 16:00:16, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1AxrHmiAyW6QZ1vH-xBdpzLXQbuef60rN",
+    "folderName": "uzb-zjoy-zij"
+}}
+{timestamp: 2025-04-03 16:00:16, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1AxrHmiAyW6QZ1vH-xBdpzLXQbuef60rN",
+    "totalFiles": 7
+}}
+{timestamp: 2025-04-03 16:00:16, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1wJlXjd0ZSxRRXlYnjWoZArRlnMmk6n8X",
+    "folderName": "cef-fsns-syo"
+}}
+{timestamp: 2025-04-03 16:00:17, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1wJlXjd0ZSxRRXlYnjWoZArRlnMmk6n8X",
+    "totalFiles": 1
+}}
+{timestamp: 2025-04-03 16:00:17, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1u9Lonpx4yrbKvAk-azgaa6M8iw4fle4A",
+    "folderName": "eib-vmds-yxn"
+}}
+{timestamp: 2025-04-03 16:00:17, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1u9Lonpx4yrbKvAk-azgaa6M8iw4fle4A",
+    "totalFiles": 0
+}}
+{timestamp: 2025-04-03 16:00:17, level:[info], function: processFolder, statusCode: 200,message: Processing folder, data: {
+    "folderId": "1CaEMSlPy7Mvv4CgsNOXYARwQGl7XgoN_",
+    "folderName": "css-bzoc-tfb"
+}}
+{timestamp: 2025-04-03 16:00:18, level:[info], function: getFilesInFolder, statusCode: 200,message: Fetched files from folder successfully, data: {
+    "folderId": "1CaEMSlPy7Mvv4CgsNOXYARwQGl7XgoN_",
+    "totalFiles": 3
+}}
+{timestamp: 2025-04-03 16:00:18, level:[info], function: transferScreenshotsToGCP, statusCode: 200,message: Transfer complete, data: {
+    "organizerEmail": "bhavya.shah@searce.com"
+}}
+{timestamp: 2025-04-03 16:00:18, level:[info], function: cronJob, statusCode: 200,message: Scheduled transfer task completed, data: {}}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 16:48:09, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 16:48:10, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 16:48:10, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 16:48:10, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 16:48:10, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 16:48:11, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-03 16:48:11, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 16:48:11, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 16:48:11, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 16:48:11, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 16:48:12, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-03 16:48:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 16:48:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 17:01:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 17:01:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:07:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 01:07:34, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 01:07:34, level:[info], function: handleToken, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:07:36, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:07:37, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:07:37, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:07:37, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:07:37, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:07:37, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:07:38, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:07:38, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:07:38, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:08:04, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 01:08:05, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:19:01, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:19:02, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:19:02, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:19:02, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:19:02, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:19:02, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:19:03, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:19:03, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:19:03, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:24:33, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:24:34, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:24:34, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:24:34, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:24:34, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:24:35, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:24:35, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:24:35, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:24:35, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:24:35, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:24:36, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:24:36, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:24:36, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:26:10, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:26:10, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:10, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:26:10, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:32:59, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:33:00, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:33:01, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-04 01:33:01, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}

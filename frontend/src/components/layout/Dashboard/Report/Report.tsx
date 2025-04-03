@@ -1,7 +1,6 @@
 import { useState } from "react";
-import React from "react";
-import { toast } from "sonner";
 import { DatePicker } from "../../../ui/date-picker";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import {
   Select,
   SelectItem,
@@ -11,101 +10,163 @@ import {
   SelectContent,
   SelectGroup,
 } from "../../../ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../../ui/dropdown-menu";
+import { Checkbox } from "../../../ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
+import { DataTable } from "../../../ui/DataTable";
+import { exportData } from "./ExportData";
+import { format } from "date-fns";
 
-const dummyMeetings = [
-  {
-    id: "1",
-    title: "Team Sync",
-    code: "ABC123",
-    role: "Admin",
-    startDate: new Date("2024-04-01T10:00:00"),
-    endDate: new Date("2024-04-01T11:00:00"),
-    drive: "Uploaded",
-    gcp: "Pending",
-    participants: 10,
-  },
-  {
-    id: "2",
-    title: "Client Meeting",
-    code: "DEF456",
-    role: "Member",
-    startDate: new Date("2024-04-02T14:00:00"),
-    endDate: new Date("2024-04-02T15:00:00"),
-    drive: "Pending",
-    gcp: "Failed",
-    participants: 8,
-  },
-  // Add more dummy data here...
-];
 
-const columns: ColumnDef<any>[] = [
+// Define the Meeting interface
+interface Meeting {
+  id: string;
+  title: string;
+  code: string;
+  role: string;
+  startDate: Date;
+  endDate: Date;
+  drive: string;
+  gcp: string;
+  participants: number;
+}
+
+const dummyMeetings: Meeting[] = Array.from({ length: 20 }, (_, i) => ({
+  id: (i + 1).toString(),
+  title: `Meeting ${i + 1}`,
+  code: `CODE${i + 1}`,
+  role: i % 2 === 0 ? "Admin" : "Member",
+  startDate: new Date(),
+  endDate: new Date(),
+  drive: i % 3 === 0 ? "Uploaded" : "Pending",
+  gcp: i % 4 === 0 ? "Success" : "Failed",
+  participants: Math.floor(Math.random() * 20) + 1,
+}))
+
+
+export const columns: ColumnDef<Meeting>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "title",
-    header: "Meeting Title",
+    header: "Title",
+    cell: ({ row }) => <div className="font-medium">{row.getValue("title")}</div>,
   },
   {
     accessorKey: "code",
     header: "Meeting Code",
+    cell: ({ row }) => <div className="text-sm font-mono">{row.getValue("code")}</div>,
   },
   {
     accessorKey: "role",
     header: "User Role",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "startDate",
-    header: "Start Date",
-    cell: ({ row }) => new Date(row.original.startDate).toLocaleString(),
+    header: "Start Time",
+    cell: ({ row }) => <div>{format(new Date(row.getValue("startDate")), "PPpp")}</div>,
   },
   {
     accessorKey: "endDate",
-    header: "End Date",
-    cell: ({ row }) => new Date(row.original.endDate).toLocaleString(),
+    header: "End Time",
+    cell: ({ row }) => <div>{format(new Date(row.getValue("endDate")), "PPpp")}</div>,
   },
   {
     accessorKey: "drive",
-    header: "Drive Status",
-    cell: ({ row }) => (
-      <span
-        className={`px-2 py-1 rounded ${
-          row.original.drive === "Uploaded"
-            ? "bg-green-200 text-green-800"
-            : row.original.drive === "Pending"
-            ? "bg-yellow-200 text-yellow-800"
-            : "bg-red-200 text-red-800"
-        }`}
-      >
-        {row.original.drive}
-      </span>
-    ),
+    header: "Drive Upload",
+    cell: ({ row }) => {
+      const status = row.getValue("drive")
+      return <div className={status === "Pending" ? "text-yellow-500" : "text-green-500"}>{status as string}</div>
+    },
   },
   {
     accessorKey: "gcp",
     header: "GCP Status",
-    cell: ({ row }) => (
-      <span
-        className={`px-2 py-1 rounded ${
-          row.original.gcp === "Uploaded"
-            ? "bg-green-200 text-green-800"
-            : row.original.gcp === "Pending"
-            ? "bg-yellow-200 text-yellow-800"
-            : "bg-red-200 text-red-800"
-        }`}
-      >
-        {row.original.gcp}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const status = row.getValue("gcp")
+      return (
+        <div
+          className={
+            status === "Pending"
+              ? "text-yellow-500"
+              : status === "Failed"
+              ? "text-red-500"
+              : "text-green-500"
+          }
+        >
+          {status as string}
+        </div>
+      )
+    },
   },
   {
     accessorKey: "participants",
     header: "Participants",
+    cell: ({ row }) => <div className="text-center">{row.getValue("participants")}</div>,
   },
-];
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const meeting = row.original
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(meeting.code)}
+            >
+              Copy Meeting Code
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View Details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+  },
+]
 
 const Report = () => {
   const [filteredData, setFilteredData] = useState(dummyMeetings);
+  const [exportFormat, setExportFormat] = useState("csv");
   const [filters, setFilters] = useState({
     code: "",
     role: "",
@@ -237,6 +298,23 @@ const Report = () => {
           </Button>
         </div>
       </div>
+      <div className="flex space-x-2 items-center pt-4">
+    <Select value={exportFormat} onValueChange={setExportFormat}>
+      <SelectTrigger className="w-[150px]">
+        <SelectValue placeholder="Select Format" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="csv">CSV</SelectItem>
+        <SelectItem value="text">Text</SelectItem>
+        <SelectItem value="pdf">PDF</SelectItem>
+      </SelectContent>
+    </Select>
+
+    <Button onClick={() => exportData(filteredData, exportFormat)}>Export</Button>
+  </div>
+  <div className="pt-6 ">
+  <DataTable columns={columns} data={filteredData} />
+  </div>
     </div>
   );
 };

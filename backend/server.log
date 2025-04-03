@@ -3767,3 +3767,301 @@
 {timestamp: 2025-04-02 15:54:52, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
 {timestamp: 2025-04-03 00:02:40, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-03 00:02:40, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:03:37, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:03:38, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:04:05, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:04:05, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:14:58, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:14:58, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:15:15, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:15:15, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:15:50, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:15:51, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:16:10, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:16:10, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:16:57, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:16:58, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:18:16, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:18:17, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:18:58, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:18:58, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:19:23, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:19:24, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:20:08, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:20:08, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:20:58, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:20:59, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:21:19, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:21:20, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:21:27, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:21:27, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:24:13, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:24:14, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:24:32, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:24:32, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:25:12, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:25:13, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:27:52, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:27:53, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:28:43, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:28:43, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:36:04, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:36:04, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:36:27, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:36:27, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:36:36, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:36:37, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:37:06, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:37:06, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:37:43, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:37:43, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:38:27, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:38:27, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:39:00, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:39:00, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:39:28, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:39:28, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:39:48, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:39:48, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 00:40:07, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 00:40:08, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 00:40:08, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 00:40:08, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 00:40:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:40:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:40:09, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 00:40:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 00:40:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 00:44:32, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:44:32, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:44:50, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:44:50, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:45:47, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:45:47, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:47:59, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:47:59, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:48:57, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:48:57, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:49:37, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:49:37, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:49:42, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-03 00:49:42, level:[info], function: databaseConnect, statusCode: 200,message: Connected to database, data: {}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "101325236299671743156"
+}}
+{timestamp: 2025-04-03 00:51:37, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-03 00:51:38, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "bhavya.shah@searce.com",
+    "userId": "67dbe28cc766f958641da5e7"
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "bhavya.shah@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 28
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 0,
+    "allMeetingsLength": 28,
+    "platformMeetingsLength": 3
+}}
+{timestamp: 2025-04-03 00:51:39, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "101325236299671743156",
+    "totalMeetings": 0
+}}

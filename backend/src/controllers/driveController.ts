@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import * as driveService from "../services/driveServices";
 import { StatusCodes } from "../constants/status-codes.constants";
 import { ErrorResponseMessages, SuccessResponseMessages } from "../constants/service-messages.constants";
-import { AuthenticatedRequest } from "../constants/types.constants";
+// import { AuthenticatedRequest } from "../constants/types.constants";
 import logger from "../utils/logger";
 
 
 
-// interface AuthenticatedRequest extends Request {
-//     user: any;
-// }
+interface AuthenticatedRequest extends Request {
+    user: any;
+}
 
 const functionName = {
     getAllFolders: "getAllFolders",

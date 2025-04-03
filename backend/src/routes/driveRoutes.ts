@@ -1,9 +1,13 @@
 import express from "express";
 import * as driveController from "../controllers/driveController";
 import { authMiddleware } from "../middleware/authMiddleware";
-import { AuthenticatedRequest } from "../constants/types.constants";
 
-//restrictTo check
+export interface AuthenticatedRequest extends express.Request {
+    user: {
+        googleId: string;
+    };
+}
+
 
 const router = express.Router();
 router.get("/folders", authMiddleware, async (req, res, next) => driveController.getAllFolders(req as unknown as AuthenticatedRequest, res).catch(next));

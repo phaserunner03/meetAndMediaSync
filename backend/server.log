@@ -5915,3 +5915,997 @@
 }}
 {timestamp: 2025-04-03 15:56:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
 {timestamp: 2025-04-03 15:56:34, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 01:23:50, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 01:23:51, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 01:24:11, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 01:24:12, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 01:25:40, level:[info], function: handleToken, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com"
+}}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:25:45, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:25:46, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:25:46, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:25:46, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:25:46, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: listEvents, statusCode: 500,message: Error listing events, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:95:26)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: getAllMeetings, statusCode: 500,message: Error fetching meetings, data: {
+    "name": "Error",
+    "stack": "Error: Failed to retrieve Google Calendar events\n    at listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:124:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: [object Object], statusCode: 500,message: Error fetching meetings, data: {
+    "error": "Failed to fetch meetings"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: listEvents, statusCode: 500,message: Error listing events, data: {
+    "name": "Error",
+    "stack": "Error: unauthorized_client\n    at Gaxios._request (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/gaxios/build/src/gaxios.js:140:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OAuth2Client.refreshTokenNoCache (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:178:19)\n    at async OAuth2Client.getRequestMetadataAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:298:17)\n    at async OAuth2Client.requestAsync (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/googleapis-common/node_modules/google-auth-library/build/src/auth/oauth2client.js:371:23)\n    at async listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:95:26)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: getAllMeetings, statusCode: 500,message: Error fetching meetings, data: {
+    "name": "Error",
+    "stack": "Error: Failed to retrieve Google Calendar events\n    at listEvents (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/utils/googleCalendar.js:124:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/meetingService.js:68:32)\n    at async Object.getAllMeetings (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/meetingController.js:104:24)"
+}}
+{timestamp: 2025-04-04 01:25:47, level:[error], function: [object Object], statusCode: 500,message: Error fetching meetings, data: {
+    "error": "Failed to fetch meetings"
+}}
+{timestamp: 2025-04-04 01:25:52, level:[info], function: logoutUser, statusCode: 200,message: User logged out successfully, data: {}}
+{timestamp: 2025-04-04 01:25:55, level:[warn], function: [object Object], statusCode: 400,message: Refresh token is missing, data: {}}
+{timestamp: 2025-04-04 01:25:55, level:[info], function: handleNoToken, statusCode: 200,message: No valid session. Redirecting to Google OAuth, data: {}}
+{timestamp: 2025-04-04 01:25:55, level:[info], function: getGoogleAuthURL, statusCode: 200,message: Generated Google authentication URL successfully, data: {
+    "authUrl": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=profile%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&response_type=code&client_id=972397341408-c42t0kj0h5l577coac8u20ke4gqvs7br.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fauth%2Fv1%2Fgoogle%2Fcallback"
+}}
+{timestamp: 2025-04-04 01:26:05, level:[info], function: generateJWT, statusCode: 200,message: JWT generated successfully, data: {
+    "email": "ridam.chhapiya@searce.com"
+}}
+{timestamp: 2025-04-04 01:26:05, level:[info], function: processGoogleAuth, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:26:05, level:[info], function: handleGoogleCallback, statusCode: 200,message: Google authentication successful, data: {}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:26:11, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:26:12, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:13, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:26:13, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:26:13, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:26:13, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:26:13, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:26:14, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:26:14, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:26:14, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:28:24, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:28:25, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-04 01:28:26, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-04 01:28:26, level:[info], function: getAllFolders, statusCode: 200,message: Folders fetched successfully, data: {
+    "folderCount": 10
+}}
+{timestamp: 2025-04-04 01:28:26, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:28:27, level:[info], function: getCloudCaptureFolder, statusCode: 200,message: CloudCapture folder retrieved successfully, data: {
+    "folderId": "1yhSz1HLGAlC0iEivzYnGIFNwibSA5N_Z"
+}}
+{timestamp: 2025-04-04 01:28:28, level:[info], function: getAllFolders, statusCode: 200,message: Fetched all CloudCapture folders successfully, data: {
+    "totalFolders": 10
+}}
+{timestamp: 2025-04-04 01:28:28, level:[info], function: getAllFolders, statusCode: 200,message: Folders fetched successfully, data: {
+    "folderCount": 10
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:29:44, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:29:51, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:29:51, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 01:29:51, level:[error], function: validateRequest, statusCode: No Code,message: Request body validation failed, data: {
+    "name": "ValidationError",
+    "stack": "ValidationError: 2 errors occurred\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:807:33\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:1867:9\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:709:16\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at handleResult (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:368:96)\n    at validate (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:391:5)\n    at StringSchema.runTests (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:756:7)"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:30:46, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:30:47, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:30:48, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:30:48, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:30:48, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:30:48, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:30:48, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:30:49, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:30:49, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:30:49, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:32:25, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:32:26, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:32:26, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:32:26, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:32:26, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:32:26, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:32:27, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:32:27, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:32:27, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAuthenticatedUser, statusCode: 200,message: Fetched authenticated user, data: {
+    "userId": "102983494808288862927"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getUser, statusCode: No Code,message: User fetched successfully, data: undefined}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 01:34:08, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 01:34:09, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:34:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:34:09, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 01:34:09, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 01:34:09, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewUser"
+}}
+{timestamp: 2025-04-04 01:34:10, level:[info], function: listEvents, statusCode: 200,message: Event created successfully, data: {
+    "eventCount": 29
+}}
+{timestamp: 2025-04-04 01:34:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "ourMeetingsLength": 2,
+    "allMeetingsLength": 29,
+    "platformMeetingsLength": 5
+}}
+{timestamp: 2025-04-04 01:34:10, level:[info], function: getAllMeetings, statusCode: 200,message: Meetings fetched successfully, data: {
+    "userId": "102983494808288862927",
+    "totalMeetings": 2
+}}
+{timestamp: 2025-04-04 11:12:28, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:12:28, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:12:28, level:[error], function: validateRequest, statusCode: No Code,message: Request body validation failed, data: {
+    "name": "ValidationError",
+    "stack": "ValidationError: 2 errors occurred\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:807:33\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:1867:9\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:709:16\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at handleResult (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:368:96)\n    at validate (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:391:5)\n    at StringSchema.runTests (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:756:7)"
+}}
+{timestamp: 2025-04-04 11:12:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:12:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "addUser"
+}}
+{timestamp: 2025-04-04 11:12:47, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "email": "ridamchhapiya@gmail.com",
+    "role": "67cad2b4d3dd89f49742abea"
+}}
+{timestamp: 2025-04-04 11:12:47, level:[info], function: addUser, statusCode: 201,message: New user created, data: {
+    "userId": "67ef715724e2c17598e4696b",
+    "email": "ridamchhapiya@gmail.com",
+    "role": "Admin"
+}}
+{timestamp: 2025-04-04 11:12:50, level:[info], function: sendWelcomeEmail, statusCode: 200,message: Welcome email sent to ridamchhapiya@gmail.com, data: {
+    "userEmail": "ridamchhapiya@gmail.com"
+}}
+{timestamp: 2025-04-04 11:12:50, level:[info], function: addUser, statusCode: 201,message: User created successfully, data: {
+    "user": {
+        "email": "ridamchhapiya@gmail.com",
+        "role": "67cad2b4d3dd89f49742abea",
+        "_id": "67ef715724e2c17598e4696b",
+        "__v": 0
+    }
+}}
+{timestamp: 2025-04-04 11:12:51, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:12:51, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:12:51, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 7
+}}
+{timestamp: 2025-04-04 11:13:04, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:13:04, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:13:04, level:[error], function: validateRequest, statusCode: No Code,message: Request body validation failed, data: {
+    "name": "ValidationError",
+    "stack": "ValidationError: 2 errors occurred\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:807:33\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:1867:9\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:709:16\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at handleResult (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:368:96)\n    at validate (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:391:5)\n    at StringSchema.runTests (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:756:7)"
+}}
+{timestamp: 2025-04-04 11:19:39, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:19:39, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:19:39, level:[error], function: validateRequest, statusCode: No Code,message: Request body validation failed, data: {
+    "name": "ValidationError",
+    "stack": "ValidationError: 2 errors occurred\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:807:33\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:1867:9\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:709:16\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at handleResult (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:368:96)\n    at validate (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:391:5)\n    at StringSchema.runTests (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:756:7)"
+}}
+{timestamp: 2025-04-04 11:20:03, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:20:03, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:20:03, level:[error], function: validateRequest, statusCode: No Code,message: Request body validation failed, data: {
+    "name": "ValidationError",
+    "stack": "ValidationError: 2 errors occurred\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:807:33\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:1867:9\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at /Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:709:16\n    at nextOnce (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:742:7)\n    at finishTestRun (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:761:11)\n    at handleResult (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:368:96)\n    at validate (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:391:5)\n    at StringSchema.runTests (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/node_modules/yup/index.js:756:7)"
+}}
+{timestamp: 2025-04-04 11:26:07, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 11:26:07, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 11:26:16, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 7
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:17, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewRoles"
+}}
+{timestamp: 2025-04-04 11:26:18, level:[info], function: getAllRoles, statusCode: 200,message: Fetched all roles successfully, data: {
+    "totalRoles": 4
+}}
+{timestamp: 2025-04-04 11:26:18, level:[info], function: getAllRoles, statusCode: 200,message: Roles fetched successfully, data: {
+    "roleCount": 4
+}}
+{timestamp: 2025-04-04 11:26:18, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:18, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:26:18, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 7
+}}
+{timestamp: 2025-04-04 11:26:24, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:24, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:26:24, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67ef715724e2c17598e4696b",
+    "newRole": "67cad2fed3dd89f49742abee"
+}}
+{timestamp: 2025-04-04 11:26:24, level:[error], function: editUserRole, statusCode: 500,message: Error editing user role, data: {
+    "name": "Error",
+    "stack": "Error: User not found\n    at Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/userService.js:200:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/userController.js:229:22)"
+}}
+{timestamp: 2025-04-04 11:26:24, level:[error], function: editUserRole, statusCode: 500,message: Error updating user role, data: {
+    "error": "Failed to edit user role"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "deleteUser"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {
+    "userId": "67ef715724e2c17598e4696b"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:26:56, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 11:27:12, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:27:12, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:27:12, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "67cad2fed3dd89f49742abee"
+}}
+{timestamp: 2025-04-04 11:27:12, level:[error], function: editUserRole, statusCode: 500,message: Error editing user role, data: {
+    "name": "Error",
+    "stack": "Error: User not found\n    at Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/userService.js:200:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/userController.js:229:22)"
+}}
+{timestamp: 2025-04-04 11:27:12, level:[error], function: editUserRole, statusCode: 500,message: Error updating user role, data: {
+    "error": "Failed to edit user role"
+}}
+{timestamp: 2025-04-04 11:32:59, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 11:32:59, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 11:33:16, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:33:16, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:33:16, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "67cad2fed3dd89f49742abee"
+}}
+{timestamp: 2025-04-04 11:33:16, level:[error], function: editUserRole, statusCode: 500,message: Error editing user role, data: {
+    "name": "Error",
+    "stack": "Error: User not found\n    at Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/services/userService.js:201:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.editUserRole (/Users/ridam.chhapiya/Documents/GitHub/meetAndMediaSync/backend/dist/controllers/userController.js:229:22)"
+}}
+{timestamp: 2025-04-04 11:33:16, level:[error], function: editUserRole, statusCode: 500,message: Error updating user role, data: {
+    "error": "Failed to edit user role"
+}}
+{timestamp: 2025-04-04 11:35:33, level:[info], function: Server, statusCode: 200,message: Server running on port 8080, data: {}}
+{timestamp: 2025-04-04 11:35:34, level:[info], function: databaseConnect, statusCode: 200,message: database connected successfully, data: {}}
+{timestamp: 2025-04-04 11:38:24, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:24, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:38:24, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "67cad2fed3dd89f49742abee"
+}}
+{timestamp: 2025-04-04 11:38:24, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "NAU"
+}}
+{timestamp: 2025-04-04 11:38:24, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "user": {
+        "_id": "67eecf0ea3713068214d5de4",
+        "googleId": "104645066895823563176",
+        "displayName": "Akshat Prasad",
+        "email": "akshat.prasad@searce.com",
+        "role": "67cad2fed3dd89f49742abee",
+        "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocLreAMD9AA0wB6I4ZlCD8pH5IoY1EIixy1a3nslUf7NdPSctA=s96-c",
+        "accessToken": "ya29.a0AeXRPp4eB2K1xNE4Se63fRmf5nK-8AaWSk-WoROE_tLYZJ9FXVdn-tAmR-1quATsOx8rzA9O02EJKFa1NGOxHCe8gzmWI1m8WA9aDTJhX15_xD3i7Y3ha4TrevqIBqGvnzVoaOVwUuC9gCUuzO_8DmXYgtbVTYfulRtYLqt7aCgYKAWYSARESFQHGX2Mit7slG0cDj5ukO_rBDDD9oA0175",
+        "refreshToken": "1//04fN1K6q-sO0sCgYIARAAGAQSNwF-L9IrHAOHLEE2YwCWkl2fXKQ7hH14Zq8JIMOrZGwH_ft8Gj6_GnRexBBfHtCoRij3xjyTm8A",
+        "__v": 0
+    }
+}}
+{timestamp: 2025-04-04 11:38:25, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:25, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:38:25, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "67cad2b4d3dd89f49742abea"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "Admin"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "user": {
+        "_id": "67eecf0ea3713068214d5de4",
+        "googleId": "104645066895823563176",
+        "displayName": "Akshat Prasad",
+        "email": "akshat.prasad@searce.com",
+        "role": "67cad2b4d3dd89f49742abea",
+        "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocLreAMD9AA0wB6I4ZlCD8pH5IoY1EIixy1a3nslUf7NdPSctA=s96-c",
+        "accessToken": "ya29.a0AeXRPp4eB2K1xNE4Se63fRmf5nK-8AaWSk-WoROE_tLYZJ9FXVdn-tAmR-1quATsOx8rzA9O02EJKFa1NGOxHCe8gzmWI1m8WA9aDTJhX15_xD3i7Y3ha4TrevqIBqGvnzVoaOVwUuC9gCUuzO_8DmXYgtbVTYfulRtYLqt7aCgYKAWYSARESFQHGX2Mit7slG0cDj5ukO_rBDDD9oA0175",
+        "refreshToken": "1//04fN1K6q-sO0sCgYIARAAGAQSNwF-L9IrHAOHLEE2YwCWkl2fXKQ7hH14Zq8JIMOrZGwH_ft8Gj6_GnRexBBfHtCoRij3xjyTm8A",
+        "__v": 0
+    }
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:38:40, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 11:38:46, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:46, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "editUserRole"
+}}
+{timestamp: 2025-04-04 11:38:46, level:[info], function: validateRequest, statusCode: No Code,message: Request body validated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "67cacd51ee0507e6ba0ba0d1"
+}}
+{timestamp: 2025-04-04 11:38:46, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4",
+    "newRole": "SuperAdmin"
+}}
+{timestamp: 2025-04-04 11:38:46, level:[info], function: editUserRole, statusCode: 200,message: User role updated successfully, data: {
+    "user": {
+        "_id": "67eecf0ea3713068214d5de4",
+        "googleId": "104645066895823563176",
+        "displayName": "Akshat Prasad",
+        "email": "akshat.prasad@searce.com",
+        "role": "67cacd51ee0507e6ba0ba0d1",
+        "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocLreAMD9AA0wB6I4ZlCD8pH5IoY1EIixy1a3nslUf7NdPSctA=s96-c",
+        "accessToken": "ya29.a0AeXRPp4eB2K1xNE4Se63fRmf5nK-8AaWSk-WoROE_tLYZJ9FXVdn-tAmR-1quATsOx8rzA9O02EJKFa1NGOxHCe8gzmWI1m8WA9aDTJhX15_xD3i7Y3ha4TrevqIBqGvnzVoaOVwUuC9gCUuzO_8DmXYgtbVTYfulRtYLqt7aCgYKAWYSARESFQHGX2Mit7slG0cDj5ukO_rBDDD9oA0175",
+        "refreshToken": "1//04fN1K6q-sO0sCgYIARAAGAQSNwF-L9IrHAOHLEE2YwCWkl2fXKQ7hH14Zq8JIMOrZGwH_ft8Gj6_GnRexBBfHtCoRij3xjyTm8A",
+        "__v": 0
+    }
+}}
+{timestamp: 2025-04-04 11:38:47, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:47, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:38:47, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 6
+}}
+{timestamp: 2025-04-04 11:38:51, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:51, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "deleteUser"
+}}
+{timestamp: 2025-04-04 11:38:51, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {
+    "userId": "67eecf0ea3713068214d5de4"
+}}
+{timestamp: 2025-04-04 11:38:51, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {}}
+{timestamp: 2025-04-04 11:38:52, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:52, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:38:52, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 5
+}}
+{timestamp: 2025-04-04 11:38:54, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:54, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "deleteUser"
+}}
+{timestamp: 2025-04-04 11:38:54, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {
+    "userId": "67e3f11409998f09be1d0d2b"
+}}
+{timestamp: 2025-04-04 11:38:54, level:[info], function: deleteUser, statusCode: 200,message: User deleted successfully, data: {}}
+{timestamp: 2025-04-04 11:38:55, level:[info], function: authMiddleware, statusCode: 200,message: User authenticated successfully, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "userId": "67da9195ff7e40d08808cba7"
+}}
+{timestamp: 2025-04-04 11:38:55, level:[info], function: restrictTo, statusCode: 200,message: Access granted, data: {
+    "email": "ridam.chhapiya@searce.com",
+    "requiredPermission": "viewAllUsers"
+}}
+{timestamp: 2025-04-04 11:38:55, level:[info], function: getAllUsers, statusCode: 200,message: Users fetched successfully, data: {
+    "userCount": 4
+}}

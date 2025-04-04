@@ -212,6 +212,7 @@ async function editUserRole(
     }
 
     const user = await Collections.USER.findById(userId);
+    console.log(user);
     if (!user) {
       throw new Error("User not found");
     }

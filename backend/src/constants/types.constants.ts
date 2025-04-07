@@ -25,6 +25,7 @@ export interface AuthenticatedRequest extends Request {
     params: Record<string, string>; 
     header: Record<string, string>; 
     cookies: Record<string, string>;
+    query: Record<string, any>;
 }
 
 

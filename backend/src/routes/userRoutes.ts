@@ -15,4 +15,5 @@ router.delete("/deleteUser/:userId", authMiddleware, restrictTo(Permissions.DELE
 router.get("/allUsers", authMiddleware, restrictTo(Permissions.VIEW_ALL_USERS), (req, res) => userController.getAllUsers(req as AuthenticatedRequest, res));
 router.put("/editUserRole", authMiddleware, restrictTo(Permissions.EDIT_USER_ROLE),validateRequest(userSchema.updateUserRequest) ,(req, res) => userController.editUserRole(req as AuthenticatedRequest, res));
 
+
 export default router;

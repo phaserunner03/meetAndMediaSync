@@ -30,6 +30,16 @@ app.listen(PORT, () => {
   logger.info({functionName:"Server",statusCode:"200", message: `Server running on port ${PORT}`,data:{} });
 });
 
+process.on("uncaughtException", (err) => {
+  logger.error({ functionName: "Server", statusCode: "500", message: "Uncaught Exception", data: { error: err.message } });
+  process.exit(1);
+});
+
+
+process.on("unhandledRejection", (reason) => {
+  logger.error({ functionName: "Server", statusCode: "500", message: "Unhandled Rejection", data: { reason } });
+});
+
 interface Error {
   stack?: string;
 }

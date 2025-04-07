@@ -1,5 +1,6 @@
 import { useState } from "react"
 import {
+  Table as ReactTableInstance,
   ColumnDef,
   ColumnFiltersState,
   SortingState,
@@ -11,10 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,  
 } from "@tanstack/react-table"
-
 import { Button } from "./button"
-import { Input } from "./input"
-
 import {
   Table,
   TableBody,
@@ -24,14 +22,17 @@ import {
   TableRow,
 } from "./table"
 
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onTableReady?: (table: ReactTableInstance<TData>) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onTableReady
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -56,10 +57,11 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   })
+  if (onTableReady) onTableReady(table);
 
   return (
     <div className="w-full">
-      
+   
 
       {/* Table */}
       <div className="rounded-md border">

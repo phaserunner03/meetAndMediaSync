@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DatePicker } from "../../../ui/date-picker";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, ChevronDown } from "lucide-react";
 import {
   Select,
   SelectItem,
@@ -20,13 +20,12 @@ import {
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import { Checkbox } from "../../../ui/checkbox";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
 import { DataTable } from "../../../ui/DataTable";
 import { exportData } from "./ExportData";
 import { format } from "date-fns";
-
 
 // Define the Meeting interface
 interface Meeting {
@@ -51,8 +50,7 @@ const dummyMeetings: Meeting[] = Array.from({ length: 20 }, (_, i) => ({
   drive: i % 3 === 0 ? "Uploaded" : "Pending",
   gcp: i % 4 === 0 ? "Success" : "Failed",
   participants: Math.floor(Math.random() * 20) + 1,
-}))
-
+}));
 
 export const columns: ColumnDef<Meeting>[] = [
   {
@@ -80,12 +78,16 @@ export const columns: ColumnDef<Meeting>[] = [
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("title")}</div>,
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue("title")}</div>
+    ),
   },
   {
     accessorKey: "code",
     header: "Meeting Code",
-    cell: ({ row }) => <div className="text-sm font-mono">{row.getValue("code")}</div>,
+    cell: ({ row }) => (
+      <div className="text-sm font-mono">{row.getValue("code")}</div>
+    ),
   },
   {
     accessorKey: "role",
@@ -95,51 +97,71 @@ export const columns: ColumnDef<Meeting>[] = [
   {
     accessorKey: "startDate",
     header: "Start Time",
-    cell: ({ row }) => <div>{format(new Date(row.getValue("startDate")), "PPpp")}</div>,
+    cell: ({ row }) => (
+      <div>{format(new Date(row.getValue("startDate")), "PPpp")}</div>
+    ),
   },
   {
     accessorKey: "endDate",
     header: "End Time",
-    cell: ({ row }) => <div>{format(new Date(row.getValue("endDate")), "PPpp")}</div>,
+    cell: ({ row }) => (
+      <div>{format(new Date(row.getValue("endDate")), "PPpp")}</div>
+    ),
   },
   {
     accessorKey: "drive",
     header: "Drive Upload",
     cell: ({ row }) => {
-      const status = row.getValue("drive")
-      return <div className={status === "Pending" ? "text-yellow-500" : "text-green-500"}>{status as string}</div>
+      const status = row.getValue("drive") as string;
+      const color =
+        status === "Uploaded"
+          ? "bg-green-100 text-green-800"
+          : status === "Pending"
+          ? "bg-yellow-100 text-yellow-800"
+          : "bg-gray-100 text-gray-800";
+
+      return (
+        <span
+          className={`inline-block text-center w-20 px-3 py-1 text-xs font-medium rounded-full ${color}`}
+        >
+          {status}
+        </span>
+      );
     },
   },
   {
     accessorKey: "gcp",
     header: "GCP Status",
     cell: ({ row }) => {
-      const status = row.getValue("gcp")
+      const status = row.getValue("gcp") as string;
+      const color =
+        status === "Success"
+          ? "bg-green-100 text-green-800"
+          : status === "Pending"
+          ? "bg-yellow-100 text-yellow-800"
+          : "bg-red-100 text-red-800";
+
       return (
-        <div
-          className={
-            status === "Pending"
-              ? "text-yellow-500"
-              : status === "Failed"
-              ? "text-red-500"
-              : "text-green-500"
-          }
+        <span
+          className={`inline-block text-center w-20 px-3 py-1 text-xs font-medium rounded-full ${color}`}
         >
-          {status as string}
-        </div>
-      )
+          {status}
+        </span>
+      );
     },
   },
   {
     accessorKey: "participants",
     header: "Participants",
-    cell: ({ row }) => <div className="text-center">{row.getValue("participants")}</div>,
+    cell: ({ row }) => (
+      <div className="text-center">{row.getValue("participants")}</div>
+    ),
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const meeting = row.original
+      const meeting = row.original;
 
       return (
         <DropdownMenu>
@@ -159,14 +181,17 @@ export const columns: ColumnDef<Meeting>[] = [
             <DropdownMenuItem>View Details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 const Report = () => {
   const [filteredData, setFilteredData] = useState(dummyMeetings);
   const [exportFormat, setExportFormat] = useState("csv");
+  const [tableInstance, setTableInstance] = useState<any>(null);
+  const [columnVersion, setColumnVersion] = useState(0);
+
   const [filters, setFilters] = useState({
     code: "",
     role: "",
@@ -178,6 +203,37 @@ const Report = () => {
 
   const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+  const renderColumnDropdown = () => {
+    if (!tableInstance) return null;
+    const handleToggleVisibility = (column: any, value: boolean) => {
+      column.toggleVisibility(value);
+      setColumnVersion((v) => v + 1); 
+    };
+    return (
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Columns <ChevronDown className="ml-2 h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {tableInstance
+          .getAllLeafColumns()
+          .filter((column: any) => column.getCanHide())
+          .map((column: any) => (
+            <DropdownMenuCheckboxItem
+              key={column.id}
+              checked={column.getIsVisible()}
+              onCheckedChange={() => handleToggleVisibility(column,true)}
+              className="capitalize"
+            >
+              {column.columnDef.header?.toString() || column.id}
+            </DropdownMenuCheckboxItem>
+          ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+    );
   };
 
   const applyFilters = () => {
@@ -252,7 +308,6 @@ const Report = () => {
           <Select
             value={filters.drive}
             onValueChange={(value) => handleFilterChange("drive", value)}
-            
           >
             <SelectTrigger className="w-full bg-white">
               <SelectValue placeholder="Select Status" />
@@ -274,7 +329,7 @@ const Report = () => {
             GCP Status
           </label>
           <Select
-            value={filters.gcp} 
+            value={filters.gcp}
             onValueChange={(value) => handleFilterChange("gcp", value)}
           >
             <SelectTrigger className="w-full bg-white">
@@ -298,23 +353,33 @@ const Report = () => {
           </Button>
         </div>
       </div>
-      <div className="flex space-x-2 items-center pt-4">
-    <Select value={exportFormat} onValueChange={setExportFormat}>
-      <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder="Select Format" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="csv">CSV</SelectItem>
-        <SelectItem value="text">Text</SelectItem>
-        <SelectItem value="pdf">PDF</SelectItem>
-      </SelectContent>
-    </Select>
+      <div className="flex flex-wrap justify-between items-center gap-3 pt-4">
+        <div className="flex items-center gap-2">
+          <Select value={exportFormat} onValueChange={setExportFormat}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Select Format" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="csv">CSV</SelectItem>
+              <SelectItem value="text">Text</SelectItem>
+              <SelectItem value="pdf">PDF</SelectItem>
+            </SelectContent>
+          </Select>
 
-    <Button onClick={() => exportData(filteredData, exportFormat)}>Export</Button>
-  </div>
-  <div className="pt-6 ">
-  <DataTable columns={columns} data={filteredData} />
-  </div>
+          <Button onClick={() => exportData(filteredData, exportFormat)}>
+            Export
+          </Button>
+        </div>
+
+        {renderColumnDropdown()}
+      </div>
+      <div className="pt-6 ">
+        <DataTable
+          columns={columns}
+          data={filteredData}
+          onTableReady={setTableInstance}
+        />
+      </div>
     </div>
   );
 };

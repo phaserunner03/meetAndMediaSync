@@ -2,6 +2,7 @@ import { Collections } from "../constants/collections.constants";
 
 export const fetchMeetings = async (queryParams: any) => {
   const { code, roleId, startDate, endDate, drive, gcp } = queryParams;
+  //Add meeting title and scheduled by 
   
       let meetings;
   

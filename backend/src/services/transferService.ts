@@ -113,7 +113,8 @@ async function processFile(file: any, folder: any ,refresh_token: string, gcpPat
         });
         const fileData = await fetchFileBuffer(refresh_token, file.id);
         if (file.name) {
-            const fileUrl = await uploadToGCP(file.name, fileData, gcpPath);
+            const fileMetaData = await uploadToGCP(file.name, fileData, gcpPath) as {authenticatedUrl: string };
+            console.log("fileMetaData:", fileMetaData);
              logger.info({
                functionName: functionName.processFile,
                statusCode: StatusCodes.OK,
@@ -132,6 +133,8 @@ async function processFile(file: any, folder: any ,refresh_token: string, gcpPat
                 meetingID: meetingID?._id,
                 fileName: file.name,
                 fileUrl: Url,
+                gcpPath,
+                gcpUrl:fileMetaData.authenticatedUrl,
                 transferredAt: new Date(),
             });
 

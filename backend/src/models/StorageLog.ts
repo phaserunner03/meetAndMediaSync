@@ -12,6 +12,8 @@ interface StorageLogDocument extends Document {
 const StorageLogSchema = new mongoose.Schema({
     meetingID: { type: mongoose.Schema.Types.ObjectId, ref: 'Meeting', required: true },
     fileName: { type: String, required: true },
+    gcpPath: { type: String, required: true },
+    gcpUrl: { type: String, required: true },
     fileUrl: { type: String, required: true },
     transferredAt: { type: Date, required: true },
     createdAt: { type: Date, default: Date.now },

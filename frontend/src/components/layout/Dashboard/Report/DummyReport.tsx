@@ -244,7 +244,6 @@ export const columns: ColumnDef<Meeting>[] = [
     cell: ({ row }) => {
       const mediaCount = row.original.media?.length ?? 0;
       const hasMedia = mediaCount > 0;
-  
       return (
         <TooltipProvider>
           <Tooltip>
@@ -275,7 +274,7 @@ export const columns: ColumnDef<Meeting>[] = [
   
       const status =
         mediaLogs === 0
-          ? "Transferred"
+          ? "No need"
           : gcpLogs === mediaLogs
           ? "Transferred"
           : gcpLogs === 0
@@ -287,6 +286,8 @@ export const columns: ColumnDef<Meeting>[] = [
           ? "bg-green-500"
           : status === "Failed"
           ? "bg-red-500"
+          : status === "No need"
+          ? "bg-gray-500"
           : "bg-yellow-500";
   
       return (

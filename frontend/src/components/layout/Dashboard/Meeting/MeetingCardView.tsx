@@ -101,7 +101,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const onSubmit = async (data: any) => {
     if (!editMeetingData) return;
 
-    setIsSaving(true); // Start loader
+    setIsSaving(true); 
     const updatedMeetingData = {
       title: data.title,
       description: data.description,
@@ -120,16 +120,14 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
     } else {
       toast.error(` Failed to update meeting: ${result.message}`);
     }
-    setIsSaving(false); // Stop loader
+    setIsSaving(false); 
   };
 
 
 
   return (
     <div className="relative mt-6">
-      {loading ? (
-        <Loader/>
-      ) : (
+      
         <motion.div initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -238,7 +236,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
           )}
         </motion.div>
 
-      )}
+    
     </div>
   );
 };

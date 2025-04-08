@@ -271,13 +271,13 @@ const mediaLog = async (
     meetID: string,
     type: "screenshot" | "recording",
     fileUrl: string,
+    fileName: string,
     storedIn: "Google Drive" | "GCP",
     movedToGCP: boolean,
     timestamp: string
 ) => {
     try {
         const fullMeetLink = `https://meet.google.com/${meetID}`;
-        console.log("fullMeetLink", fullMeetLink);
         const Id = await Collections.MEETINGS.findOne({ meetLink: fullMeetLink });
         if (!Id) {
             throw new Error("Meeting not found");
@@ -287,6 +287,7 @@ const mediaLog = async (
             meetingID,
             type: type || "screenshot",
             fileUrl,
+            fileName,
             storedIn: storedIn || "Google Drive",
             movedToGCP: movedToGCP || false,
             timestamp,

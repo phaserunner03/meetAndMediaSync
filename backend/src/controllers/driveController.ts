@@ -178,13 +178,13 @@ const deleteFile = async (req: AuthenticatedRequest, res: Response) => {
 
 const mediaLog = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const { meetingID, type, fileUrl, storedIn, movedToGCP, timestamp } = req.body;
+        const { meetingID, type, fileUrl, fileName, storedIn, movedToGCP, timestamp } = req.body;
 
         if (!meetingID || !fileUrl || !timestamp) {
             return res.status(400).json({ success: false, message: "Missing required fields." });
         }
 
-        const media = await driveService.mediaLog(meetingID, type, fileUrl, storedIn, movedToGCP, timestamp);
+        const media = await driveService.mediaLog(meetingID, type, fileUrl, fileName, storedIn, movedToGCP, timestamp);
 
         return res.status(201).json({
             success: true,

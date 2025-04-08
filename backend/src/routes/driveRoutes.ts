@@ -19,7 +19,7 @@ router.get("/folders/:folderId", authMiddleware, async (req, res, next) => drive
 
 router.delete("/files/:fileId", authMiddleware, async (req, res, next) => driveController.deleteFile(req as unknown as AuthenticatedRequest, res).catch(next));
 
-router.post("/mediaLogs", authMiddleware,validateRequest(driveSchema.mediaLogRequest), async (req, res, next) => driveController.mediaLog(req as unknown as AuthenticatedRequest, res).catch(next));
+router.post("/mediaLogs",validateRequest(driveSchema.mediaLogRequest), async (req, res, next) => driveController.mediaLog(req as unknown as AuthenticatedRequest, res).catch(next));
 
 
 export default router;

@@ -22,19 +22,40 @@ async function uploadToGCP(fileName: string, fileBuffer: Buffer, destinationPath
                     functionName: functionName.uploadToGCP,
                     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
                     message: "Error uploading file to GCP",
-                    data: { fileName, destinationPath, error: err.message },
+                    data: { fileName, destinationPath, error: err instanceof Error ? err.message : "Unknown error" },
                 });
-                reject(err);
+                reject(err instanceof Error ? err : new Error(String(err)));
             });
 
-            stream.on("finish", () => {
-                logger.info({
-                    functionName: functionName.uploadToGCP,
-                    statusCode: StatusCodes.OK,
-                    message: "File uploaded successfully to GCP",
-                    data: { fileName, destinationPath },
-                });
-                resolve(`File uploaded to ${destinationPath}`);
+            stream.on("finish", async () => {
+                try {
+                    const [metadata] = await file.getMetadata();
+                    const authenticatedUrl = `https://storage.cloud.google.com/${bucketName}/${destinationPath}${fileName}`;
+
+                    const detailedMetadata = {
+                        ...metadata,
+                        authenticatedUrl,
+                    };
+
+                    console.log("File metadata with authenticated URL:", detailedMetadata);
+
+                    logger.info({
+                        functionName: functionName.uploadToGCP,
+                        statusCode: StatusCodes.OK,
+                        message: "File uploaded successfully to GCP with metadata",
+                        data: detailedMetadata,
+                    });
+
+                    resolve(detailedMetadata);
+                } catch (err) {
+                    logger.error({
+                        functionName: functionName.uploadToGCP,
+                        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+                        message: "Error retrieving file metadata after upload",
+                        data: { fileName, destinationPath, error: err instanceof Error ? err.message : "Unknown error" },
+                    });
+                    reject(err instanceof Error ? err : new Error(String(err)));
+                }
             });
 
             stream.end(fileBuffer);

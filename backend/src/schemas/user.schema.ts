@@ -8,6 +8,25 @@ const SchemaErrorMessages = {
   EMAIL_VERIFICATION_FAILED: "Email verification failed",
 };
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateUserRequest:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email of the user
+ *         role:
+ *           type: string
+ *           description: Role ID for the user
+ *       required:
+ *         - email
+ *         - role
+ */
+
 export const createUserRequest = yup.object().shape({
   email: yup
     .string()

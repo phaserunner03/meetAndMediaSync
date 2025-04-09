@@ -27,7 +27,7 @@ export interface Meeting {
 interface ReportContextType {
   meetings: Meeting[];
   loading: boolean;
-  fetchMeetingsWithFilters: (filters: { code?: string,title?:string, startTime?:Date, endTime?:Date, scheduledBy?:string, role?:string }) => Promise<void>;
+  fetchMeetingsWithFilters: (filters: { title?:string, startTime?:Date, endTime?:Date, scheduledBy?:string, roleId?:string, drive?:string,gcp?:string }) => Promise<void>;
 }
 
 const ReportContext = createContext<ReportContextType>({
@@ -62,7 +62,7 @@ export const ReportProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchMeetings();
   }, []);
 
-  const fetchMeetingsWithFilters = async (filters: { code?: string }) => {
+  const fetchMeetingsWithFilters = async (filters: { title?:string, scheduledBy?:string, roleId?:string}) => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(

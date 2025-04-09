@@ -144,7 +144,7 @@ export const fetchMeetings = async (queryParams: any) => {
       if (gcp) {
         if (media.length === 0) return null;
         if (gcp === "transferred" && media.length !== storageLogs.length) return null;
-        if (gcp === "pending" && media.length === storageLogs.length) return null;
+        if (gcp === "pending" && media.length === storageLogs.length && storageLogs.length) return null;
         if (gcp === "failed" && storageLogs.length !== 0 ) return null;
       }
 

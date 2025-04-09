@@ -7,6 +7,7 @@ export const SuccessResponseMessages = {
     ACTION_SUCCESS: (action: string) => `${action} completed successfully`,
     TRANSFER : (resource: string) => `${resource} transferred successfully`,
     CONNECTED: (resource: string) => `${resource} connected successfully`,
+    ALREADY_EXISTS: (resource: string) => `${resource} already exists`,
     NOTIFIED: "Admin notified successfully",
 };
 

@@ -3,6 +3,7 @@ import { environment } from "../constants/environments.constants";
 import logger from "../utils/logger";
 import { SuccessResponseMessages } from "../constants/service-messages.constants";
 import { StatusCodes } from "../constants/status-codes.constants";
+import { seedConfig } from "./seedConfig";
 
 const functionName = {databaseConnect:"databaseConnect"}
 
@@ -27,7 +28,7 @@ const databaseConnect = async () => {
       message: SuccessResponseMessages.CONNECTED("database"),
       data: {},
     });
-    
+    await seedConfig();
     //create user / role  seed 
     // user -> email
     // role -> superadmin -> permissions -> user 

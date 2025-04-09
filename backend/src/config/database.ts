@@ -29,9 +29,7 @@ const databaseConnect = async () => {
       data: {},
     });
     await seedConfig();
-    //create user / role  seed 
-    // user -> email
-    // role -> superadmin -> permissions -> user 
+    
   } catch (error) {
     logger.error({
       functionName: functionName.databaseConnect,

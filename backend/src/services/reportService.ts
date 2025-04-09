@@ -20,14 +20,16 @@ const getMeetingExtras = async (meetingID: string) => {
 
 const isWithinDateRange = (
   meetingDetails: any,
-  startDate?: string,
-  endDate?: string
+  startTime?: string,
+  endTime?: string
 ) => {
-  const start = startDate ? new Date(startDate) : null;
-  const end = endDate ? new Date(endDate) : null;
+  // Parse the provided date strings into JavaScript Date objects.
+  // The input format is expected to be: "Tue Mar 25 2025 00:00:00 GMT+0530 (India Standard Time)"
+  const start = startTime ? new Date(startTime) : null;
+  const end = endTime ? new Date(endTime) : null;
 
-  if (start) start.setHours(0, 0, 0, 0);
-  if (end) end.setHours(23, 59, 59, 999);
+  if (start) start.setHours(0, 0, 0, 0); // Set start date to the beginning of the day
+  if (end) end.setHours(23, 59, 59, 999); // Set end date to the end of the day
 
   const meetingStart = new Date(meetingDetails?.startTime || 0);
   const meetingEnd = new Date(meetingDetails?.endTime || 0);
@@ -83,8 +85,8 @@ const sanitizeMeeting = (
 };
 
 export const fetchMeetings = async (queryParams: any) => {
-  const { title, scheduledBy, roleId, startDate, endDate, drive, gcp } = queryParams;
-  const hasFilters = title || scheduledBy || roleId || startDate || endDate || drive || gcp;
+  const { title, scheduledBy, roleId, startTime, endTime, drive, gcp } = queryParams;
+  const hasFilters = title || scheduledBy || roleId || startTime || endTime || drive || gcp;
 
   const query: Record<string, any> = {};
 
@@ -149,7 +151,7 @@ export const fetchMeetings = async (queryParams: any) => {
       }
 
       // Date range filter
-      if (!isWithinDateRange(meetingDetails, startDate, endDate)) return null;
+      if (!isWithinDateRange(meetingDetails, startTime, endTime)) return null;
 
       // Past meetings filter
       if (new Date(meetingDetails?.endTime || 0) >= new Date()) return null;

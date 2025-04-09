@@ -155,11 +155,15 @@ async function deleteUser(req: AuthenticatedRequest, res: Response) {
 
 async function getAllUsers(req: AuthenticatedRequest, res: Response) {
   try {
-    const users = await Collections.USER.find().populate(
-      "role",
-      "name permissions"
+    const users = await Collections.USER.find()
+      .populate("role", "name permissions")
+      .lean();
+
+    const filteredUsers = users.filter(
+      (user: any) => user.role.name !== "Seed Role"
     );
-    if (!users || users.length === 0) {
+
+    if (!filteredUsers || filteredUsers.length === 0) {
       logger.warn({
         functionName: functionName.getAllUsers,
         statusCode: StatusCodes.NOT_FOUND,
@@ -171,16 +175,18 @@ async function getAllUsers(req: AuthenticatedRequest, res: Response) {
         data: {},
       });
     }
+
     logger.info({
       functionName: functionName.getAllUsers,
       statusCode: StatusCodes.OK,
       message: "Users fetched successfully",
-      data: { userCount: users.length },
+      data: { userCount: filteredUsers.length },
     });
+
     res.status(StatusCodes.OK).json({
       success: true,
       message: SuccessResponseMessages.FETCHED("User"),
-      data: { users },
+      data: { users: filteredUsers },
     });
   } catch (err) {
     logger.error({

@@ -7,6 +7,7 @@ import {
 } from "../constants/service-messages.constants";
 import permissions from "./permission.json";
 import { ObjectId } from "mongoose";
+import { Seed } from "../constants/seeds.constants";
 
 const functionName = {
   seed: "seedConfig",
@@ -14,9 +15,9 @@ const functionName = {
   createUser: "createSeedUser",
 };
 
-const SEED_EMAIL = "suyash.bhagat@searce.com";
-const SEED_ROLE_NAME = "SuperAdmin";
-const NAU_ROLE_NAME = "NAU";
+const SEED_EMAIL = Seed.SEED_EMAIL;
+const SEED_ROLE_NAME = Seed.SEED_ROLE_NAME;
+const NAU_ROLE_NAME = Seed.NAU_ROLE_NAME;
 
 const upsertRole = async (name: string, perms: string[]) => {
   try {

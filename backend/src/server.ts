@@ -6,6 +6,8 @@ import router from  "./routes/index";
 import cookieParser from "cookie-parser";
 import "./utils/cronJob";
 import { environment } from "./constants/environments.constants";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./swagger/swaggerConfig";
 import logger from "./utils/logger"
 dotenv.config();
 
@@ -25,6 +27,11 @@ app.use(cookieParser());
 databaseConnect();
 
 app.use("/web", router);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.get("/web/swagger.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerDocs);
+});
 
 app.listen(PORT, () => {
   logger.info({functionName:"Server",statusCode:"200", message: `Server running on port ${PORT}`,data:{} });

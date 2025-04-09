@@ -62,7 +62,7 @@ export interface Meeting {
     startTime: Date;
     endTime: Date;
   };
-  media: any[];
+  googleDriveMedia: any[];
   storageLogs: any[];
   [key: string]: any; 
 }
@@ -242,7 +242,7 @@ export const columns: ColumnDef<Meeting>[] = [
     id: "driveStatus",
     header: "Drive Status",
     cell: ({ row }) => {
-      const mediaCount = row.original.media?.length ?? 0;
+      const mediaCount = row.original.googleDriveMedia?.length ?? 0;
       const hasMedia = mediaCount > 0;
       return (
         <TooltipProvider>
@@ -268,7 +268,7 @@ export const columns: ColumnDef<Meeting>[] = [
     id: "gcpStatus",
     header: "GCP Status",
     cell: ({ row }) => {
-      const mediaLogs = row.original.media?.length ?? 0;
+      const mediaLogs = row.original.googleDriveMedia?.length ?? 0;
       const gcpLogs = row.original.storageLogs?.length ?? 0;
       const pending = Math.max(mediaLogs - gcpLogs, 0);
   

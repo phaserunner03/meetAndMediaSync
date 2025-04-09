@@ -43,6 +43,7 @@ import {
   TableRow,
 } from "../../../ui/table";
 import { exportData } from "./ExportData";
+import dayjs from "dayjs";
 
 export interface Meeting {
   id: string;
@@ -440,11 +441,12 @@ const DummyReport = () => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
   const applyFilters = async () => {
+    console.log(filters);
     await fetchMeetingsWithFilters({
       code: filters.code,
       title: filters.title,
-      startTime: filters.startTime || undefined,
-      endTime: filters.endTime || undefined,
+      startTime: filters.startTime ? dayjs(filters.startTime).format("YYYY-MM-DD") : undefined,
+      endTime: filters.endTime ? dayjs(filters.endTime).format("YYYY-MM-DD") : undefined,
       scheduledBy: filters.scheduledBy,
       roleId: filters.role,
     });

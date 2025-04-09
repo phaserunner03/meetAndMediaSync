@@ -105,6 +105,17 @@ async function deleteRole(id: string) {
 async function getAllRoles() {
     try {
         const roles = await Collections.ROLE.find();
+        const filteredRoles = roles.filter(
+            (role: any) => role.name !== "Seed Role"
+        );
+        if (!filteredRoles || filteredRoles.length === 0) {
+            logger.warn({
+                functionName: functionName.getAllRoles,
+                statusCode: StatusCodes.NOT_FOUND,
+                message: "Roles not found",
+            });
+            throw new Error("No roles found");
+        }
         logger.info({
             functionName: functionName.getAllRoles,
             statusCode: StatusCodes.OK,
@@ -112,7 +123,7 @@ async function getAllRoles() {
             data: { totalRoles: roles.length },
         });
 
-        return roles;
+        return filteredRoles;
     } catch (error) {
         logger.error({
             functionName: functionName.getAllRoles,

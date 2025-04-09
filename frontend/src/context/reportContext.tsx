@@ -19,7 +19,7 @@ export interface Meeting {
     startTime: Date;
     endTime: Date;
   };
-  media: any[];
+  googleDriveMedia: any[];
   storageLogs: any[];
   [key: string]: any;
 }

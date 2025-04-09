@@ -27,6 +27,10 @@ const databaseConnect = async () => {
       message: SuccessResponseMessages.CONNECTED("database"),
       data: {},
     });
+    
+    //create user / role  seed 
+    // user -> email
+    // role -> superadmin -> permissions -> user 
   } catch (error) {
     logger.error({
       functionName: functionName.databaseConnect,

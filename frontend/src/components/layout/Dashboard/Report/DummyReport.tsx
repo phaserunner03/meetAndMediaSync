@@ -446,7 +446,7 @@ const DummyReport = () => {
       startTime: filters.startTime || undefined,
       endTime: filters.endTime || undefined,
       scheduledBy: filters.scheduledBy,
-      role: filters.role,
+      roleId: filters.role,
     });
   };
   const clearFilters = async () => {

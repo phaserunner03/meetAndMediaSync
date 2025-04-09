@@ -27,7 +27,7 @@ export interface Meeting {
 interface ReportContextType {
   meetings: Meeting[];
   loading: boolean;
-  fetchMeetingsWithFilters: (filters: { code?: string,title?:string, startTime?:Date, endTime?:Date, scheduledBy?:string, role?:string }) => Promise<void>;
+  fetchMeetingsWithFilters: (filters: { code?: string,title?:string, startTime?:Date, endTime?:Date, scheduledBy?:string, roleId?:string }) => Promise<void>;
 }
 
 const ReportContext = createContext<ReportContextType>({

@@ -48,7 +48,7 @@ import {
   TableRow,
 } from "../../../ui/table";
 import { exportData } from "./ExportData";
-import dayjs from "dayjs";
+
 
 export interface Meeting {
   id: string;
@@ -447,8 +447,8 @@ const DummyReport = () => {
     console.log(filters);
     await fetchMeetingsWithFilters({
       title: filters.title,
-      startTime: filters.startTime ? dayjs(filters.startTime).format("YYYY-MM-DD") : undefined,
-      endTime: filters.endTime ? dayjs(filters.endTime).format("YYYY-MM-DD") : undefined,
+      startTime: filters.startTime ? new Date(filters.startTime) : undefined,
+      endTime: filters.endTime ? new Date(filters.endTime) : undefined,
       scheduledBy: filters.scheduledBy,
       roleId: filters.role,
       drive: filters.driveStatus,

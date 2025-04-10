@@ -12,5 +12,6 @@
   "groupMeeting",
   "createMeeting",
   "editMeeting",
-  "deleteMeeting"
+  "deleteMeeting",
+  "viewReport"
 ]

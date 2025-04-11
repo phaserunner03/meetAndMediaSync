@@ -1,7 +1,8 @@
 import express from "express";
 import { generateReport } from "../controllers/reportController";
-import { authMiddleware } from "../middleware/authMiddleware";
+import { authMiddleware, restrictTo } from "../middleware/authMiddleware";
 import { AuthenticatedRequest } from "../constants/types.constants";
+import { Permissions } from "../constants/permissions.constants";
 
 const router = express.Router();
 
@@ -23,6 +24,6 @@ const router = express.Router();
  *         description: Report generated successfully
  */
 
-router.get("/report", authMiddleware, async (req, res, next) => generateReport(req as unknown as AuthenticatedRequest, res).catch(next));
+router.get("/report", authMiddleware, restrictTo(Permissions.VIEW_REPORT) ,async (req, res, next) => generateReport(req as unknown as AuthenticatedRequest, res).catch(next));
 
 export default router;

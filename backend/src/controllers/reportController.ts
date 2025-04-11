@@ -10,7 +10,7 @@ export const generateReport = async (req: AuthenticatedRequest, res: Response) =
   const functionName = "generateReport";
   logger.info({ functionName, message: "Function started" });
   try {
-    const reportData = await fetchMeetings(req.query);
+    const reportData = await fetchMeetings(req.query, req.user);
     logger.info({ 
         functionName, 
         statusCode: StatusCodes.OK, 

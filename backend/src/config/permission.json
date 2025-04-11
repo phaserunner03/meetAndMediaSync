@@ -13,6 +13,7 @@
     "createMeeting",
     "editMeeting",
     "deleteMeeting",
-    "viewReport"
+    "viewReport",
+    "viewAllReports"
   ]
   

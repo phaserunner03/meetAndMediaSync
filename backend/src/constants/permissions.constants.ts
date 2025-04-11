@@ -21,4 +21,5 @@ export enum Permissions {
 
     //REPORT PERMISSIONS
     VIEW_REPORT = "viewReport",
+    VIEW_ALL_REPORTS = "viewAllReports",
 }

@@ -68,7 +68,12 @@ async function handleToken(token: string, req: Request, res: Response) {
 
     return res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
   } catch (err) {
-    console.log("JWT expired or invalid. Trying refresh token...");
+    logger.warn({
+      functionName: functionName.handleToken,
+      statusCode: StatusCodes.UNAUTHORIZED,
+      message: "Invalid or expired token",
+      data: { error: (err as Error).message },
+    });
     await handleRefreshToken(req, res);
   }
 }

@@ -51,7 +51,7 @@ export const ReportProvider: React.FC<{ children: React.ReactNode }> = ({
           "/reports/v1/report"
         );
         setMeetings(res.data);
-        console.log(res.data)
+        
       } catch (error) {
         console.error("Failed to fetch meetings:", error);
       } finally {
@@ -71,7 +71,7 @@ export const ReportProvider: React.FC<{ children: React.ReactNode }> = ({
           params: filters,
         }
       );
-      console.log(response)
+      
       setMeetings(response.data || []);
     } catch (error) {
       console.error("Failed to fetch filtered meetings", error);

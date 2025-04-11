@@ -1,58 +1,82 @@
-import { useState } from "react";
-import { DatePicker } from "../../../ui/date-picker";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../../utils/axiosConfig";
 import { ArrowUpDown, MoreHorizontal, ChevronDown } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../ui/tooltip";
 import {
   Select,
   SelectItem,
   SelectTrigger,
-  SelectLabel,
   SelectValue,
   SelectContent,
-  SelectGroup,
 } from "../../../ui/select";
+import { DatePicker } from "../../../ui/date-picker";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import { Checkbox } from "../../../ui/checkbox";
-import { ColumnDef, Table } from "@tanstack/react-table";
+import { useReportContext } from "../../../../context/reportContext";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
-import { DataTable } from "../../../ui/DataTable";
+import {
+  Table,
+  TableHead,
+  TableCell,
+  TableHeader,
+  TableBody,
+  TableRow,
+} from "../../../ui/table";
 import { exportData } from "./ExportData";
-import { format } from "date-fns";
+import ReportModal from "./ReportModal";
 
-// Define the Meeting interface
-interface Meeting {
+export interface Meeting {
   id: string;
   title: string;
-  code: string;
-  role: string;
-  startDate: Date;
-  endDate: Date;
-  drive: string;
-  gcp: string;
-  participants: number;
+  description: string;
+  location: string;
+  meetLink: string;
+  scheduledBy: {
+    email: string;
+    role: Record<string, any>; // adjust as needed
+  };
+  meetingDetails: {
+    meetingDate: string;
+    meetingHistory: string;
+    meetingType: string;
+    participants: string[];
+    startTime: Date;
+    endTime: Date;
+  };
+  googleDriveMedia: any[];
+  storageLogs: any[];
+  [key: string]: any;
 }
 
-const dummyMeetings: Meeting[] = Array.from({ length: 20 }, (_, i) => ({
-  id: (i + 1).toString(),
-  title: `Meeting ${i + 1}`,
-  code: `CODE${i + 1}`,
-  role: i % 2 === 0 ? "Admin" : "Member",
-  startDate: new Date(),
-  endDate: new Date(),
-  drive: i % 3 === 0 ? "Uploaded" : "Pending",
-  gcp: i % 4 === 0 ? "Success" : "Failed",
-  participants: Math.floor(Math.random() * 20) + 1,
-}));
-
-export const columns: ColumnDef<Meeting>[] = [
+export const getColumns = (
+  setSelectedMeeting: (meeting: any) => void,
+  setModalOpen: (open: boolean) => void
+): ColumnDef<Meeting>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -78,84 +102,247 @@ export const columns: ColumnDef<Meeting>[] = [
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("title")}</div>
-    ),
-  },
-  {
-    accessorKey: "code",
-    header: "Meeting Code",
-    cell: ({ row }) => (
-      <div className="text-sm font-mono">{row.getValue("code")}</div>
-    ),
-  },
-  {
-    accessorKey: "role",
-    header: "User Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "startDate",
-    header: "Start Time",
-    cell: ({ row }) => (
-      <div>{format(new Date(row.getValue("startDate")), "PPpp")}</div>
-    ),
-  },
-  {
-    accessorKey: "endDate",
-    header: "End Time",
-    cell: ({ row }) => (
-      <div>{format(new Date(row.getValue("endDate")), "PPpp")}</div>
-    ),
-  },
-  {
-    accessorKey: "drive",
-    header: "Drive Upload",
     cell: ({ row }) => {
-      const status = row.getValue("drive") as string;
-      const color =
-        status === "Uploaded"
-          ? "bg-green-100 text-green-800"
-          : status === "Pending"
-          ? "bg-yellow-100 text-yellow-800"
-          : "bg-gray-100 text-gray-800";
+      const title = row.getValue("title") as string;
+      const displayTitle =
+        title.length > 10 ? `${title.slice(0, 10)}...` : title;
 
       return (
-        <span
-          className={`inline-block text-center w-20 px-3 py-1 text-xs font-medium rounded-full ${color}`}
-        >
-          {status}
-        </span>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span>{displayTitle}</span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{title}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       );
     },
   },
   {
-    accessorKey: "gcp",
+    accessorKey: "meetLink",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Meeting Code
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="px-4  text-gray-900">
+          {String(row.getValue("meetLink")).split(".com/")[1] || "-"}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "scheduledBy",
+    id: "scheduledBy",
+    header: "Scheduled By",
+    cell: ({ row }) => {
+      const userId = row.original.scheduledBy?.email;
+      return <div className="text-gray-900">{userId ?? "Anonymous"}</div>;
+    },
+  },
+  {
+    accessorKey: "scheduledBy.role.name",
+    id: "role",
+    header: "Role",
+    cell: ({ row }) => {
+      const roleName = row.original.scheduledBy?.role?.name || "-";
+      return <div className="capitalize text-gray-900">{roleName || "-"}</div>;
+    },
+  },
+  {
+    accessorKey: "startTime",
+    id: "startTime",
+    header: "Start Time",
+    cell: ({ row }) => {
+      const startTime = row.original.meetingDetails?.startTime;
+
+      if (!startTime) return <div className="text-gray-500">-</div>;
+
+      const date = new Date(startTime);
+      const onlyTime = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+      const fullDateTime = date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="capitalize  text-gray-900 cursor-pointer">
+                {onlyTime}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{fullDateTime}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+  },
+  {
+    accessorKey: "endTime",
+    id: "endTime",
+    header: "End Time",
+    cell: ({ row }) => {
+      const endTime = row.original.meetingDetails?.endTime;
+
+      if (!endTime) return <div className="text-gray-500">-</div>;
+
+      const date = new Date(endTime);
+      const onlyTime = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+      const fullDateTime = date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="capitalize  text-gray-900 cursor-pointer">
+                {onlyTime}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{fullDateTime}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+  },
+  {
+    id: "driveStatus",
+    header: "Drive Status",
+    cell: ({ row }) => {
+      const mediaCount = row.original.googleDriveMedia?.length ?? 0;
+      const hasMedia = mediaCount > 0;
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                className={`text-xs font-semibold px-2 py-1 rounded-full text-white w-fit ${
+                  hasMedia ? "bg-green-500" : "bg-yellow-500"
+                }`}
+              >
+                {hasMedia ? "Uploaded" : "No Media"}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                {mediaCount} image{mediaCount === 1 ? "" : "s"}
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+  },
+  {
+    id: "gcpStatus",
     header: "GCP Status",
     cell: ({ row }) => {
-      const status = row.getValue("gcp") as string;
+      const mediaLogs = row.original.googleDriveMedia?.length ?? 0;
+      const gcpLogs = row.original.storageLogs?.length ?? 0;
+      const pending = Math.max(mediaLogs - gcpLogs, 0);
+
+      const status =
+        mediaLogs === 0
+          ? "No need"
+          : gcpLogs === mediaLogs
+          ? "Transferred"
+          : gcpLogs === 0 
+          ? "Failed"
+          : "Pending";
+
       const color =
-        status === "Success"
-          ? "bg-green-100 text-green-800"
-          : status === "Pending"
-          ? "bg-yellow-100 text-yellow-800"
-          : "bg-red-100 text-red-800";
+        status === "Transferred"
+          ? "bg-green-500"
+          : status === "Failed"
+          ? "bg-red-500"
+          : status === "No need"
+          ? "bg-gray-500"
+          : "bg-yellow-500";
 
       return (
-        <span
-          className={`inline-block text-center w-20 px-3 py-1 text-xs font-medium rounded-full ${color}`}
-        >
-          {status}
-        </span>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                className={`text-xs font-semibold px-2 py-1 rounded-full text-white w-fit ${color}`}
+              >
+                {status}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="text-sm">
+              <p>Total: {mediaLogs}</p>
+              <p>Transferred: {gcpLogs}</p>
+              <p>Pending: {pending}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       );
     },
   },
+
   {
-    accessorKey: "participants",
+    id: "participants",
     header: "Participants",
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("participants")}</div>
-    ),
+    cell: ({ row }) => {
+      const participants = row.original.meetingDetails.participants || [];
+
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="text-xs  text-center font-semibold px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 cursor-pointer ">
+                {participants.length}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent
+              side="top"
+              className="max-w-xs max-h-52 overflow-y-auto"
+            >
+              <ul className="text-sm list-disc pl-4 pr-2">
+                {participants.map((name: string, index: number) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
   },
   {
     id: "actions",
@@ -173,12 +360,16 @@ export const columns: ColumnDef<Meeting>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(meeting.code)}
+              onClick={() => navigator.clipboard.writeText((row.getValue("meetLink")))}
             >
-              Copy Meeting Code
+              Copy Meeting Link
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {setSelectedMeeting(meeting); setModalOpen(true);}}
+            >
+              View Details
+            </DropdownMenuItem>
+
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -187,173 +378,217 @@ export const columns: ColumnDef<Meeting>[] = [
 ];
 
 const Report = () => {
-  const [filteredData, setFilteredData] = useState(dummyMeetings);
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
   const [exportFormat, setExportFormat] = useState("csv");
-  const [tableInstance, setTableInstance] = useState<any>(null);
-  const [columnVersion, setColumnVersion] = useState(0);
-
   const [filters, setFilters] = useState({
-    code: "",
+    title: "",
+    startTime: null,
+    endTime: null,
+    scheduledBy: "",
     role: "",
-    startDate: null,
-    endDate: null,
-    drive: "",
-    gcp: "",
+    driveStatus: "",
+    gcpStatus: "",
+  });
+  const [roles, setRoles] = useState<
+    {
+      _id: string;
+      name: string;
+    }[]
+  >([]);
+  const { meetings, fetchMeetingsWithFilters, loading } = useReportContext();
+  const [filteredData, setFilteredData] = useState<Meeting[]>([]);
+
+  useEffect(() => {
+    if (!loading) {
+      setFilteredData(meetings);
+    }
+  }, [meetings, loading]);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const res = await axiosInstance.get("roles/v1/allRoles");
+        setRoles(res.data.data.roles);
+        
+      } catch (error) {
+        console.error("Failed to fetch roles", error);
+      }
+    };
+
+    fetchRoles();
+  }, []);
+
+  const [pageSize, setPageSize] = useState(10);
+  const [selectedMeeting, setSelectedMeeting] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const columns = getColumns(setSelectedMeeting, setModalOpen)
+
+  const table = useReactTable({
+    data: filteredData,
+    columns: columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
   });
 
   const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
-  const renderColumnDropdown = () => {
-    if (!tableInstance) return null;
-    const handleToggleVisibility = (column: any, value: boolean) => {
-      column.toggleVisibility(value);
-      setColumnVersion((v) => v + 1); 
-    };
-    return (
-      <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          Columns <ChevronDown className="ml-2 h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        {tableInstance
-          .getAllLeafColumns()
-          .filter((column: any) => column.getCanHide())
-          .map((column: any) => (
-            <DropdownMenuCheckboxItem
-              key={column.id}
-              checked={column.getIsVisible()}
-              onCheckedChange={() => handleToggleVisibility(column,true)}
-              className="capitalize"
-            >
-              {column.columnDef.header?.toString() || column.id}
-            </DropdownMenuCheckboxItem>
-          ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-    );
-  };
-
-  const applyFilters = () => {
-    let filtered = dummyMeetings.filter((meeting) => {
-      return (
-        (filters.code ? meeting.code.includes(filters.code) : true) &&
-        (filters.role ? meeting.role.includes(filters.role) : true) &&
-        (filters.startDate
-          ? new Date(meeting.startDate) >= new Date(filters.startDate)
-          : true) &&
-        (filters.endDate
-          ? new Date(meeting.endDate) <= new Date(filters.endDate)
-          : true) &&
-        (filters.drive ? meeting.drive === filters.drive : true) &&
-        (filters.gcp ? meeting.gcp === filters.gcp : true)
-      );
+  const applyFilters = async () => {
+    
+    await fetchMeetingsWithFilters({
+      title: filters.title,
+      startTime: filters.startTime ? new Date(filters.startTime) : undefined,
+      endTime: filters.endTime ? new Date(filters.endTime) : undefined,
+      scheduledBy: filters.scheduledBy,
+      roleId: filters.role,
+      drive: filters.driveStatus,
+      gcp: filters.gcpStatus,
     });
-    setFilteredData(filtered);
+  };
+  const clearFilters = async () => {
+    setFilters({
+      title: "",
+      startTime: null,
+      endTime: null,
+      scheduledBy: "",
+      role: "",
+      driveStatus: "",
+      gcpStatus: "",
+    });
+    await fetchMeetingsWithFilters({});
   };
 
   return (
     <div className="p-6 sm:ml-64 min-h-screen">
       <h1 className="text-2xl font-bold"> Reports</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-muted rounded-lg">
-        {/* Meeting Code */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-muted rounded-lg mt-4">
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">
-            Meeting Code
-          </label>
+          <label className="text-sm text-gray-700">Title</label>
           <Input
-            value={filters.code}
-            onChange={(e) => handleFilterChange("code", e.target.value)}
+            value={filters.title}
+            placeholder="Search by title"
+            onChange={(e) => handleFilterChange("title", e.target.value)}
+            className="w-full bg-white"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm  text-gray-700">Start Time</label>
+          <DatePicker
+            value={filters.startTime}
+            onChange={(date: any) => handleFilterChange("startTime", date)}
+          />
+        </div>
+
+        {/* End Time */}
+        <div className="flex flex-col">
+          <label className="text-sm  text-gray-700">End Time</label>
+
+          <DatePicker
+            value={filters.endTime}
+            onChange={(date: any) => handleFilterChange("endTime", date)}
+          />
+        </div>
+
+        {/* Scheduled By */}
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-700">Scheduled By</label>
+          <Input
+            value={filters.scheduledBy}
+            placeholder="Search by email"
+            onChange={(e) => handleFilterChange("scheduledBy", e.target.value)}
             className="w-full bg-white"
           />
         </div>
 
-        {/* User Role */}
+        {/* Role Dropdown */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">User Role</label>
-          <Input
+          <label className="text-sm  text-gray-700">Role</label>
+          <Select
             value={filters.role}
-            onChange={(e) => handleFilterChange("role", e.target.value)}
-            className="w-full bg-white"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label className="block text-sm font-medium text-gray-700">
-            Start Date
-          </label>
-          <DatePicker
-            value={filters.startDate}
-            onChange={(date: any) => handleFilterChange("startDate", date)}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="block text-sm font-medium text-gray-700">
-            End Date
-          </label>
-          <DatePicker
-            value={filters.endDate}
-            onChange={(date: any) => handleFilterChange("endDate", date)}
-          />
-        </div>
-
-        {/* Drive Status */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">
-            Drive Status
-          </label>
-          <Select
-            value={filters.drive}
-            onValueChange={(value) => handleFilterChange("drive", value)}
+            onValueChange={(value) => handleFilterChange("role", value)}
           >
             <SelectTrigger className="w-full bg-white">
-              <SelectValue placeholder="Select Status" />
+              <SelectValue placeholder="Select Role" />
             </SelectTrigger>
             <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Drive Status</SelectLabel>
-                <SelectItem value="Uploaded">Uploaded</SelectItem>
-                <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Failed">Failed</SelectItem>
-              </SelectGroup>
+              {roles.map((role) => (
+                <SelectItem key={role.name} value={role._id}>
+                  {role.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-700">Drive Status</label>
+          <Select
+            value={filters.driveStatus}
+            onValueChange={(value) => handleFilterChange("driveStatus", value)}
+          >
+            <SelectTrigger className="w-[200px] w-full bg-white">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="no media">No Media</SelectItem>
+              <SelectItem value="uploaded">Uploaded</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-700">GCP Status</label>
+          <Select
+            value={filters.gcpStatus}
+            onValueChange={(value) => handleFilterChange("gcpStatus", value)}
+          >
+            <SelectTrigger className="w-[200px] w-full bg-white">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="transferred">Transferred</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="failed">Failed</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        {/* GCP Status */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">
-            GCP Status
-          </label>
-          <Select
-            value={filters.gcp}
-            onValueChange={(value) => handleFilterChange("gcp", value)}
-          >
-            <SelectTrigger className="w-full bg-white">
-              <SelectValue placeholder="Select Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>GCP Status</SelectLabel>
-                <SelectItem value="Uploaded">Uploaded</SelectItem>
-                <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Failed">Failed</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Apply Filters Button */}
-        <div className="col-span-full ">
+        <div className="col-span-full flex flex-wrap gap-4">
           <Button className="w-full md:w-auto px-6" onClick={applyFilters}>
             Apply Filters
           </Button>
+          <Button
+            variant="outline"
+            className="w-full md:w-auto px-6"
+            onClick={clearFilters}
+          >
+            Clear Filters
+          </Button>
         </div>
       </div>
-      <div className="flex flex-wrap justify-between items-center gap-3 pt-4">
+      <div className="flex items-center py-4">
         <div className="flex items-center gap-2">
           <Select value={exportFormat} onValueChange={setExportFormat}>
             <SelectTrigger className="w-[150px]">
@@ -370,17 +605,132 @@ const Report = () => {
             Export
           </Button>
         </div>
-
-        {renderColumnDropdown()}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <div className="pt-6 ">
-        <DataTable
-          columns={columns}
-          data={filteredData}
-          onTableReady={setTableInstance}
-        />
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="flex items-center space-x-2">
+          <label className="text-sm">Rows per page:</label>
+          <Select
+            value={String(pageSize)}
+            onValueChange={(value) => {
+              const newSize = Number(value);
+              setPageSize(newSize);
+              table.setPageSize(newSize);
+            }}
+          >
+            <SelectTrigger className="w-[100px]">
+              <SelectValue placeholder="Rows per page" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
+        <ReportModal 
+  isOpen={modalOpen}
+  onClose={() => setModalOpen(false)}
+  meeting={selectedMeeting}
+/>
       </div>
     </div>
   );
 };
+
 export default Report;

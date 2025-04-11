@@ -11,7 +11,7 @@ import Drive from "../components/layout/Dashboard/Drive/Drive";
 import Create from "../components/layout/Dashboard/Create/Create";
 import Meetings from "../components/layout/Dashboard/Meeting/Meetings";
 import AddUsers from "../components/layout/Dashboard/Roles/AddUsers";
-import DummyReport from "../components/layout/Dashboard/Report/DummyReport";
+import Report from "../components/layout/Dashboard/Report/Report";
 import AddNewRole from "../components/layout/Dashboard/Roles/AddNewRole";
 import { ROUTES } from "../constants";
 
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
       { path: ROUTES.MEETINGS, element: <Meetings /> },
       { path: ROUTES.CREATE_MEETING, element: <Create /> },
       { path: ROUTES.DRIVE, element: <Drive /> },
-      { path: ROUTES.REPORT, element: <DummyReport /> },
+      { path: ROUTES.REPORT, element: <Report /> },
       { path: ROUTES.ADD_USERS, element: <AddUsers /> },
       { path: ROUTES.ADD_ROLE, element: <AddNewRole /> },  // Fixed casing
     ],

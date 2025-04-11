@@ -33,7 +33,7 @@ export function exportCSV(data: any[], fileName = "meeting_report") {
 }
 
 export function exportPDF(data: any[], fileName = "meeting_report") {
-  console.log(data)
+  
   const doc = new jsPDF({ orientation: "landscape" });
   doc.text("Meeting Report", 14, 10);
   

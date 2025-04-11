@@ -8,6 +8,25 @@ const SchemaErrorMessages = {
   EMAIL_VERIFICATION_FAILED: "Email verification failed",
 };
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateUserRequest:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email of the user
+ *         role:
+ *           type: string
+ *           description: Role ID for the user
+ *       required:
+ *         - email
+ *         - role
+ */
+
 export const createUserRequest = yup.object().shape({
   email: yup
     .string()
@@ -29,20 +48,8 @@ export const createUserRequest = yup.object().shape({
 export const updateUserRequest = yup
   .object()
   .shape({
-    email: yup
-      .string()
-      .email(SchemaErrorMessages.INVALID_EMAIL)
-      .required(SchemaErrorMessages.IS_REQUIRED)
-      .test(
-        "is-verified-email",
-        SchemaErrorMessages.EMAIL_VERIFICATION_FAILED,
-        async (value) => {
-          if (!value) return false;
-          const isVerified = await verifyEmail(value);
-          return isVerified;
-        }
-      ),
-    role: yup.string().required(SchemaErrorMessages.IS_REQUIRED),
+    userId: yup.string().required(SchemaErrorMessages.IS_REQUIRED),
+    newRole: yup.string().required(SchemaErrorMessages.IS_REQUIRED),
   })
   .noUnknown(true, SchemaErrorMessages.NO_EXTRA_FIELDS);
 

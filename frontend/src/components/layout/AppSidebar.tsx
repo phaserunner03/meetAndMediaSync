@@ -10,7 +10,8 @@ import {
   CalendarPlus2,
   User,
   BadgeInfo,
-  X
+  X,
+  NotebookTabs
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
 import { ERROR_MESSAGES, ROUTES } from "../../constants";
@@ -33,6 +34,9 @@ const Sidebar = () => {
       { title: "Drive", url: `${dashboardPrefix}/${ROUTES.DRIVE}`, icon: HardDriveUpload },
     ];
 
+    if(currentUser?.role.permissions?.includes(Permissions.VIEW_REPORT) || currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_REPORTS)) {
+      baseMenu.push({ title: "Report", url: `${dashboardPrefix}/${ROUTES.REPORT}`, icon: NotebookTabs });
+      }
     if (currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_USERS)) {
       baseMenu.push({ title: "Users", url: `${dashboardPrefix}/${ROUTES.ADD_USERS}`, icon: User });
     }

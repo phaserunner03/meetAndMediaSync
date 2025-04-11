@@ -2,9 +2,7 @@ import { Request, Response } from "express";
 import * as driveService from "../services/driveServices";
 import { StatusCodes } from "../constants/status-codes.constants";
 import { ErrorResponseMessages, SuccessResponseMessages } from "../constants/service-messages.constants";
-// import { AuthenticatedRequest } from "../constants/types.constants";
 import logger from "../utils/logger";
-
 
 
 interface AuthenticatedRequest extends Request {
@@ -180,13 +178,13 @@ const deleteFile = async (req: AuthenticatedRequest, res: Response) => {
 
 const mediaLog = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const { meetingID, type, fileUrl, storedIn, movedToGCP, timestamp } = req.body;
+        const { meetingID, type, fileUrl, fileName, storedIn, movedToGCP, timestamp } = req.body;
 
         if (!meetingID || !fileUrl || !timestamp) {
             return res.status(400).json({ success: false, message: "Missing required fields." });
         }
 
-        const media = await driveService.mediaLog(meetingID, type, fileUrl, storedIn, movedToGCP, timestamp);
+        const media = await driveService.mediaLog(meetingID, type, fileUrl, fileName, storedIn, movedToGCP, timestamp);
 
         return res.status(201).json({
             success: true,

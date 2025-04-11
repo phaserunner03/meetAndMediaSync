@@ -10,5 +10,6 @@ export const ROUTES = {
   DRIVE: "drive",
   ADD_USERS: "add-users",
   ADD_ROLE: "add-role",
+  REPORT:"report",
   NOT_FOUND: "*",
 };

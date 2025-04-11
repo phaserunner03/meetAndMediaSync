@@ -14,7 +14,6 @@ import {
   SuccessResponseMessages,
 } from "../constants/service-messages.constants";
 import logger from "../utils/logger";
-import { AuthenticatedRequest } from "../constants/types.constants";
 
 const functionName = {
   redirectToGoogle: "redirectToGoogle",
@@ -25,14 +24,6 @@ const functionName = {
   logoutUser: "logoutUser",
   refreshJwtToken: "refreshJwtToken",
 };
-
-// export interface AuthenticatedRequest extends Request {
-//   user: {
-//     googleId: string;
-//     email: string;
-//     refreshToken: string;
-//   };
-// }
 
 async function redirectToGoogle(req: Request, res: Response) {
   try {
@@ -77,7 +68,12 @@ async function handleToken(token: string, req: Request, res: Response) {
 
     return res.redirect(`${environment.FRONTEND_URL}/dashboard/home`);
   } catch (err) {
-    console.log("JWT expired or invalid. Trying refresh token...");
+    logger.warn({
+      functionName: functionName.handleToken,
+      statusCode: StatusCodes.UNAUTHORIZED,
+      message: "Invalid or expired token",
+      data: { error: (err as Error).message },
+    });
     await handleRefreshToken(req, res);
   }
 }

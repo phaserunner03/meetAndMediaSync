@@ -18,4 +18,8 @@ export enum Permissions {
     CREATE_MEETING = "createMeeting",
     EDIT_MEETING = "editMeeting",
     DELETE_MEETING = "deleteMeeting",
+
+    //REPORT PERMISSIONS
+    VIEW_REPORT = "viewReport",
+    VIEW_ALL_REPORTS = "viewAllReports",
 }

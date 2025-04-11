@@ -191,6 +191,7 @@ function notifyBackend(fileUrl, fileName, sendResponse) {
         meetingID: activeMeetId,
         type: "screenshot",
         fileUrl: fileUrl,
+        fileName: fileName,
         storedIn: "Google Drive",
         movedToGCP: false,
         timestamp: new Date().toISOString()

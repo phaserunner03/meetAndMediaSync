@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies (including TypeScript)
-RUN npm install
+RUN npm install --force
 
 # Copy the entire project to the container
 COPY . .

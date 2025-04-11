@@ -21,10 +21,6 @@ async function transferScreenshotsToGCP(refresh_token: string, organizerEmail: s
 
 async function processFolder(folder: any, twoHoursAgo: moment.Moment, refresh_token: string, organizerEmail: string) {
     const meetingId = folder.name;
-    
-    const meetingCreatedTime = moment(folder.createdTime);
-
-    if (meetingCreatedTime.isBefore(twoHoursAgo)) return; // Skip old meetings
 
     if (!folder.id) {
         console.warn(`Folder ${folder.name} does not have an id, skipping.`);
@@ -35,7 +31,10 @@ async function processFolder(folder: any, twoHoursAgo: moment.Moment, refresh_to
     const gcpPath = `${datePath}/${organizerEmail}/${meetingId}/`;
 
     for (const file of files) {
-        await processFile(file, refresh_token, gcpPath);
+        const fileModifiedTime = moment(file.modifiedTime);
+        if (fileModifiedTime.isAfter(twoHoursAgo)) {
+            await processFile(file, refresh_token, gcpPath);
+        }
     }
 }
 

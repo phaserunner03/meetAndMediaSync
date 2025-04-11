@@ -1,28 +1,33 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import axiosInstance from "../../utils/axiosConfig";
+import { API_URL } from "../../constants/constants";
+
+
 
 const OAuthButton: React.FC = () => {
+  
   const handleGoogleSignUp = async () => {
     try {
+      
       const response = await axiosInstance.get('/api/auth/check-refresh');
 
       if (response.status === 200) {
         const data = response.data;
         if (data.valid) {
-          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+          window.location.href = `${API_URL}/dashboard`;
         } else if (data.token) {
-          // If a new token is returned, save it in cookies and redirect
+          
           document.cookie = `refreshToken=${data.token}; path=/; HttpOnly`;
-          window.location.href = `${import.meta.env.VITE_API_URL}/dashboard`;
+          window.location.href = `${API_URL}/dashboard`;
         } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+          window.location.href = `${API_URL}/api/auth/google`;
         }
       } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+        window.location.href = `${API_URL}/api/auth/google`;
       }
     } catch (error) {
-      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+      window.location.href = `${API_URL}/api/auth/google`;
     }
   };
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getAllFolders, getFilesInFolder } from "../../../utils/driveApi";
+import { getAllFolders, getFilesInFolder } from "../../../../utils/driveApi";
 import { toast } from "sonner";
 import { Folder, FileText, Trash2, ArrowLeft, Eye, Loader2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Button } from "../../ui/button";
-import { ScrollArea } from "../../ui/scroll-area";
-import axiosInstance from "../../../utils/axiosConfig";
-import { useDrive } from "../../../context/driveContext"
-import Loader from "../../common/Loader";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
+import { Button } from "../../../ui/button";
+import { ScrollArea } from "../../../ui/scroll-area";
+import axiosInstance from "../../../../utils/axiosConfig";
+import { useDrive } from "../../../../context/driveContext"
+import Loader from "../../../common/Loader";
 
 const Drive = () => {
     const { folders, selectedFolder, files, setFolders, setSelectedFolder, setFiles } = useDrive();
@@ -70,6 +70,24 @@ const Drive = () => {
         }
     };
 
+    const handleTransferToGCP = async () => {
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post('/api/transfer/gcp');
+            if (response.status === 200) {
+                toast.success("Folder transferred to GCP successfully!");
+            } else {
+                toast.error("Failed to transfer folder to GCP!");
+            }
+        } catch (error) {
+            toast.error("Error transferring folder to GCP!");
+            console.error("Error transferring folder to GCP:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     return (
         <div className="p-6 sm:ml-64 min-h-screen">
             <div className="max-w-5xl mx-auto">
@@ -78,6 +96,16 @@ const Drive = () => {
                 {loading && (
                     <Loader/>
                 )}
+
+
+                <Button
+                    variant="outline"
+                    onClick={handleTransferToGCP}
+                    className="mb-4 flex items-center gap-2"
+                >
+                    Transfer to GCP
+                </Button>
+
 
                 {!selectedFolder ? (
                     <ScrollArea className="h-[500px]">

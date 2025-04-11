@@ -55,8 +55,8 @@ async function handleRefreshToken(req: Request, res: Response) {
 
             res.cookie("token", newToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
             return res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
@@ -90,8 +90,8 @@ async function handleGoogleCallback(req: Request, res: Response) {
         if (result.token) {
             res.cookie("token", result.token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
         }
@@ -99,21 +99,21 @@ async function handleGoogleCallback(req: Request, res: Response) {
         if (result.refresh_token) {
             res.cookie("refreshToken", result.refresh_token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                secure: process.env.NODE_ENV === "production", // Change for localhost testing
+                sameSite: "none", // Cross-origin requests need "lax" or "none"
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             });
         }
 
-        res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+        res.redirect(`${process.env.FRONTEND_URL}/dashboard/home`);
     } catch (err) {
         res.status(401).json({ success: false, message: (err as Error).message, data: {} });
     }
 }
 
 async function logoutUser(req: Request, res: Response) {
-    res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
-    res.clearCookie("refreshToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"});
+    res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none"});
+    res.clearCookie("refreshToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none"});
     res.json({ success: true, message: "Logged out successfully", data: {} });
 }
 
@@ -135,8 +135,8 @@ async function refreshJwtToken(req: Request, res: Response) {
 
         res.cookie("token", newToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+            secure: process.env.NODE_ENV === "production", // Change for localhost testing
+            sameSite: "none", // Cross-origin requests need "lax" or "none"
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 

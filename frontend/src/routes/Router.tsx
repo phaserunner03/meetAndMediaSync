@@ -6,12 +6,12 @@ import Signup from "../components/auth/Signup";
 import Unauthorized from "../page/error/Unauthorized";
 import NotFound from "../page/error/Unauthorized";
 import Dashboard from "../page/Dashboard";
-import DashboardHome from "../components/layout/Dashboard/DashboardHome";
-import Drive from "../components/layout/Dashboard/Drive";
-import Create from "../components/layout/Dashboard/Create";
-import Meetings from "../components/layout/Dashboard/Meetings";
-import AddUsers from "../components/layout/Dashboard/AddUsers";
-import AddNewRole from "../components/layout/Dashboard/AddNewRole";
+import DashboardHome from "../components/layout/Dashboard/Home/DashboardHome";
+import Drive from "../components/layout/Dashboard/Drive/Drive";
+import Create from "../components/layout/Dashboard/Create/Create";
+import Meetings from "../components/layout/Dashboard/Meeting/Meetings";
+import AddUsers from "../components/layout/Dashboard/Roles/AddUsers";
+import AddNewRole from "../components/layout/Dashboard/Roles/AddNewRole";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },

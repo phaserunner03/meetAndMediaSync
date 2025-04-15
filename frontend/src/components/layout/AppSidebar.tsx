@@ -33,8 +33,8 @@ const Sidebar = () => {
       { title: "Create", url: `${dashboardPrefix}/${ROUTES.CREATE_MEETING}`, icon: CalendarPlus2 },
       { title: "Drive", url: `${dashboardPrefix}/${ROUTES.DRIVE}`, icon: HardDriveUpload },
     ];
-    
-    if(currentUser?.role.permissions?.includes(Permissions.VIEW_REPORT)) {
+
+    if(currentUser?.role.permissions?.includes(Permissions.VIEW_REPORT) || currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_REPORTS)) {
       baseMenu.push({ title: "Report", url: `${dashboardPrefix}/${ROUTES.REPORT}`, icon: NotebookTabs });
       }
     if (currentUser?.role.permissions?.includes(Permissions.VIEW_ALL_USERS)) {

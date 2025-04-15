@@ -1,4 +1,5 @@
 import { Collections } from "../constants/collections.constants";
+import { Permissions } from "../constants/permissions.constants";
 
 const populateMeetingUser = [
   {
@@ -84,7 +85,7 @@ const sanitizeMeeting = (
   };
 };
 
-export const fetchMeetings = async (queryParams: any) => {
+export const fetchMeetings = async (queryParams: any, user: any) => {
   const { title, scheduledBy, roleId, startTime, endTime, drive, gcp } = queryParams;
   const hasFilters = title || scheduledBy || roleId || startTime || endTime || drive || gcp;
 
@@ -94,14 +95,10 @@ export const fetchMeetings = async (queryParams: any) => {
     query["title"] = { $regex: title, $options: "i" };
   }
 
-  // Ensure query fetches all past meetings when no filters are applied
-//   if (!hasFilters) {
-//     query["meetingDetails.endTime"] = { $lt: new Date() }; // Only past meetings
-//   }
-
-  let meetings = await Collections.MEETINGS.find(hasFilters ? query : {})
+  let meetings = await Collections.MEETINGS.find(query)
     .populate(populateMeetingUser)
     .lean();
+
   // Apply scheduledBy filter after populating
   if (scheduledBy) {
     meetings = meetings.filter((meeting) => {
@@ -110,19 +107,25 @@ export const fetchMeetings = async (queryParams: any) => {
     });
   }
 
-  console.log("meetings", meetings, "query", query);
+  meetings = meetings.filter((meeting) => {
+    if (user.role.permissions.includes(Permissions.VIEW_ALL_REPORTS)) {
+      return true; 
+    }
+    const scheduledByUser = meeting.scheduledBy as { email?: string };
+    return scheduledByUser?.email === user.email; // Restrict to meetings scheduled by the user
+  });
+
 
   const processedMeetings = await Promise.all(
     meetings.map(async (meeting) => {
       const { meetingDetails, media, storageLogs } = await getMeetingExtras(meeting?._id as string);
 
-      const googleDriveMedia = media
-        .map(({ _id, type, fileUrl, timestamp }) => ({
-          id: _id,
-          type,
-          fileUrl,
-          timestamp,
-        }));
+      const googleDriveMedia = media.map(({ _id, type, fileUrl, timestamp }) => ({
+        id: _id,
+        type,
+        fileUrl,
+        timestamp,
+      }));
 
       const gcpMedia = media
         .filter((item) => item.movedToGCP)
@@ -147,7 +150,7 @@ export const fetchMeetings = async (queryParams: any) => {
         if (media.length === 0) return null;
         if (gcp === "transferred" && media.length !== storageLogs.length) return null;
         if (gcp === "pending" && media.length === storageLogs.length && storageLogs.length) return null;
-        if (gcp === "failed" && storageLogs.length !== 0 ) return null;
+        if (gcp === "failed" && storageLogs.length !== 0) return null;
       }
 
       // Date range filter

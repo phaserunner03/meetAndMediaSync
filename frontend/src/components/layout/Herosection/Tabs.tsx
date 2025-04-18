@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Video, Camera, Users } from "lucide-react";
+import { GlowingEffect } from "../../ui/glowing-effect";
 
 const Tabs = () => {
   return (
@@ -13,7 +14,8 @@ const Tabs = () => {
 
       <div className="mt-8 grid grid-cols-1 gap-8 text-center md:text-start md:grid-cols-2 lg:grid-cols-3 md:px-24">
         
-        <div className="flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+        <div className="relative flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
           <Video className="h-8 w-8 text-blue-500" />
           <h2 className="mt-4 text-xl font-bold text-black">Create Meeting</h2>
           <p className="mt-1 text-sm text-gray-600 md:text-justify">
@@ -22,8 +24,8 @@ const Tabs = () => {
           </p>
         </div>
 
-        
-        <div className="flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+        <div className="relative flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
           <Camera className="h-8 w-8 text-green-500" />
           <h2 className="mt-4 text-xl font-bold text-black">
             Capture & Store Screenshots
@@ -34,8 +36,8 @@ const Tabs = () => {
           </p>
         </div>
 
-        
-        <div className="flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+        <div className="relative flex flex-col cursor-pointer p-8 border border-gray-100 rounded-3xl bg-white shadow-xl max-md:shadow-md shadow-gray-600/10 hover:shadow-gray-600/15 transition-shadow duration-300 items-center md:items-start justify-center md:justify-start">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
           <Users className="h-8 w-8 text-purple-500" />
           <h2 className="mt-4 text-xl font-bold text-black">
             Role-Based Access
@@ -47,7 +49,6 @@ const Tabs = () => {
         </div>
       </div>
 
-      
       <div className="mt-20 text-center">
         <Link
           to="/dashboard"

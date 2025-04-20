@@ -216,7 +216,8 @@ async function getBelowUsers(req: AuthenticatedRequest, res: Response) {
 async function editUserRole(req: AuthenticatedRequest, res: Response) {
   try {
     const { userId, newRole } = req.body;
-    const user = await userService.editUserRole(userId, newRole,req.user.role._id);
+    const editorRoleId = req.user.role._id; // Assume roleId is part of the authenticated user object
+    const user = await userService.editUserRole(userId, newRole,editorRoleId);
     if (!user) {
       logger.warn({
         functionName: functionName.editUserRole,

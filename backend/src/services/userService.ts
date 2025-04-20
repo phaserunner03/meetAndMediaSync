@@ -12,6 +12,7 @@ import {
 import { RoleDocument } from "../constants/types.constants";
 import logger from "../utils/logger";
 import { StatusCodes } from "../constants/status-codes.constants";
+import permissionsConfig from "../config/permission.json";
 
 const functionName = {
   notifyAdminToAddUser: "notifyAdminToAddUser",
@@ -101,7 +102,25 @@ async function sendWelcomeEmail(user: { email: string }) {
   }
 }
 
-async function addUser(email: string, role: string) {
+async function canAssignRole(userRoleId: string, targetRoleId: string): Promise<boolean> {
+  const userRole = await Collections.ROLE.findById(userRoleId);
+  const targetRole = await Collections.ROLE.findById(targetRoleId);
+
+  if (!userRole || !targetRole) {
+    throw new Error("Invalid role(s) provided.");
+  }
+
+  const userPermissions = userRole.permissions;
+  const targetPermissions = targetRole.permissions;
+
+  return canAssignPermissions(userPermissions, targetPermissions);
+}
+
+
+async function addUser(email: string, role: string, userRoleId: string) {
+  if (!(await canAssignRole(userRoleId, role))) {
+    throw new Error("You cannot assign a role higher than your own.");
+  }
   try {
     const roleDoc = await Collections.ROLE.findById(role);
     if (!roleDoc) {
@@ -244,6 +263,20 @@ async function editUserRole(
   }
 }
 
+function getPermissionLevel(permission: string): number {
+  for (const level of permissionsConfig.levels) {
+    if (level.permissions.includes(permission)) {
+      return level.level;
+    }
+  }
+  return -1; // Invalid permission
+}
+
+function canAssignPermissions(userPermissions: string[], targetPermissions: string[]): boolean {
+  const userMaxLevel = Math.max(...userPermissions.map(getPermissionLevel));
+  return targetPermissions.every((perm) => getPermissionLevel(perm) <= userMaxLevel);
+}
+
 export {
   notifyAdminToAddUser,
   sendWelcomeEmail,
@@ -252,3 +285,5 @@ export {
   deleteUser,
   editUserRole,
 };
+
+

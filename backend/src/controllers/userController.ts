@@ -20,6 +20,11 @@ const functionName = {
 export interface AuthenticatedRequest extends Request {
   user: {
     googleId: string;
+    role: {
+      _id: string;
+      name: string;
+      permissions: string[];
+    };
   };
 }
 
@@ -70,7 +75,9 @@ async function getUser(req: AuthenticatedRequest, res: Response) {
 async function addUser(req: AuthenticatedRequest, res: Response) {
   try {
     const { email, role } = req.body;
-    const user = await userService.addUser(email, role);
+    const userRoleId = req.user.role._id; // Assume roleId is part of the authenticated user object
+
+    const user = await userService.addUser(email, role, userRoleId);
     if (!user) {
       logger.warn({
         functionName: functionName.addUser,

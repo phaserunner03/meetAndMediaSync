@@ -210,10 +210,13 @@ async function getAllUsers(req: AuthenticatedRequest, res: Response) {
   }
 }
 
+async function getBelowUsers(req: AuthenticatedRequest, res: Response) {
+}
+
 async function editUserRole(req: AuthenticatedRequest, res: Response) {
   try {
     const { userId, newRole } = req.body;
-    const user = await userService.editUserRole(userId, newRole);
+    const user = await userService.editUserRole(userId, newRole,req.user.role._id);
     if (!user) {
       logger.warn({
         functionName: functionName.editUserRole,

@@ -52,15 +52,10 @@ const editMeetingSchema = z.object({
 const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const { editMeeting, deleteMeeting } = useMeetings();
   const [editMeetingData, setEditMeetingData] = useState<Meeting | null>(null);
-  const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(editMeetingSchema),
   });
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
 
   const getMeetingStatusColor = (meeting: any) => {
     const now = new Date();
@@ -235,8 +230,6 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
             </Dialog>
           )}
         </motion.div>
-
-    
     </div>
   );
 };

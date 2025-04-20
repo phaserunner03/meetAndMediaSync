@@ -11,24 +11,27 @@ import Drive from "../components/layout/Dashboard/Drive/Drive";
 import Create from "../components/layout/Dashboard/Create/Create";
 import Meetings from "../components/layout/Dashboard/Meeting/Meetings";
 import AddUsers from "../components/layout/Dashboard/Roles/AddUsers";
+import Report from "../components/layout/Dashboard/Report/Report";
 import AddNewRole from "../components/layout/Dashboard/Roles/AddNewRole";
+import { ROUTES } from "../constants";
 
 export const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <Signup /> },
-  { path: "/unauthorized", element: <Unauthorized /> },
+  { path: ROUTES.HOME, element: <Home /> },
+  { path: ROUTES.LOGIN, element: <Login /> },
+  { path: ROUTES.SIGNUP, element: <Signup /> },
+  { path: ROUTES.UNAUTHORIZED, element: <Unauthorized /> },
   {
-    path: "/dashboard",
+    path: ROUTES.DASHBOARD,
     element: <PrivateRoute Component={Dashboard} />,
     children: [
-      { path: "home", element: <DashboardHome /> },
-      { path: "meetings", element: <Meetings /> },
-      { path: "create", element: <Create /> },
-      { path: "drive", element: <Drive /> },
-      { path: "add-users", element: <AddUsers /> },
-      { path: "add-role", element: <AddNewRole /> },  // Fixed casing
+      { path: ROUTES.DASHBOARD_HOME, element: <DashboardHome /> },
+      { path: ROUTES.MEETINGS, element: <Meetings /> },
+      { path: ROUTES.CREATE_MEETING, element: <Create /> },
+      { path: ROUTES.DRIVE, element: <Drive /> },
+      { path: ROUTES.REPORT, element: <Report /> },
+      { path: ROUTES.ADD_USERS, element: <AddUsers /> },
+      { path: ROUTES.ADD_ROLE, element: <AddNewRole /> },  // Fixed casing
     ],
   },
-  { path: "*", element: <NotFound /> },
+  { path: ROUTES.NOT_FOUND, element: <NotFound /> },
 ]);

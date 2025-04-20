@@ -52,14 +52,10 @@ const editMeetingSchema = z.object({
 const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const { editMeeting, deleteMeeting } = useMeetings();
   const [editMeetingData, setEditMeetingData] = useState<Meeting | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(editMeetingSchema),
   });
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
 
   const getMeetingStatusColor = (meeting: any) => {
     const now = new Date();
@@ -100,7 +96,7 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
   const onSubmit = async (data: any) => {
     if (!editMeetingData) return;
 
-    // Prepare the updated meeting data first
+    setIsSaving(true); 
     const updatedMeetingData = {
       title: data.title,
       description: data.description,
@@ -112,23 +108,21 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
 
     const result = await editMeeting(editMeetingData.id, updatedMeetingData);
 
-
     if (result.success) {
-      toast.success("✅ Meeting updated successfully!");
+      toast.success(" Meeting updated successfully!");
       setEditMeetingData(null);
       reset();
     } else {
-      toast.error(`❌ Failed to update meeting: ${result.message}`);
+      toast.error(` Failed to update meeting: ${result.message}`);
     }
+    setIsSaving(false); 
   };
 
 
 
   return (
     <div className="relative mt-6">
-      {loading ? (
-        <Loader/>
-      ) : (
+      
         <motion.div initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -224,16 +218,18 @@ const MeetingCardView: React.FC<MeetingCardViewProps> = ({ meetings = [] }) => {
                   {errors.endTime && <p className="text-red-500 text-sm">{errors.endTime.message}</p>}
 
                   <DialogFooter>
-                    <Button variant="outline" type="button" onClick={() => setEditMeetingData(null)}>Cancel</Button>
-                    <Button type="submit">Save</Button>
+                    <Button variant="outline" type="button" onClick={() => setEditMeetingData(null)} disabled={isSaving}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={isSaving}>
+                      {isSaving ? <Loader /> : "Save"}
+                    </Button>
                   </DialogFooter>
                 </form>
               </DialogContent>
             </Dialog>
           )}
         </motion.div>
-
-      )}
     </div>
   );
 };

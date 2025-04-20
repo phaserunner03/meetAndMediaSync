@@ -1,137 +1,308 @@
-import { Request, Response } from 'express';
-import * as meetingService from '../services/meetingService';
-import { google } from "googleapis";
-import Meeting from '../models/Meeting';
-import User from "../models/User"
+import { Request, Response } from "express";
+import * as meetingService from "../services/meetingService";
+import { StatusCodes } from "../constants/status-codes.constants";
+import {
+  ErrorResponseMessages,
+  SuccessResponseMessages,
+} from "../constants/service-messages.constants";
+import logger from "../utils/logger";
 
 interface AuthenticatedRequest extends Request {
-    user: any;
+  user: any;
 }
 
+const functionName = {
+  scheduleMeeting: "scheduleMeeting",
+  getAllMeetings: "getAllMeetings",
+  updateMeeting: "updateMeeting",
+  deleteMeeting: "deleteMeeting",
+  verifyMeeting: "verifyMeeting",
+};
+
 const scheduleMeeting = async (req: AuthenticatedRequest, res: Response) => {
-    try {
-        const { user } = req;
-        const { title, location, description, participants, startTime, endTime } = req.body;
-        const event = await meetingService.scheduleMeeting(user, title, location, description, participants, startTime, endTime);
-        res.status(200).json(event);
-    } catch (err) {
-        if (err instanceof Error) {
-            res.status(500).json({ message: err.message });
-        } else {
-            res.status(500).json({ message: 'An unknown error occurred' });
-        }
+  try {
+    const { user } = req;
+    const { title, location, description, participants, startTime, endTime } =
+      req.body;
+    if (!user) {
+      logger.warn({
+        functionName: functionName.scheduleMeeting,
+        statusCode: StatusCodes.UNAUTHORIZED,
+        message: "Unauthorized request - No user",
+        data: {},
+      });
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        success: false,
+        message: ErrorResponseMessages.UNAUTHORIZED,
+        data: {},
+      });
     }
+
+    const event = await meetingService.scheduleMeeting(
+      user,
+      title,
+      location,
+      description,
+      participants,
+      startTime,
+      endTime
+    );
+    logger.info({
+      functionName: functionName.scheduleMeeting,
+      statusCode: StatusCodes.CREATED,
+      message: "Meeting scheduled successfully",
+      data: { eventId: event },
+    });
+    res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: SuccessResponseMessages.CREATED("Meeting"),
+      data: event,
+    });
+  } catch (error) {
+    logger.error({
+      functionName: functionName.scheduleMeeting,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error scheduling meeting",
+      data: { error: (error as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (error as Error).message },
+    });
+  }
 };
 
 const getAllMeetings = async (req: AuthenticatedRequest, res: Response) => {
-    try {
-        const { year, month } = req.query;
-        if (!year || !month) {
-            return res.status(400).json({ success: false, message: "Year and month are required" });
-        }
-        const result = await meetingService.getAllMeetings(req.user, parseInt(year as string), parseInt(month as string));
-        res.status(200).json(result);
-    } catch (error) {
-        if (error instanceof Error) {
-            if (error instanceof Error) {
-                if (error instanceof Error) {
-                    res.status(500).json({ message: error.message });
-                } else {
-                    res.status(500).json({ message: 'An unknown error occurred' });
-                }
-            } else {
-                res.status(500).json({ message: 'An unknown error occurred' });
-            }
-        } else {
-            res.status(500).json({ message: 'An unknown error occurred' });
-        }
+  try {
+    const { year, month } = req.query;
+    if (!year || !month) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ success: false, message: ErrorResponseMessages.BAD_REQUEST("Year and month are required") });
     }
+    const result = await meetingService.getAllMeetings(
+      req.user,
+      parseInt(year as string),
+      parseInt(month as string)
+    );
+
+    logger.info({
+      functionName :functionName.getAllMeetings,
+      statusCode: StatusCodes.OK,
+      message: "Meetings fetched successfully",
+      data:{userId: req.user.googleId,
+      totalMeetings: result.ourMeetings.length}
+    });
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.FETCHED("Meetings"),
+      data: result,
+    });
+  } catch (error) {
+    
+    logger.error({
+      functionName,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error fetching meetings",
+      data: { error: (error as Error).message
+      },
+    });
+
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (error as Error).message },
+    });
+  }
 };
 
+// Update an existing meeting
 const updateMeeting = async (req: AuthenticatedRequest, res: Response) => {
-    try {
-        const { user } = req;
-        const { eventId } = req.params;
-        const updatedData = req.body;
-        if (!eventId || !updatedData) {
-            return res.status(400).json({ success: false, message: "Event ID and updated data are required" });
-        }
-        const result = await meetingService.modifyMeeting(user, eventId, updatedData);
-        res.status(200).json(result);
-    } catch (err) {
-        if (err instanceof Error) {
-            res.status(500).json({ message: err.message });
-        } else {
-            res.status(500).json({ message: 'An unknown error occurred' });
-        }
+  try {
+    const { user } = req;
+    const { eventId } = req.params;
+    const updatedData = req.body;
+
+    if (!user) {
+      logger.warn({
+        functionName: functionName.updateMeeting,
+        statusCode: StatusCodes.UNAUTHORIZED,
+        message: "Unauthorized request - No user",
+        data: {},
+      });
+
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        success: false,
+        message: ErrorResponseMessages.UNAUTHORIZED,
+        data: {},
+      });
     }
+
+    if (!eventId || !updatedData) {
+      logger.warn({
+        functionName: functionName.updateMeeting,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "Event ID and updated data are required",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.BAD_REQUEST(
+          "Event ID and updated data are required"
+        ),
+        data: {},
+      });
+    }
+
+    const result = await meetingService.modifyMeeting(
+      user,
+      eventId,
+      updatedData
+    );
+
+    logger.info({
+      functionName: functionName.updateMeeting,
+      statusCode: StatusCodes.OK,
+      message: "Meeting updated successfully",
+      data: { eventId },
+    });
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.UPDATED("Meeting"),
+      data: result,
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.updateMeeting,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error updating meeting",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 };
 
+// Delete a meeting
 const deleteMeeting = async (req: AuthenticatedRequest, res: Response) => {
-    try {
-        const { user } = req;
-        const { eventId } = req.params;
-        if (!eventId) {
-            return res.status(400).json({ success: false, message: "Event ID is required" });
-        }
-        const result = await meetingService.removeMeeting(user, eventId);
-        res.status(200).json(result);
-    } catch (err) {
-        if (err instanceof Error) {
-            res.status(500).json({ message: err.message });
-        } else {
-            res.status(500).json({ message: 'An unknown error occurred' });
-        }
-    }
-};
+  try {
+    const { user } = req;
+    const { eventId } = req.params;
 
-const test = async (req: Request, res: Response) => {
-    try{
-    const { meetingCode, token } = req.body;
-    if (!token || !meetingCode) {
-        return res.status(400).json({ success: false, message: "Missing parameters" });
-    }
-    const oauth2Client = new google.auth.OAuth2();
-    oauth2Client.setCredentials({ access_token: token });
-    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
-
-    const { data } = await oauth2.userinfo.get();
-    if (!data.id) {
-        return res.status(401).json({ success: false, message: "Invalid token" });
+    if (!user) {
+      logger.warn({
+        functionName: functionName.deleteMeeting,
+        statusCode: StatusCodes.UNAUTHORIZED,
+        message: "Unauthorized request - No user",
+        data: {
+          userId: user?.googleId,
+        },
+      })
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        success: false,
+        message: ErrorResponseMessages.UNAUTHORIZED,
+        data: {},
+      });
     }
 
-    const userId = data.id; 
-    console.log("🔹 Verified User ID:", userId);
-
-    const user = await User.findOne({ googleId:userId });
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-
-
-    const meetingLink = `https://meet.google.com/${meetingCode}`
-    const meeting = await Meeting.findOne({ meetLink: meetingLink, scheduledBy: user._id });
-    if (meeting) {
-        return res.json({ success: true, message: "Authorized" });
-    } else {
-        return res.status(403).json({ success: false, message: "Unauthorized" });
+    if (!eventId) {
+      logger.warn({
+        functionName: functionName.deleteMeeting,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "Event ID is required",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.BAD_REQUEST("Event ID is required"),
+        data: {},
+      });
     }
-}
-catch (error) {
-    console.error("❌ Error:", error);
-    return res.status(500).json({ success: false, message: "Server error" });
-}
+
+    await meetingService.removeMeeting(user, eventId);
+    logger.info({
+      functionName: functionName.deleteMeeting,
+      statusCode: StatusCodes.OK,
+      message: "Meeting deleted successfully",
+      data: { eventId },
+    })
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.DELETED("Meeting"),
+      data: {},
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.deleteMeeting,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error deleting meeting",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
 };
 
 const verifyMeeting = async (req: Request, res: Response) => {
-    try {
-        const { meetingCode, token } = req.body;
-        const result = await meetingService.verifyMeeting(meetingCode, token);
-        return res.json(result);
-    } catch (error: any) {
-        console.error("❌ Error:", error);
-        return res.status(error.status || 500).json({ success: false, message: error.message || "Server error" });
+  try {
+    const { meetingCode, token } = req.body;
+
+    if (!meetingCode || !token) {
+      logger.warn({
+        functionName: functionName.verifyMeeting,
+        statusCode: StatusCodes.BAD_REQUEST,
+        message: "Meeting code and token are required",
+        data: {},
+      });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: ErrorResponseMessages.BAD_REQUEST(
+          "Meeting code and token are required"
+        ),
+        data: {},
+      });
     }
+
+    const result = await meetingService.verifyMeeting(meetingCode, token);
+    logger.info({
+      functionName: functionName.verifyMeeting,
+      statusCode: StatusCodes.OK,
+      message: "Meeting verified successfully",
+      data: result,
+    });
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.VERIFIED("Meeting"),
+      data: result,
+    });
+  } catch (error: any) {
+    logger.error({
+      functionName: functionName.verifyMeeting,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error verifying meeting",
+      data: { error: error.message },
+    });
+    return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || ErrorResponseMessages.INTERNAL_ERROR,
+      data: {},
+    });
+  }
 };
 
-export { scheduleMeeting, getAllMeetings, updateMeeting, deleteMeeting, test, verifyMeeting};
+export {
+  scheduleMeeting,
+  getAllMeetings,
+  updateMeeting,
+  deleteMeeting,
+  verifyMeeting,
+};

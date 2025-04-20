@@ -1,8 +1,9 @@
+import { API_ENDPOINTS } from "../constants";
 import axiosInstance from "./axiosConfig";
 
 export async function getAllFolders(){
     try{
-        const response = await axiosInstance.get("/api/drive/folders");
+        const response = await axiosInstance.get(API_ENDPOINTS.DRIVE.FOLDERS);
         return response;
     }
     catch(error:any){
@@ -13,7 +14,7 @@ export async function getAllFolders(){
 
 export async function getFilesInFolder(folderId:string){
     try{
-        const response = await axiosInstance.get(`/api/drive/folders/${folderId}`);
+        const response = await axiosInstance.get(API_ENDPOINTS.DRIVE.FOLDER(folderId));
         return response;
     }
     catch(error:any){

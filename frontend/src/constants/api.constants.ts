@@ -1,10 +1,7 @@
-export const API_BASE_URL = "https://backend-972397341408.us-central1.run.app/web";
-export const API_URL = "https://cloudcapture-972397341408.us-central1.run.app";
-// export const API_BASE_URL = import.meta.env.VITE_API_URL ;
-// export const API_URL =  import.meta.env.URL ;
-
-
-
+// export const API_BASE_URL = "https://backend-972397341408.us-central1.run.app/web";
+// export const API_URL = "https://cloudcapture-972397341408.us-central1.run.app";
+export const API_BASE_URL = import.meta.env.VITE_API_URL ;
+export const API_URL =  import.meta.env.URL ;
 
 export const API_ENDPOINTS = {
   MEETINGS: {
@@ -33,6 +30,7 @@ export const API_ENDPOINTS = {
   },
   ROLE: {
     ALL: `${API_BASE_URL}/roles/v1/allRoles`,
+    BELOW: `${API_BASE_URL}/roles/v1/getBelowRoles`,
     ADD: `${API_BASE_URL}/roles/v1/addRole`,
     DELETE: (id: string) => `${API_BASE_URL}/roles/v1/deleteRole/${id}`,
     EDIT: (id: string) => `${API_BASE_URL}/roles/v1/editRole/${id}`,

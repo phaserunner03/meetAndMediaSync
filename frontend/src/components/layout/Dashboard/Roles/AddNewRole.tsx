@@ -37,7 +37,7 @@ const AddNewRole = () => {
   const fetchRoles = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.BELOW);
       setRoles(response.data.data.roles);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -90,7 +90,7 @@ const AddNewRole = () => {
         permissions: newRolePermissions,
       });
       toast.success(SUCCESS_MESSAGES.ROLE.UPDATE_SUCCESS);
-      fetchRoles(); // Refresh the roles list
+      fetchRoles(); 
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -113,7 +113,7 @@ const AddNewRole = () => {
     try {
       await axiosInstance.delete(API_ENDPOINTS.ROLE.DELETE(roleToDelete));
       toast.success(SUCCESS_MESSAGES.ROLE.DELETE_SUCCESS);
-      fetchRoles(); // Refresh the roles list
+      fetchRoles(); 
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -137,13 +137,13 @@ const AddNewRole = () => {
 
       if (permission === "addRole") {
         return hasPermission
-          ? prevPermissions.filter((perm) => perm !== "addRole") // Unselect only "addRole"
+          ? prevPermissions.filter((perm) => perm !== "addRole") 
           : [...prevPermissions, "addRole", "viewRoles"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
       }
 
       if (permission === "addUser") {
         return hasPermission
-          ? prevPermissions.filter((perm) => perm !== "addUser") // Unselect only "addRole"
+          ? prevPermissions.filter((perm) => perm !== "addUser") 
           : [...prevPermissions, "addUser", "viewAllUsers"].filter((perm, index, self) => self.indexOf(perm) === index); // Add both, ensuring no duplicates
       }
   
@@ -154,7 +154,17 @@ const AddNewRole = () => {
       if (permission === "viewAllUsers" && hasPermission) {
         return prevPermissions.filter((perm) => perm !== "viewAllUsers" && perm !== "addUser");
       }
-  
+
+      if (permission === "viewAllReports") {
+        return hasPermission
+          ? prevPermissions.filter((perm) => perm !== "viewAllReports")
+          : [...prevPermissions, "viewAllReports", "viewReport"].filter((perm, index, self) => self.indexOf(perm) === index);
+      }
+
+      if (permission === "viewReport" && hasPermission) {
+        return prevPermissions.filter((perm) => perm !== "viewReport");
+      }
+    
       return hasPermission
         ? prevPermissions.filter((perm) => perm !== permission)
         : [...prevPermissions, permission];
@@ -236,7 +246,6 @@ const AddNewRole = () => {
         </motion.div>
     
 
-      {/* Add Role Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseDialog(setOpenAddDialog)}>
         <DialogTitle>Add Role</DialogTitle>
         <DialogContent>
@@ -251,7 +260,7 @@ const AddNewRole = () => {
               className="mb-4"
             />
             <FormControl fullWidth className="mb-4">
-              {permissionsData.map((permission) => (
+              {currentUser.role.permissions.map((permission) => (
                 <FormControlLabel
                   key={permission}
                   control={

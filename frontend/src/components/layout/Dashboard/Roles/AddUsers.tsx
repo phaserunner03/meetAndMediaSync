@@ -64,7 +64,7 @@ const AddUsers = () => {
     setLoading(true);
     try {
       // Fetch roles from the backend
-      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.BELOW);
     
       setRoles(response.data.data.roles);
       

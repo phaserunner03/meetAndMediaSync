@@ -30,6 +30,7 @@ export const API_ENDPOINTS = {
   },
   ROLE: {
     ALL: `${API_BASE_URL}/roles/v1/allRoles`,
+    BELOW: `${API_BASE_URL}/roles/v1/getBelowRoles`,
     ADD: `${API_BASE_URL}/roles/v1/addRole`,
     DELETE: (id: string) => `${API_BASE_URL}/roles/v1/deleteRole/${id}`,
     EDIT: (id: string) => `${API_BASE_URL}/roles/v1/editRole/${id}`,

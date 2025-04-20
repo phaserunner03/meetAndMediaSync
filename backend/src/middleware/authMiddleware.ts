@@ -44,7 +44,7 @@ const authMiddleware = async (
     };
     const user = await Collections.USER.findOne({
       googleId: decoded.uid,
-    }).populate("role");
+    }).populate("role","name permissions");
 
     if (!user) {
       logger.warn({

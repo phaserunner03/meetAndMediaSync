@@ -114,7 +114,7 @@ const createSeedUser = async (email: string, roleName: string) => {
 }
 export const seedConfig = async () => {
   try {
-    await upsertRole(SEED_ROLE_NAME, permissions);
+    await upsertRole(SEED_ROLE_NAME, permissions.levels.flatMap(level => level.permissions));
     await upsertRole(NAU_ROLE_NAME, ["viewUser"]);
     await createSeedUser(SEED_EMAIL, SEED_ROLE_NAME);
   } catch (error) {

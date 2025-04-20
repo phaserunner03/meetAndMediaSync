@@ -1,19 +1,20 @@
-[
-    "addRole",
-    "addUser",
-    "editRole",
-    "deleteRole",
-    "viewRoles",
-    "editUserRole",
-    "deleteUser",
-    "viewUser",
-    "viewAllUsers",
-    "viewMeeting",
-    "groupMeeting",
-    "createMeeting",
-    "editMeeting",
-    "deleteMeeting",
-    "viewReport",
-    "viewAllReports"
+{
+  "levels": [
+    {
+      "level": 1,
+      "permissions": ["viewUser", "viewAllUsers", "viewMeeting", "viewReport"]
+    },
+    {
+      "level": 2,
+      "permissions": ["addUser", "deleteUser", "editUserRole", "viewRoles"]
+    },
+    {
+      "level": 3,
+      "permissions": ["groupMeeting", "createMeeting", "editMeeting", "deleteMeeting"]
+    },
+    {
+      "level": 4,
+      "permissions": ["addRole", "editRole", "deleteRole","viewAllReports"]
+    }
   ]
-  
+}

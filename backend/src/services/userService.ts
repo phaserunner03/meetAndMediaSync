@@ -222,21 +222,41 @@ async function deleteUser(userId: string) {
 
 async function editUserRole(
   userId: string,
-  newRole: mongoose.Schema.Types.ObjectId
+  newRole: mongoose.Schema.Types.ObjectId,
+  editorRoleId: string
 ) {
   try {
+    const editorRole = await Collections.ROLE.findById(editorRoleId);
+    const targetUser = await Collections.USER.findById(userId).populate<{ role: RoleDocument }>("role");
+
+    if (!editorRole) {
+      throw new Error("Invalid editor role");
+    }
+
+    if (!targetUser || !targetUser.role) {
+      throw new Error("Target user or role not found");
+    }
+
+    const editorMaxLevel = Math.max(
+      ...editorRole.permissions.map(getPermissionLevel)
+    );
+    const targetUserMaxLevel = Math.max(
+      ...targetUser.role.permissions.map(getPermissionLevel)
+    );
+
+    if (editorMaxLevel < targetUserMaxLevel) {
+      throw new Error(
+        "You cannot edit the role of a user with a higher or equal role level"
+      );
+    }
+
     const roleDoc = await Collections.ROLE.findById(newRole);
     if (!roleDoc) {
-      throw new Error("Invalid role");
+      throw new Error("Invalid new role");
     }
 
-    const user = await Collections.USER.findById(userId);
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    user.role = newRole;
-    await user.save();
+    targetUser.role = roleDoc;
+    await targetUser.save();
 
     logger.info({
       functionName: functionName.editUserRole,
@@ -245,20 +265,17 @@ async function editUserRole(
       data: { userId, newRole: roleDoc.name },
     });
 
-    return user;
-
+    return targetUser;
   } catch (error) {
-
     logger.error({
-        functionName: functionName.editUserRole,
-        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-        message: "Error editing user role",
-        data: {
+      functionName: functionName.editUserRole,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error editing user role",
+      data: {
         name: (error as Error).name,
-        stack: (error as Error).stack
-    }
-        
-      });
+        stack: (error as Error).stack,
+      },
+    });
     throw new Error("Failed to edit user role");
   }
 }

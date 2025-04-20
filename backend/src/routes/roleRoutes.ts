@@ -89,5 +89,6 @@ router.post("/addRole", authMiddleware, restrictTo(Permissions.ADD_ROLE), valida
 router.put("/editRole/:id", authMiddleware, restrictTo(Permissions.EDIT_ROLE), validateRequest(roleSchema.editRoleRequest), (req, res) => roleController.editRole(req as AuthenticatedRequest, res));
 router.delete("/deleteRole/:id", authMiddleware, restrictTo(Permissions.DELETE_ROLE), (req, res) => roleController.deleteRole(req as AuthenticatedRequest, res));
 router.get("/allRoles", authMiddleware, restrictTo(Permissions.VIEW_ROLES), (req, res) => roleController.getAllRoles(req as AuthenticatedRequest, res));
+router.get("/getBelowRoles", authMiddleware, restrictTo(Permissions.VIEW_ROLES), (req, res) => roleController.getBelowRoles(req as AuthenticatedRequest, res));
 
 export default router;

@@ -37,7 +37,7 @@ const AddNewRole = () => {
   const fetchRoles = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.ALL);
+      const response = await axiosInstance.get(API_ENDPOINTS.ROLE.BELOW);
       setRoles(response.data.data.roles);
     } catch (error) {
       if (axios.isAxiosError(error)) {

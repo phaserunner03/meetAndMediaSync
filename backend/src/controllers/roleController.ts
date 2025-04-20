@@ -6,10 +6,16 @@ import {
   SuccessResponseMessages,
 } from "../constants/service-messages.constants";
 import logger from "../utils/logger";
+import permissionsConfig from "../config/permission.json";
 // Extend the Request interface to include the user property
 export interface AuthenticatedRequest extends Request {
   user?: {
     googleId: string;
+    role: {
+      _id: string;
+      name: string;
+      permissions: string[];
+    };
   };
 }
 
@@ -18,6 +24,7 @@ const functionName = {
   editRole: "editRole",
   deleteRole: "deleteRole",
   getAllRoles: "getAllRoles",
+  getBelowRoles: "getBelowRoles",
 };
 
 // Add a new role
@@ -41,7 +48,7 @@ async function addRole(req: AuthenticatedRequest, res: Response) {
       });
     }
 
-    const role = await roleService.addRole(name, permissions);
+    const role = await roleService.addRole(name, permissions, req.user?.role.permissions || []);
     logger.info({
       functionName: functionName.addRole,
       statusCode: StatusCodes.CREATED,
@@ -104,7 +111,7 @@ async function editRole(req: AuthenticatedRequest, res: Response) {
       });
     }
 
-    const role = await roleService.editRole(id, name, permissions);
+    const role = await roleService.editRole(id, name, permissions, req.user?.role.permissions || []);
     logger.info({
       functionName: functionName.editRole,
       statusCode: StatusCodes.OK,
@@ -223,4 +230,66 @@ async function getAllRoles(req: AuthenticatedRequest, res: Response) {
   }
 }
 
-export { addRole, editRole, deleteRole, getAllRoles };
+
+async function getBelowRoles(req: AuthenticatedRequest, res: Response) {
+  try {
+    const userPermissions = req.user?.role.permissions || [];
+    const roles = await roleService.getAllRoles();
+
+    const userMaxLevel = Math.max(
+      ...userPermissions.map((permission) =>
+        roleService.getPermissionLevel(permission)
+      )
+    );
+
+    const filteredRoles = roles.filter((role: any) =>
+      role.permissions.every(
+        (permission: string) =>
+          roleService.getPermissionLevel(permission) <= userMaxLevel
+      )
+    );
+
+    if (!filteredRoles || filteredRoles.length === 0) {
+      logger.warn({
+        functionName: functionName.getBelowRoles,
+        statusCode: StatusCodes.NOT_FOUND,
+        message: "No roles found",
+        data: {},
+      });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: ErrorResponseMessages.NOT_FOUND("Roles"),
+        data: {},
+      });
+    }
+
+    logger.info({
+      functionName: functionName.getBelowRoles,
+      statusCode: StatusCodes.OK,
+      message: "Roles fetched successfully",
+      data: { roleCount: filteredRoles.length },
+    });
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: SuccessResponseMessages.FETCHED("Roles"),
+      data: { roles: filteredRoles },
+    });
+  } catch (err) {
+    logger.error({
+      functionName: functionName.getBelowRoles,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Error fetching roles",
+      data: { error: (err as Error).message },
+    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: ErrorResponseMessages.INTERNAL_ERROR,
+      data: { error: (err as Error).message },
+    });
+  }
+}
+
+
+
+export { addRole, editRole, deleteRole, getAllRoles, getBelowRoles };

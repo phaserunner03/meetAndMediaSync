@@ -103,18 +103,22 @@ const scheduleMeeting = async (
 
 const getAllMeetings = async (user: User, year: number, month: number) => {
   try {
-    
     const googleMeetings = await listEvents(user.refreshToken, year, month);
     const platformMeetings = await Collections.MEETINGS.find({
       scheduledBy: user._id,
     }).lean();
 
-    const ourMeetings = googleMeetings.filter(
+    // Filter out meetings with the title "office"
+    const filteredGoogleMeetings = googleMeetings.filter(
+      (meeting) => meeting.summary?.toLowerCase() !== "office"
+    );
+
+    const ourMeetings = filteredGoogleMeetings.filter(
       (meeting) =>
         meeting.extendedProperties?.private?.source === "CloudCapture"
     );
 
-    const allMeetings = googleMeetings.map((event) => ({
+    const allMeetings = filteredGoogleMeetings.map((event) => ({
       id: event.id,
       title: event.summary || "No Title",
       description: event.description || "No Description",
@@ -126,7 +130,7 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
       participants: event.attendees ? event.attendees.map(a => a.email) : [],
       extendedProperties: event.extendedProperties || {},
       location: event.location,
-  }));
+    }));
 
     logger.info({
       functionName: functionName.getAllMeetings,
@@ -144,7 +148,7 @@ const getAllMeetings = async (user: User, year: number, month: number) => {
       data: {
         name: (error as Error).name,
         stack: (error as Error).stack
-    }
+      }
     });
     throw new Error("Failed to fetch meetings");
   }

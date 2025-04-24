@@ -39,6 +39,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const fetchUser = async () => {
             try {
                 const response = await axiosInstance.get(API_ENDPOINTS.USER.ME); 
+                console.log(response)
                 setCurrentUser(response.data.data.user);
                 setUserLoggedIn(true);
             } catch (error) {

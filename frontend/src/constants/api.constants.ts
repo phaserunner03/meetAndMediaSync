@@ -1,5 +1,5 @@
 export const API_BASE_URL = "https://backend-972397341408.us-central1.run.app/web";
-export const API_URL = "https://cloudcapture-972397341408.us-central1.run.app";
+export const API_URL = "https://meetandmediasync-972397341408.us-central1.run.app"
 // export const API_BASE_URL = import.meta.env.VITE_API_URL ;
 // export const API_URL =  import.meta.env.URL ;
 

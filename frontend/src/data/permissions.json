@@ -12,5 +12,7 @@
   "groupMeeting",
   "createMeeting",
   "editMeeting",
-  "deleteMeeting"
+  "deleteMeeting",
+  "viewAllReports",
+  "viewReport"
 ]

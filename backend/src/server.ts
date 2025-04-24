@@ -2,22 +2,20 @@ import express, { Request, Response, NextFunction } from "express";
 import databaseConnect from "./config/database";
 import cors from "cors";
 import dotenv from "dotenv";
-import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes";
-import roleRoutes from "./routes/roleRoutes";
-import driveRoutes from "./routes/driveRoutes"
+import router from  "./routes/index";
 import cookieParser from "cookie-parser";
-import meetingRoutes from "./routes/meetingRoutes";
-import transferRoutes from "./routes/transferRoutes";
 import "./utils/cronJob";
-
+import { environment } from "./constants/environments.constants";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./swagger/swaggerConfig";
+import logger from "./utils/logger"
 dotenv.config();
 
-const PORT = process.env.PORT ?? 5000;
+const PORT = environment.PORT || 8080;
 const app = express();
 
 app.use(cors({
-  origin: [`${process.env.FRONTEND_URL}`, 'chrome-extension://ngmabalmicmpbdjgabmogmkgdcbcbmmj','chrome-extension://eblacphkjhgedhmaegepjodbfhkkfogb','http:localhost:8080'],
+  origin: [`${environment.FRONTEND_URL}`, 'chrome-extension://ngmabalmicmpbdjgabmogmkgdcbcbmmj'],
   credentials: true,  // Important: This allows cookies to be sent
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -28,23 +26,25 @@ app.use(cookieParser());
 
 databaseConnect();
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use("/web", router);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.get("/web/swagger.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerDocs);
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/roles", roleRoutes);
-app.use("/api/meetings", meetingRoutes);
-app.use("/api/drive", driveRoutes);
-app.use("/api/transfer", transferRoutes);
+app.listen(PORT, () => {
+  logger.info({functionName:"Server",statusCode:"200", message: `Server running on port ${PORT}`,data:{} });
+});
 
-app.get("/", (req, res) => {
-  return res.json({
-    success: true,
-    message: "Your server is up and running....",
-    data: {}
-  });
+process.on("uncaughtException", (err) => {
+  logger.error({ functionName: "Server", statusCode: "500", message: "Uncaught Exception", data: { error: err.message } });
+  process.exit(1);
+});
+
+
+process.on("unhandledRejection", (reason) => {
+  logger.error({ functionName: "Server", statusCode: "500", message: "Unhandled Rejection", data: { reason } });
 });
 
 interface Error {

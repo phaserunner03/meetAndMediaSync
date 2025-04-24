@@ -7,6 +7,7 @@ import { Textarea } from "../../../ui/textarea";
 import { toast } from "sonner";
 import { useMeetings } from "../../../../context/meetingContext";
 import { Loader2 } from "lucide-react";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../constants";
 
 // Validation Schema
 const meetingSchema = z.object({
@@ -47,18 +48,18 @@ const MeetingForm = () => {
       startTime: new Date(data.startTime).toISOString(),
       endTime: new Date(data.endTime).toISOString(),
     };
-    console.log(meetingData)
+      
     try {
       const result = await createMeeting(meetingData);
 
       if (result.data.success) {
-        toast.success("✅ Meeting scheduled successfully!");
+        toast.success(result.data.message || SUCCESS_MESSAGES.MEETINGS.CREATE_SUCCESS);
       } else {
         
-        toast.error(result.data.message||"❌ Failed to schedule meeting.");
+        toast.error(result.data.message|| ERROR_MESSAGES.MEETINGS.CREATE_FAILED);
       }
     } catch (error: any) {
-      toast.error(error.message || "❌ Something went wrong.");
+      toast.error(error.message || ERROR_MESSAGES.NETWORK_ERROR);
     }
   };
 

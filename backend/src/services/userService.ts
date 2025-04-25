@@ -246,7 +246,7 @@ async function editUserRole(
 
     if (editorMaxLevel < targetUserMaxLevel) {
       throw new Error(
-        "You cannot edit the role of a user with a higher or equal role level"
+        "You cannot edit the role of a user with a higher role level"
       );
     }
 
@@ -276,7 +276,7 @@ async function editUserRole(
         stack: (error as Error).stack,
       },
     });
-    throw new Error("Failed to edit user role");
+    throw error;
   }
 }
 

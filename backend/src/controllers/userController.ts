@@ -247,12 +247,12 @@ async function editUserRole(req: AuthenticatedRequest, res: Response) {
       functionName: functionName.editUserRole,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Error updating user role",
-      data: { error: (err as Error).message },
+      data: { error: (err as Error).message, stack: (err as Error).stack },
     });
     res.status(StatusCodes.BAD_REQUEST).json({
       success: false,
       message: ErrorResponseMessages.INTERNAL_ERROR,
-      data: { error: (err as Error).message },
+      data: { error: (err as Error).message, stack: (err as Error).stack },
     });
   }
 }

@@ -153,7 +153,7 @@ const AddUsers = () => {
         if (error.response?.status === 401) {
           toast.error(ERROR_MESSAGES.UNAUTHORIZED);
         } else {
-          toast.error(error.response?.data?.message || ERROR_MESSAGES.USER.EDIT_ROLE_FAILED);
+          toast.error(error.response?.data?.data?.error || ERROR_MESSAGES.USER.EDIT_ROLE_FAILED);
         }
       } else {
         toast.error(ERROR_MESSAGES.NETWORK_ERROR);

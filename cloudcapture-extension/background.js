@@ -1,4 +1,3 @@
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "capture_screenshot") {
         if (!activeMeetId) {
@@ -6,7 +5,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             sendResponse({ success: false, message: "No active Meet found." });
             return;
         }
-
+        
         chrome.tabs.captureVisibleTab(null, { format: "png" }, (image) => {
             if (chrome.runtime.lastError) {
                 console.error("❌ Screenshot error:", chrome.runtime.lastError.message);
